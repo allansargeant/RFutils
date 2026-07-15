@@ -446,6 +446,77 @@ body {
   padding: 8px 0;
   border-top: 1px solid var(--panel-2);
 }
+
+/* Web build: flex row so the optional RF meter + cue button don't fight a
+   fixed grid track count. */
+.channel-row--web {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.channel-row--web .channel-row__name {
+  flex: 0 0 120px;
+}
+.channel-row--web .level-meter {
+  flex: 1 1 150px;
+  min-width: 140px;
+}
+.channel-row--web .battery-indicator {
+  flex: 0 0 auto;
+}
+.channel-row--web .cue {
+  margin-left: auto;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cue--na {
+  color: var(--dim);
+  opacity: 0.4;
+  width: 34px;
+  text-align: center;
+}
+.cue-btn {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 9px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.15s, border-color 0.15s, background 0.15s;
+}
+.cue-btn:hover {
+  opacity: 1;
+}
+.cue-btn--active {
+  background: #1f3d28;
+  border-color: var(--good);
+  opacity: 1;
+}
+.cue-btn--error {
+  border-color: var(--bad);
+  color: var(--bad);
+  opacity: 1;
+}
+.cue-meter {
+  display: inline-block;
+  width: 46px;
+  height: 8px;
+  background: var(--panel-2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.cue-meter__fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--good);
+  transition: width 60ms linear;
+}
 .channel-row__name {
   font-size: 13px;
 }

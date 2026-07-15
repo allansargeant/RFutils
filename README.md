@@ -125,18 +125,32 @@ Live discovery and metering of wireless receivers on the local network — Shure
 strings, port 2202), Sennheiser (SSC), and AES67/Dante (mDNS + SAP), with per-channel audio,
 battery, and RF telemetry pushed to the browser over WebSocket.
 
-![RFutils Monitor tab: Shure, Sennheiser and AES67 receiver cards with per-channel audio/RF meters and battery gauges](docs/screenshots/monitor.png)
+![RFutils Monitor tab: Shure, Sennheiser and AES67 receiver cards with per-channel audio/RF meters, battery gauges, and a headphone cue button active on an AES67 channel](docs/screenshots/monitor.png)
 
-*Screenshot captured with `RFUTILS_MOCK_DEVICES=1` (simulated receivers) — no real hardware was on the network.*
+*Screenshot captured with `RFUTILS_MOCK_DEVICES=1` (simulated receivers) — no real hardware was on the network. The highlighted headphone button on an AES67 channel is an active audio cue.*
 
 > **Not yet hardware-tested.** As in MicWizard, the vendor protocol adapters are built from a mix of
 > public documentation and best-effort reverse engineering and have not been validated against real
 > receivers. The Sennheiser SSC adapter in particular is a skeleton.
 
-Unlike MicWizard (an Electron app), this is a web app: the server decodes AES67 and publishes
-per-channel **levels**, but audio **cueing to headphones** — a MicWizard feature that ran in the
-Electron renderer — is out of scope for the browser build, since a browser can't join a multicast
-RTP group directly.
+### Audio cueing to headphones
+
+A browser can't join the AES67 RTP multicast group directly, so cueing works by **relay**: click
+the 🎧 button on an AES67 channel and the server enables per-channel PCM on the audio it already
+decodes and streams that one channel to the browser as PCM16 mono over a dedicated binary
+WebSocket (`/ws/audio`); an `AudioWorklet` ring buffer plays it out with a small jitter buffer.
+Only the cued channel is streamed (~0.77 Mbit/s at 48 kHz), and only one channel is cued at a time,
+like a hardware PFL/cue bus.
+
+- **AES67 only.** Cue buttons are enabled only on AES67 channels — Shure/Sennheiser command
+  protocols carry telemetry, not audio, and native-only Dante still needs Audinate's SDK. A Dante
+  device must be in AES67 mode to be cueable.
+- **Latency** is ~100–200 ms (fine for identifying a mic, not for critical timing). Lower-latency
+  Opus/WebRTC transport is a natural future upgrade; PCM-over-WebSocket keeps the current build
+  dependency-free and reuses the audio the server already decodes.
+- The full relay → browser → playback path is verified end-to-end with a synthetic tone in
+  `RFUTILS_MOCK_DEVICES` mode (the analyser reads the expected −15 dBFS), so the pipeline is proven
+  even though the real-Dante AES67 decode remains hardware-untested.
 
 ### Dante routing via Companion (optional)
 

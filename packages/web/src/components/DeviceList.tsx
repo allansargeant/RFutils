@@ -1,6 +1,7 @@
 import type { DiscoveredDevice } from '@rfutils/shared';
 import { LevelMeter } from './LevelMeter.js';
 import { BatteryIndicator } from './BatteryIndicator.js';
+import { CueButton } from './CueButton.js';
 
 const VENDOR_LABEL: Record<DiscoveredDevice['vendor'], string> = {
   shure: 'Shure',
@@ -53,6 +54,7 @@ export function DeviceList({ devices }: { devices: DiscoveredDevice[] }): JSX.El
                   percent={channel.batteryPercent}
                   minutesRemaining={channel.batteryMinutesRemaining}
                 />
+                <CueButton channelId={channel.id} cueable={device.transport === 'aes67'} />
               </div>
             ))}
           </div>
