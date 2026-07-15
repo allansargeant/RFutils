@@ -141,6 +141,12 @@ export function createApiRouter(monitor: MonitorService): Router {
     res.json({ devices: monitor.snapshot() });
   });
 
+  /** Which audio-cue mode is active: 'capture' (DVS/Dante interface via
+   * Companion) or 'direct' (decode AES67 multicast). */
+  router.get('/audio/mode', (_req: Request, res: Response) => {
+    res.json({ mode: monitor.audioMode(), cueBusConfigured: monitor.cueBusConfigured() });
+  });
+
   router.get('/companion/status', async (_req: Request, res: Response) => {
     res.json(await monitor.companionStatus());
   });

@@ -13,6 +13,12 @@ import { monitorAes67Stream, type Aes67StreamHandle } from './audio/aes67.js';
 import { loadCompanionConfig } from './companion/routesConfig.js';
 import { CompanionClient } from './companion/companionClient.js';
 import { seedMockDevices } from './mockDevices.js';
+import { resolveCaptureConfig, CaptureSource, type CaptureConfig } from './captureSource.js';
+
+/** Fixed channelId for the DVS/Dante-interface "cue bus" the server captures. */
+const CAPTURE_CUE_ID = 'capture:cue';
+
+export type AudioMode = 'capture' | 'direct';
 
 /**
  * Owns all live-monitoring discovery (the raw sockets a browser can't open)
@@ -55,9 +61,34 @@ export class MonitorService extends EventEmitter {
   private pruneTimer: NodeJS.Timeout | null = null;
   private started = false;
 
+  // Capture (DVS / Dante interface cue bus) mode
+  private captureConfig: CaptureConfig | null = resolveCaptureConfig();
+  private capture: CaptureSource | null = null;
+  private captureCount = 0;
+
   constructor() {
     super();
     this.registry.on('event', (event: ServerToClientEvent) => this.emit('event', event));
+    if (this.captureConfig) {
+      this.capture = new CaptureSource(this.captureConfig, (pcm) => {
+        this.emit('audio', {
+          channelId: CAPTURE_CUE_ID,
+          sampleRate: this.captureConfig!.sampleRate,
+          channels: 1,
+          pcm,
+        } satisfies AudioFrame);
+      });
+    }
+  }
+
+  /** 'capture' when a DVS/Dante interface is configured, else direct AES67. */
+  audioMode(): AudioMode {
+    return this.captureConfig ? 'capture' : 'direct';
+  }
+
+  /** Whether a Companion cue-bus destination is configured for auto-routing. */
+  cueBusConfigured(): boolean {
+    return !!(process.env.RFUTILS_CUE_BUS_DEVICE && process.env.RFUTILS_CUE_BUS_CHANNEL);
   }
 
   start(): void {
@@ -135,6 +166,8 @@ export class MonitorService extends EventEmitter {
     for (const timer of this.mockToneTimers.values()) clearInterval(timer);
     this.mockToneTimers.clear();
     this.cueCounts.clear();
+    this.capture?.stop();
+    this.captureCount = 0;
     if (this.pruneTimer) clearInterval(this.pruneTimer);
     this.started = false;
   }
@@ -152,21 +185,37 @@ export class MonitorService extends EventEmitter {
   }
 
   /**
-   * Begin relaying one channel's audio. Returns the stream format, or null if
-   * the channel isn't cueable (not AES67, or its session has gone away).
-   * Only AES67 channels carry audio; Shure/Sennheiser are telemetry only.
+   * Begin relaying audio for a cued channel. Returns the stream format and the
+   * internal channelId whose frames feed this cue (`streamChannelId`), or null
+   * if the channel isn't cueable.
+   *
+   * In **capture mode** any channel is cueable: the server best-effort asks
+   * Companion to route it to the DVS cue bus, then streams the captured bus
+   * (streamChannelId = 'capture:cue'). In **direct AES67 mode** only AES67
+   * channels are cueable and each plays its own decoded audio.
    */
-  startCue(channelId: string): { sampleRate: number; channels: 1 } | null {
+  async startCue(
+    channelId: string
+  ): Promise<{ sampleRate: number; channels: 1; streamChannelId: string } | null> {
+    if (this.captureConfig && this.capture) {
+      // Best-effort: route the clicked channel to the cue bus via Companion.
+      void this.routeChannelToCueBus(channelId).catch((e) =>
+        console.error('[cue] Companion route failed:', (e as Error).message)
+      );
+      this.captureCount++;
+      if (this.captureCount === 1) this.capture.start();
+      return { sampleRate: this.captureConfig.sampleRate, channels: 1, streamChannelId: CAPTURE_CUE_ID };
+    }
+
+    // Direct AES67 mode.
     const parsed = MonitorService.parseAes67ChannelId(channelId);
     if (!parsed) return null;
 
     const handle = this.aes67Streams.get(parsed.sessionId);
     if (!handle) {
-      // No live stream. In mock mode, a device with no real RTP is a demo
-      // device, so stand in with a synthetic tone; otherwise it's not cueable.
       if (process.env.RFUTILS_MOCK_DEVICES === '1' && this.registry.get(`aes67:${parsed.sessionId}`)) {
         this.startMockTone(channelId, parsed.channelIndex);
-        return { sampleRate: 48000, channels: 1 };
+        return { sampleRate: 48000, channels: 1, streamChannelId: channelId };
       }
       return null;
     }
@@ -174,10 +223,25 @@ export class MonitorService extends EventEmitter {
     const count = (this.cueCounts.get(channelId) ?? 0) + 1;
     this.cueCounts.set(channelId, count);
     if (count === 1) handle.setSampleStreaming(parsed.channelIndex, true);
-    return { sampleRate: this.aes67SampleRates.get(parsed.sessionId) ?? 48000, channels: 1 };
+    return {
+      sampleRate: this.aes67SampleRates.get(parsed.sessionId) ?? 48000,
+      channels: 1,
+      streamChannelId: channelId,
+    };
   }
 
   stopCue(channelId: string): void {
+    if (this.captureConfig && this.capture) {
+      this.captureCount = Math.max(0, this.captureCount - 1);
+      if (this.captureCount === 0) {
+        this.capture.stop();
+        void this.clearCueBus().catch(() => {
+          /* best-effort */
+        });
+      }
+      return;
+    }
+
     const parsed = MonitorService.parseAes67ChannelId(channelId);
     if (!parsed) return;
 
@@ -195,6 +259,41 @@ export class MonitorService extends EventEmitter {
     } else {
       this.cueCounts.set(channelId, count);
     }
+  }
+
+  private findChannel(channelId: string): { deviceName: string; channelName: string } | null {
+    for (const device of this.registry.list()) {
+      const ch = device.channels.find((c) => c.id === channelId);
+      if (ch) return { deviceName: device.name, channelName: ch.name };
+    }
+    return null;
+  }
+
+  /** Route a discovered channel to the configured cue-bus destination via Companion. */
+  private async routeChannelToCueBus(channelId: string): Promise<void> {
+    const dstDevice = process.env.RFUTILS_CUE_BUS_DEVICE;
+    const dstChannel = process.env.RFUTILS_CUE_BUS_CHANNEL;
+    if (!dstDevice || !dstChannel) return; // no cue bus configured: rely on manual routing
+    const config = loadCompanionConfig();
+    if (!config) return;
+    const src = this.findChannel(channelId);
+    if (!src) return;
+    await new CompanionClient(config).makeCrosspoint({
+      // Source names must match your Dante Controller labels; see README.
+      sourceDevice: process.env.RFUTILS_CUE_SRC_DEVICE ?? src.deviceName,
+      sourceChannel: src.channelName,
+      destinationDevice: dstDevice,
+      destinationChannel: dstChannel,
+    });
+  }
+
+  private async clearCueBus(): Promise<void> {
+    const dstDevice = process.env.RFUTILS_CUE_BUS_DEVICE;
+    const dstChannel = process.env.RFUTILS_CUE_BUS_CHANNEL;
+    if (!dstDevice || !dstChannel) return;
+    const config = loadCompanionConfig();
+    if (!config || !config.clearCrosspointButton) return;
+    await new CompanionClient(config).clearCrosspoint(dstChannel, dstDevice);
   }
 
   private emitAudio(channelId: string, samples: Float32Array, sampleRate: number): void {

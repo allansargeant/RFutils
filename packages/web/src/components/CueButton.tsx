@@ -1,24 +1,32 @@
 import { useEffect, useRef } from 'react';
 import { useCue } from '../audio/useCue.js';
+import { useAudioMode } from '../audio/useAudioMode.js';
 import { cuePlayer } from '../audio/cuePlayer.js';
 
 /**
- * Per-channel "cue to headphones" toggle. Only AES67 channels carry audio, so
- * for everything else it renders a disabled placeholder. When active it shows
- * a live level meter fed from the cue player's analyser.
+ * Per-channel "cue to headphones" toggle.
+ *   direct AES67 mode — only AES67 channels carry audio.
+ *   capture mode (DVS/Dante interface via Companion) — any channel is cueable
+ *   (Companion routes it to the cue bus the server captures).
+ * When active it shows a live level meter fed from the cue player's analyser.
  */
 export function CueButton({
   channelId,
-  cueable,
+  transport,
 }: {
   channelId: string;
-  cueable: boolean;
+  transport: string;
 }): JSX.Element {
   const { state, toggle } = useCue();
+  const mode = useAudioMode();
+  const cueable = mode?.mode === 'capture' || transport === 'aes67';
 
   if (!cueable) {
     return (
-      <span className="cue cue--na" title="Audio cue is available on AES67 channels only">
+      <span
+        className="cue cue--na"
+        title="In direct AES67 mode, cueing is available on AES67 channels only"
+      >
         —
       </span>
     );

@@ -15,6 +15,7 @@
     "dev:web": "npm run build:shared && npm run dev -w @rfutils/web",
     "dev:verify": "npm run build:shared && concurrently -n server,web -c blue,magenta \"RFUTILS_DISABLE_MONITOR=1 RFUTILS_SERVER_PORT=8420 npm run dev -w @rfutils/server\" \"npm run dev -w @rfutils/web\"",
     "dev:demo": "npm run build:shared && concurrently -n server,web -c blue,magenta \"RFUTILS_MOCK_DEVICES=1 RFUTILS_SERVER_PORT=8420 npm run dev -w @rfutils/server\" \"npm run dev -w @rfutils/web\"",
+    "dev:capture-demo": "npm run build:shared && concurrently -n server,web -c blue,magenta \"RFUTILS_MOCK_DEVICES=1 RFUTILS_CAPTURE_CMD='sox -n -t raw -r 48000 -b 16 -e signed-integer -c 1 - synth 3600 sine 440 vol 0.3' RFUTILS_SERVER_PORT=8420 npm run dev -w @rfutils/server\" \"npm run dev -w @rfutils/web\"",
     "build": "npm run build:shared && npm run build -w @rfutils/server && npm run build -w @rfutils/web",
     "typecheck": "npm run typecheck -w @rfutils/shared && npm run typecheck -w @rfutils/server && npm run typecheck -w @rfutils/web",
     "test": "npm run test -w @rfutils/server"

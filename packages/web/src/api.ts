@@ -64,6 +64,15 @@ export async function companionStatus(): Promise<CompanionStatus> {
   return asJson<CompanionStatus>(await fetch('/api/companion/status'));
 }
 
+export interface AudioModeInfo {
+  mode: 'capture' | 'direct';
+  cueBusConfigured: boolean;
+}
+
+export async function audioMode(): Promise<AudioModeInfo> {
+  return asJson<AudioModeInfo>(await fetch('/api/audio/mode'));
+}
+
 export async function makeCrosspoint(request: CrosspointRequest): Promise<void> {
   await asJson(
     await fetch('/api/companion/make-crosspoint', {

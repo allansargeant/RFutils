@@ -51,10 +51,11 @@ wss.on('connection', (socket) => {
 const MAX_AUDIO_BACKLOG = 1 << 20; // 1 MB: drop frames rather than buffer unbounded
 const audioWss = new WebSocketServer({ noServer: true });
 audioWss.on('connection', (socket) => {
-  let cued: string | null = null;
+  let cued: string | null = null; // requested channelId (for stopCue)
+  let streamId: string | null = null; // internal channelId whose frames we relay
 
   const onAudio = (frame: AudioFrame): void => {
-    if (frame.channelId !== cued) return;
+    if (frame.channelId !== streamId) return;
     if (socket.readyState !== WebSocket.OPEN) return;
     if (socket.bufferedAmount > MAX_AUDIO_BACKLOG) return; // client can't keep up; drop
     socket.send(frame.pcm);
@@ -74,18 +75,26 @@ audioWss.on('connection', (socket) => {
       return;
     }
     if (msg.type === 'cue') {
-      if (cued && cued !== msg.channelId) monitor.stopCue(cued);
-      const format = monitor.startCue(msg.channelId);
-      if (!format) {
-        cued = null;
-        send({ type: 'audio-error', channelId: msg.channelId, message: 'Channel is not cueable (AES67 audio only, and its stream must be live).' });
-        return;
-      }
-      cued = msg.channelId;
-      send({ type: 'audio-format', channelId: msg.channelId, sampleRate: format.sampleRate, channels: 1, encoding: 'pcm16' });
+      const requested = msg.channelId;
+      if (cued && cued !== requested) monitor.stopCue(cued);
+      void monitor
+        .startCue(requested)
+        .then((format) => {
+          if (!format) {
+            cued = null;
+            streamId = null;
+            send({ type: 'audio-error', channelId: requested, message: 'Channel is not cueable (in direct AES67 mode only live AES67 channels carry audio).' });
+            return;
+          }
+          cued = requested;
+          streamId = format.streamChannelId;
+          send({ type: 'audio-format', channelId: requested, sampleRate: format.sampleRate, channels: 1, encoding: 'pcm16' });
+        })
+        .catch((e) => send({ type: 'audio-error', channelId: requested, message: (e as Error).message }));
     } else if (msg.type === 'stop') {
       if (cued) monitor.stopCue(cued);
       cued = null;
+      streamId = null;
     }
   });
 
@@ -93,6 +102,7 @@ audioWss.on('connection', (socket) => {
     monitor.off('audio', onAudio);
     if (cued) monitor.stopCue(cued);
     cued = null;
+    streamId = null;
   };
   socket.on('close', cleanup);
   socket.on('error', cleanup);

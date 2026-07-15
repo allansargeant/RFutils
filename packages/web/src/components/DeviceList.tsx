@@ -54,7 +54,7 @@ export function DeviceList({ devices }: { devices: DiscoveredDevice[] }): JSX.El
                   percent={channel.batteryPercent}
                   minutesRemaining={channel.batteryMinutesRemaining}
                 />
-                <CueButton channelId={channel.id} cueable={device.transport === 'aes67'} />
+                <CueButton channelId={channel.id} transport={device.transport} />
               </div>
             ))}
           </div>

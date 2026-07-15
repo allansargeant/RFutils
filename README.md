@@ -82,6 +82,9 @@ without any hardware — how the Monitor screenshot above was captured).
 - `RFUTILS_DISABLE_MONITOR=1` — skip network device discovery (file conversion still works).
 - `RFUTILS_MOCK_DEVICES=1` — seed simulated receivers into the Monitor dashboard (demo/dev).
 - `RFUTILS_CONFIG_DIR` — where `companion-routes.json` is read from (default `~/.rfutils`).
+- `RFUTILS_CAPTURE_DEVICE` / `_FORMAT` / `_CHANNEL` / `_RATE`, `RFUTILS_FFMPEG`,
+  `RFUTILS_CAPTURE_CMD`, `RFUTILS_CUE_BUS_DEVICE` / `_CHANNEL`, `RFUTILS_CUE_SRC_DEVICE` — audio
+  capture (DVS/Dante interface) cue mode; see [Audio cueing](#audio-cueing-to-headphones).
 
 ## Convert
 
@@ -135,22 +138,51 @@ battery, and RF telemetry pushed to the browser over WebSocket.
 
 ### Audio cueing to headphones
 
-A browser can't join the AES67 RTP multicast group directly, so cueing works by **relay**: click
-the 🎧 button on an AES67 channel and the server enables per-channel PCM on the audio it already
-decodes and streams that one channel to the browser as PCM16 mono over a dedicated binary
-WebSocket (`/ws/audio`); an `AudioWorklet` ring buffer plays it out with a small jitter buffer.
-Only the cued channel is streamed (~0.77 Mbit/s at 48 kHz), and only one channel is cued at a time,
-like a hardware PFL/cue bus.
+A browser can't join a Dante/AES67 multicast group directly, so cueing to headphones works by
+**relay**: the server sends the one cued channel to the browser as PCM16 mono over a dedicated
+binary WebSocket (`/ws/audio`), and an `AudioWorklet` ring buffer plays it out with a small jitter
+buffer. Only the cued channel is streamed (~0.77 Mbit/s at 48 kHz), and only one is cued at a time,
+like a hardware PFL/cue bus. There are two ways to get the audio into the server:
 
-- **AES67 only.** Cue buttons are enabled only on AES67 channels — Shure/Sennheiser command
-  protocols carry telemetry, not audio, and native-only Dante still needs Audinate's SDK. A Dante
-  device must be in AES67 mode to be cueable.
-- **Latency** is ~100–200 ms (fine for identifying a mic, not for critical timing). Lower-latency
-  Opus/WebRTC transport is a natural future upgrade; PCM-over-WebSocket keeps the current build
-  dependency-free and reuses the audio the server already decodes.
-- The full relay → browser → playback path is verified end-to-end with a synthetic tone in
-  `RFUTILS_MOCK_DEVICES` mode (the analyser reads the expected −15 dBFS), so the pipeline is proven
-  even though the real-Dante AES67 decode remains hardware-untested.
+**1. Capture mode — a Dante interface (DVS) + Companion (recommended).** Let a vendor Dante
+endpoint do the decode and let Companion do the routing:
+
+```
+Mic TX ──(Dante)──▶ [Companion re-points one crosspoint] ──▶ DVS / Dante interface "cue" Rx channel
+                                                                       │  (local audio device)
+                                                                       ▼
+                                    RFutils server captures that channel with ffmpeg ──PCM16/WS──▶ browser 🎧
+```
+
+Clicking 🎧 on any channel best-effort asks Companion to route it to the cue-bus destination, then
+streams the captured bus. This offloads the Dante decode to supported vendor software and reuses the
+Companion integration below. Enable it by pointing the server at the interface's input:
+
+- `RFUTILS_CAPTURE_DEVICE` — ffmpeg input device (e.g. `":2"` for an avfoundation index on macOS;
+  list devices with `ffmpeg -f avfoundation -list_devices true -i ""`). Setting this switches the
+  app into capture mode, and **every** channel becomes cueable.
+- `RFUTILS_CAPTURE_FORMAT` — ffmpeg input format (default `avfoundation`/`dshow`/`alsa` by OS).
+- `RFUTILS_CAPTURE_CHANNEL` — 0-based input channel to use as the cue bus (default `0`).
+- `RFUTILS_CAPTURE_RATE` — sample rate (default `48000`); `RFUTILS_FFMPEG` — ffmpeg path.
+- `RFUTILS_CAPTURE_CMD` — full override: any command emitting `s16le` mono to stdout (bypasses the
+  ffmpeg args above). `npm run dev:capture-demo` uses this with a `sox` test tone.
+- `RFUTILS_CUE_BUS_DEVICE` / `RFUTILS_CUE_BUS_CHANNEL` — the Dante Controller destination Companion
+  routes mics to (the DVS Rx channel the server captures). Without these, cueing just streams the
+  bus and you route manually. The source name sent to Companion is the discovered channel's name
+  (override the device with `RFUTILS_CUE_SRC_DEVICE`); **these must match your Dante Controller
+  labels** for auto-routing to hit the right crosspoint. ffmpeg needs installing (`brew install
+  ffmpeg`). A fast/bursty source is throttled to real time by a server-side pacer.
+
+**2. Direct AES67 mode (default, no config).** If no capture device is set, the server decodes
+AES67 multicast itself and 🎧 plays that channel's own audio. Cueable **AES67 channels only** —
+Shure/Sennheiser command protocols carry telemetry, not audio, and native-only Dante still needs
+Audinate's SDK, so a Dante device must be in AES67 mode.
+
+**Both modes** share the same PCM16/WebSocket/AudioWorklet playback path, verified end-to-end with a
+synthetic tone (the browser analyser reads the expected level) — direct mode via
+`RFUTILS_MOCK_DEVICES`, capture mode via `dev:capture-demo`. Latency is ~100–200 ms (fine for
+identifying a mic, not for sample-accurate work); lower-latency Opus/WebRTC transport is a natural
+future upgrade. The real-Dante decode / capture-device paths remain hardware-untested.
 
 ### Dante routing via Companion (optional)
 
