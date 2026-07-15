@@ -12,6 +12,7 @@ import { SapListener } from './audio/sap.js';
 import { monitorAes67Stream, type Aes67StreamHandle } from './audio/aes67.js';
 import { loadCompanionConfig } from './companion/routesConfig.js';
 import { CompanionClient } from './companion/companionClient.js';
+import { seedMockDevices } from './mockDevices.js';
 
 /**
  * Owns all live-monitoring discovery (the raw sockets a browser can't open)
@@ -46,6 +47,17 @@ export class MonitorService extends EventEmitter {
   start(): void {
     if (this.started) return;
     this.started = true;
+
+    // Demo mode: seed simulated receivers and skip real network discovery.
+    if (process.env.RFUTILS_MOCK_DEVICES === '1') {
+      seedMockDevices(this.registry);
+      this.emit('event', {
+        type: 'discovery-status',
+        scanning: false,
+        message: 'mock devices',
+      } satisfies ServerToClientEvent);
+      return;
+    }
 
     this.mdns = startMdnsDiscovery(this.registry);
     this.shure = startShureDiscovery(this.registry);

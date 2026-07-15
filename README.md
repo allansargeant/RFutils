@@ -35,6 +35,8 @@ flowchart LR
 Everything routes through **one internal channel model** (`packages/shared`), so any supported input
 can be re-exported as any supported output, and the same model feeds the planned coordination tools.
 
+![RFutils Convert tab: a Sennheiser WSM Coordination Report parsed into the channel table with an export-format picker](docs/screenshots/convert-coordination.png)
+
 ## Architecture
 
 An npm-workspaces monorepo:
@@ -70,12 +72,15 @@ npm run build
 npm start -w @rfutils/server   # serves the built UI + API on :8420
 ```
 
-Other scripts: `npm run typecheck` (all packages), `npm test` (server parser tests).
+Other scripts: `npm run typecheck` (all packages), `npm test` (server parser tests),
+`npm run dev:demo` (like `dev`, but seeds simulated receivers so the Monitor tab is populated
+without any hardware — how the Monitor screenshot above was captured).
 
 ### Environment
 
 - `RFUTILS_SERVER_PORT` — server port (default `8420`).
 - `RFUTILS_DISABLE_MONITOR=1` — skip network device discovery (file conversion still works).
+- `RFUTILS_MOCK_DEVICES=1` — seed simulated receivers into the Monitor dashboard (demo/dev).
 - `RFUTILS_CONFIG_DIR` — where `companion-routes.json` is read from (default `~/.rfutils`).
 
 ## Convert
@@ -98,6 +103,10 @@ Upload an Ofcom PMSE licence schedule PDF to generate a WWB frequency list (`.tx
 sheet (`.csv`) mapping frequencies to suggested names and coordination groups, and an experimental
 `.shw` show file.
 
+![RFutils PMSE tab: a licence schedule PDF parsed into licence metadata, download buttons, and an assignment table](docs/screenshots/convert-pmse.png)
+
+*Screenshot uses a synthetic licence with invented details — not a real licence.*
+
 > **PDF parsing.** The original `pmse-to-wwb` used Python's `pdfplumber` for table detection.
 > `pdfjs-dist` has no table detector, so this port buckets positioned text into the fixed Ofcom
 > ST16 template's columns (scaled by page width) and merges the multiple physical lines per row.
@@ -115,6 +124,10 @@ sheet (`.csv`) mapping frequencies to suggested names and coordination groups, a
 Live discovery and metering of wireless receivers on the local network — Shure (TCP command
 strings, port 2202), Sennheiser (SSC), and AES67/Dante (mDNS + SAP), with per-channel audio,
 battery, and RF telemetry pushed to the browser over WebSocket.
+
+![RFutils Monitor tab: Shure, Sennheiser and AES67 receiver cards with per-channel audio/RF meters and battery gauges](docs/screenshots/monitor.png)
+
+*Screenshot captured with `RFUTILS_MOCK_DEVICES=1` (simulated receivers) — no real hardware was on the network.*
 
 > **Not yet hardware-tested.** As in MicWizard, the vendor protocol adapters are built from a mix of
 > public documentation and best-effort reverse engineering and have not been validated against real
