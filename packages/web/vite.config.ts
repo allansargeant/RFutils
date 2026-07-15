@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const SERVER_PORT = process.env.RFWIZARD_SERVER_PORT ?? '8420';
+const SERVER_PORT = process.env.RFUTILS_SERVER_PORT ?? '8420';
 
-// The React app talks to the RFWizard server over REST (/api) and a
+// The React app talks to the RFutils server over REST (/api) and a
 // WebSocket (/ws). In dev, Vite proxies both to the Node server so the
 // browser only ever sees one origin.
 export default defineConfig({

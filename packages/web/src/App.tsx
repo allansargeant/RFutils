@@ -26,7 +26,7 @@ export function App(): JSX.Element {
     <div className="app">
       <header className="app__header">
         <div className="app__brand">
-          <h1>RFWizard</h1>
+          <h1>RFutils</h1>
           <span className="app__tagline">RF coordination &amp; wireless-mic suite</span>
         </div>
         <nav className="tabs" role="tablist">

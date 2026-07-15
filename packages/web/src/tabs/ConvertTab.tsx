@@ -4,8 +4,8 @@ import type {
   ExportFormat,
   ExportFormatInfo,
   FieldMapping,
-} from '@rfwizard/shared';
-import { EXPORT_FORMATS } from '@rfwizard/shared';
+} from '@rfutils/shared';
+import { EXPORT_FORMATS } from '@rfutils/shared';
 import { convertFile, exportModel, type ConvertResponse } from '../api.js';
 import { FileDrop } from '../components/FileDrop.js';
 import { PmseConvert } from './PmseConvert.js';
@@ -114,7 +114,7 @@ function CoordinationConvert(): JSX.Element {
     try {
       const info = EXPORT_FORMATS.find((x) => x.id === exportFormat)!;
       const blob = await exportModel(result.list, exportFormat);
-      download(blob, `rfwizard-export.${info.extension}`);
+      download(blob, `rfutils-export.${info.extension}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     }
@@ -136,7 +136,7 @@ function CoordinationConvert(): JSX.Element {
         <div className="mapping">
           <h3>Map columns</h3>
           <p className="mapping__hint">
-            This file wasn't a recognised vendor format, so tell RFWizard which column is which.
+            This file wasn't a recognised vendor format, so tell RFutils which column is which.
           </p>
           <div className="mapping__grid">
             {MAPPING_FIELDS.map((field) => (

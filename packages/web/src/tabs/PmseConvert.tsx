@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { PmseConversion } from '@rfwizard/shared';
+import type { PmseConversion } from '@rfutils/shared';
 import { convertPmsePdf } from '../api.js';
 import { FileDrop } from '../components/FileDrop.js';
 

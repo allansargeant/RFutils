@@ -4,13 +4,13 @@ import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
 import { WebSocketServer, WebSocket } from 'ws';
-import type { ServerToClientEvent } from '@rfwizard/shared';
+import type { ServerToClientEvent } from '@rfutils/shared';
 import { createApiRouter } from './routes.js';
 import { MonitorService } from './monitor/index.js';
 
-const PORT = Number(process.env.RFWIZARD_SERVER_PORT ?? process.env.PORT ?? 8420);
-const HOST = process.env.RFWIZARD_HOST ?? '0.0.0.0';
-const ENABLE_MONITOR = process.env.RFWIZARD_DISABLE_MONITOR !== '1';
+const PORT = Number(process.env.RFUTILS_SERVER_PORT ?? process.env.PORT ?? 8420);
+const HOST = process.env.RFUTILS_HOST ?? '0.0.0.0';
+const ENABLE_MONITOR = process.env.RFUTILS_DISABLE_MONITOR !== '1';
 
 const monitor = new MonitorService();
 
@@ -45,17 +45,17 @@ wss.on('connection', (socket) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`[rfwizard] server listening on http://${HOST}:${PORT}`);
+  console.log(`[rfutils] server listening on http://${HOST}:${PORT}`);
   if (ENABLE_MONITOR) {
     monitor.start();
-    console.log('[rfwizard] device discovery started (mDNS / Shure / AES67)');
+    console.log('[rfutils] device discovery started (mDNS / Shure / AES67)');
   } else {
-    console.log('[rfwizard] device discovery disabled (RFWIZARD_DISABLE_MONITOR=1)');
+    console.log('[rfutils] device discovery disabled (RFUTILS_DISABLE_MONITOR=1)');
   }
 });
 
 function shutdown(): void {
-  console.log('[rfwizard] shutting down');
+  console.log('[rfutils] shutting down');
   monitor.stop();
   wss.close();
   server.close(() => process.exit(0));

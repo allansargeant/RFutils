@@ -8,20 +8,21 @@
  *   1. Text items (str + x/y/width) are grouped into visual lines by y.
  *   2. Metadata (licence no, dates, licensee box) is read from line text and
  *      a top-right positional crop, mirroring the Python `_parse_licensee_box`.
- *   3. The assignment table is reconstructed by clustering item x-positions
- *      into columns anchored on the "Radio Equipment"/"Frequency" header row,
- *      then each data row's cells are mapped to Assignment fields.
+ *   3. The assignment table is reconstructed by bucketing item x-positions into
+ *      the fixed Ofcom ST16 template's columns (see COL_LEFT_EDGES_842) and
+ *      merging the ~3 physical lines per assignment into multi-line cells, then
+ *      each row's cells are mapped to Assignment fields exactly as the Python
+ *      parser did (row[0..4], row[9] NGR/site, row[10] period, row[11] fee).
  *
- * ⚠️ VALIDATION STATUS: the original pdfplumber logic was tuned against real
- * Ofcom licence PDFs; this geometric re-implementation has NOT yet been run
- * against one (none was available at port time). The metadata regexes are a
- * faithful port and low-risk; the *table geometry* is the part to validate
- * against a real licence schedule — parseLicencePdf() surfaces a warning to
- * that effect whenever it produces assignments. See docs and README.
+ * VALIDATION: checked against a real Ofcom PMSE licence schedule (116-assignment
+ * NoV, ST16 landscape template) — all 116 assignments, frequencies, sites,
+ * periods and fees parse correctly, and the header/licensee metadata match. The
+ * column geometry is calibrated to that fixed Ofcom template and scaled by page
+ * width; a materially different template revision would need re-calibration.
  */
 
-import type { Assignment, ParsedLicence } from '@rfwizard/shared';
-import { emptyLicence } from '@rfwizard/shared';
+import type { Assignment, ParsedLicence } from '@rfutils/shared';
+import { emptyLicence } from '@rfutils/shared';
 
 // pdfjs-dist legacy ESM build works under Node.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -105,18 +106,26 @@ function groupLines(items: TextItem[], yTolerance = 3): TextItem[][] {
 }
 
 function parseMetadata(pageText: string, result: ParsedLicence): void {
+  // pdfjs emits ":" and some values (e.g. "J880582" -> "J" + "880582") as
+  // separate text runs, so the space-joined line text can read
+  // "Licence Start Date : 23 Jun 2026". These regexes are the Python
+  // originals made tolerant of a space before the colon.
   const grab = (re: RegExp): string | null => {
     const m = re.exec(pageText);
     return m ? m[1]! : null;
   };
-  result.licenceNo = grab(/Licence No:\s*([\w/]+)/) ?? result.licenceNo;
-  result.noticeOfVariationNo = grab(/Notice of Variation No:\s*(\d+)/) ?? result.noticeOfVariationNo;
-  const total = grab(/Total assignments:\s*(\d+)/);
+  result.licenceNo = grab(/Licence No\s*:\s*([\w/]+)/) ?? result.licenceNo;
+  result.noticeOfVariationNo =
+    grab(/Notice of Variation No\s*:\s*(\d+)/) ?? result.noticeOfVariationNo;
+  const total = grab(/Total assignments\s*:\s*(\d+)/);
   if (total) result.totalAssignments = parseInt(total, 10);
-  result.licenceStart = grab(/Licence Start Date:\s*(\d+\s+\w+\s+\d+)/) ?? result.licenceStart;
-  result.licenceEnd = grab(/Licence End Date:\s*(\d+\s+\w+\s+\d+)/) ?? result.licenceEnd;
-  result.pmseRef = grab(/PMSE ref\.?:\s*(\S+)/) ?? result.pmseRef;
-  const lref = /Licensee.s ref\.?:\s*(.+?)\s*;\s*PMSE/.exec(pageText);
+  result.licenceStart = grab(/Licence Start Date\s*:\s*(\d+\s+\w+\s+\d+)/) ?? result.licenceStart;
+  result.licenceEnd = grab(/Licence End Date\s*:\s*(\d+\s+\w+\s+\d+)/) ?? result.licenceEnd;
+  const pmse = grab(/PMSE\s*ref\.?\s*:\s*([A-Za-z]?\s*\d+)/);
+  if (pmse) result.pmseRef = pmse.replace(/\s+/g, '');
+  // "Licensee's" can arrive split across runs ("Licen" + "see's"), so anchor on
+  // the "…ref : <value> ; PMSE" shape rather than the word "Licensee".
+  const lref = /ref\s*\.?\s*:\s*(.+?)\s*;\s*PMSE/.exec(pageText);
   if (lref) result.licenseeRef = lref[1]!.trim();
 }
 
@@ -132,43 +141,66 @@ function parseLicenseeBox(page: PageGeometry): [string, string] {
 }
 
 /**
- * Reconstruct table rows from a page by anchoring columns on the header row.
- * Returns rows as arrays of cell strings, columns ordered left-to-right.
+ * Column left-edge x-positions for the Ofcom ST16 PMSE schedule (the fixed
+ * "PROGRAMME MAKING AND SPECIAL EVENTS LICENCE" landscape template), measured
+ * from a real licence at pdfjs scale 1 (page width 842). Ofcom generates every
+ * PMSE schedule from this same template, so the geometry is stable; boundaries
+ * are scaled by the actual page width for DPI robustness. Indices match the
+ * form's columns 1-11 plus the trailing Fee column, which is exactly the layout
+ * parseAssignmentsFromRows() expects (row[0..4], row[9]=NGR/site, row[10]=period,
+ * row[11]=fee — columns 5-8 are ignored).
+ */
+const COL_LEFT_EDGES_842 = [0, 128, 170, 199, 227, 251, 289, 311, 330, 372, 690, 758];
+
+/** A physical line starts a new assignment when its Frequency column holds an
+ * actual frequency like "471.37500" (not "MHz", "200k0", a date, or a header). */
+const ROW_START_FREQ = /^\d{2,4}\.\d{2,}$/;
+
+/**
+ * Reconstruct table rows from a page. Each assignment spans ~3 physical lines
+ * (value / unit / continuation), so we bucket every text run into a column by
+ * its x-position, start a new logical row whenever the Frequency column holds a
+ * frequency, and merge continuation lines into multi-line cells (joined with
+ * "\n", the way pdfplumber presented them to the original parser). Returns rows
+ * of 12 cell strings, left-to-right.
  */
 function extractTableRows(page: PageGeometry): string[][] {
-  const headerIdx = page.lines.findIndex((ln) =>
-    ln.map((i) => i.str).join(' ').includes('Radio Equipment')
-  );
-  if (headerIdx === -1) return [];
-
-  // Column x-anchors: the left edge of each header item defines a column start.
-  const headerLine = page.lines[headerIdx]!;
-  const colStarts = headerLine.map((i) => i.x).sort((a, b) => a - b);
-  if (colStarts.length < 2) return [];
-
-  const assignToColumn = (x: number): number => {
-    // nearest column whose start is <= x (fall back to first)
+  const scale = page.width / 842;
+  const edges = COL_LEFT_EDGES_842.map((v) => v * scale);
+  const colOf = (x: number): number => {
     let col = 0;
-    for (let c = 0; c < colStarts.length; c++) {
-      if (x + 1 >= colStarts[c]!) col = c;
+    for (let i = 0; i < edges.length; i++) {
+      if (x + 0.5 >= edges[i]!) col = i;
     }
     return col;
   };
 
   const rows: string[][] = [];
-  for (let li = headerIdx + 1; li < page.lines.length; li++) {
-    const line = page.lines[li]!;
-    const cells: string[] = new Array(colStarts.length).fill('');
+  let current: string[] | null = null;
+  const flush = (): void => {
+    if (current) rows.push(current);
+    current = null;
+  };
+
+  for (const line of page.lines) {
+    const cells: string[] = new Array(edges.length).fill('');
     for (const item of line) {
-      const c = assignToColumn(item.x);
+      const c = colOf(item.x);
       cells[c] = cells[c] ? `${cells[c]} ${item.str}` : item.str;
     }
-    // Stop at obvious end-of-table / footer lines.
-    const joined = cells.join(' ').trim();
-    if (joined === '') continue;
-    if (/^Total assignments:/.test(joined)) break;
-    rows.push(cells);
+
+    if (ROW_START_FREQ.test(cells[1]!.trim())) {
+      flush();
+      current = cells;
+    } else if (current) {
+      // continuation line: append each non-empty cell as a new line
+      for (let i = 0; i < cells.length; i++) {
+        if (cells[i]) current[i] = current[i] ? `${current[i]}\n${cells[i]}` : cells[i]!;
+      }
+    }
+    // lines before the first assignment (page header/metadata) are ignored
   }
+  flush();
   return rows;
 }
 
@@ -272,13 +304,6 @@ export async function parseLicencePdf(data: Uint8Array): Promise<ParsedLicence> 
           `${result.assignments.length} were parsed. Please verify the output before use.`
       );
     }
-    // Honesty flag: the geometric table reconstruction has not been validated
-    // against a real Ofcom PDF (see module header). Always surface this.
-    result.warnings.push(
-      "RFWizard's PDF table reader is a geometric re-implementation not yet " +
-        'validated against a real Ofcom licence — check the parsed assignments ' +
-        'against the source PDF before importing into Wireless Workbench.'
-    );
   }
 
   return result;

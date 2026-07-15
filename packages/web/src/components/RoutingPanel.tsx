@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { CompanionStatus } from '@rfwizard/shared';
+import type { CompanionStatus } from '@rfutils/shared';
 import { useDeviceStore } from '../store.js';
 import { companionStatus, makeCrosspoint, clearCrosspoint } from '../api.js';
 
@@ -39,14 +39,14 @@ export function RoutingPanel(): JSX.Element | null {
       <section className="routing-panel routing-panel--unavailable">
         <h2>Dante routing</h2>
         <p>
-          No <code>companion-routes.json</code> found — RFWizard only monitors audio/battery/RF by
+          No <code>companion-routes.json</code> found — RFutils only monitors audio/battery/RF by
           default. To route Dante channels from here, run your own{' '}
           <a href="https://bitfocus.io/companion" target="_blank" rel="noreferrer">
             Bitfocus Companion
           </a>{' '}
           with a single "Make Crosspoint" button configured (see the README), then place a{' '}
-          <code>companion-routes.json</code> in <code>~/.rfwizard/</code> (or the directory set by{' '}
-          <code>RFWIZARD_CONFIG_DIR</code>).
+          <code>companion-routes.json</code> in <code>~/.rfutils/</code> (or the directory set by{' '}
+          <code>RFUTILS_CONFIG_DIR</code>).
         </p>
       </section>
     );

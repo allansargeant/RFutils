@@ -2,7 +2,7 @@
  * PMSE → WWB export helpers. Ported from pmse-to-wwb/backend/exporters.py.
  */
 
-import type { Assignment } from '@rfwizard/shared';
+import type { Assignment } from '@rfutils/shared';
 import { writeCsv } from '../formats/csvUtil.js';
 
 export function suggestedNames(assignments: Assignment[]): string[] {

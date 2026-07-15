@@ -10,7 +10,7 @@
  * (the only kind this tool writes).
  */
 
-import type { Channel, CoordinationList } from '@rfwizard/shared';
+import type { Channel, CoordinationList } from '@rfutils/shared';
 import { formatKhz, parseFrequencyToMhz } from './freqParse.js';
 import { parseCsv, writeCsv } from './csvUtil.js';
 

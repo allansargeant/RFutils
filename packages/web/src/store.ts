@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { DiscoveredDevice, ServerToClientEvent } from '@rfwizard/shared';
+import type { DiscoveredDevice, ServerToClientEvent } from '@rfutils/shared';
 import { connectDeviceSocket } from './api.js';
 
 interface DeviceStoreState {

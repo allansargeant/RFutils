@@ -1,5 +1,5 @@
 /**
- * Wire protocol between the RFWizard server and browser.
+ * Wire protocol between the RFutils server and browser.
  *
  * Device monitoring is a server→client push over WebSocket (the server owns
  * the raw sockets — mDNS, Shure TCP, AES67 RTP — that a browser can't open).

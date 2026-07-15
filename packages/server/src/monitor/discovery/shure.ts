@@ -2,7 +2,7 @@ import net from 'node:net';
 import os from 'node:os';
 import { EventEmitter } from 'node:events';
 import type { DeviceRegistry } from '../deviceRegistry.js';
-import type { DeviceChannel } from '@rfwizard/shared';
+import type { DeviceChannel } from '@rfutils/shared';
 
 /**
  * Shure "Command Strings" protocol: plaintext ASCII over TCP port 2202.

@@ -12,7 +12,7 @@
  * streaming tag tokenizer rather than an XML DOM.
  */
 
-import type { Channel, CoordinationList } from '@rfwizard/shared';
+import type { Channel, CoordinationList } from '@rfutils/shared';
 import { decodeEntities } from './htmlEntities.js';
 
 export function looksLikeWsmHtmlReport(text: string): boolean {

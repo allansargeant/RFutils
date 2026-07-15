@@ -1,5 +1,5 @@
 import { EventEmitter } from 'node:events';
-import type { DiscoveredDevice, ServerToClientEvent } from '@rfwizard/shared';
+import type { DiscoveredDevice, ServerToClientEvent } from '@rfutils/shared';
 
 /**
  * Single source of truth for every device any discovery/audio module has

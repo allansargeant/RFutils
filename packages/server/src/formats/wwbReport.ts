@@ -9,7 +9,7 @@
  * context but a row is only treated as a channel if that check passes.
  */
 
-import type { Channel, CoordinationList } from '@rfwizard/shared';
+import type { Channel, CoordinationList } from '@rfutils/shared';
 import { parseWwbGroupChannel } from './freqParse.js';
 import { parseCsvNonEmpty } from './csvUtil.js';
 

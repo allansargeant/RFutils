@@ -1,4 +1,4 @@
-import type { DiscoveredDevice } from '@rfwizard/shared';
+import type { DiscoveredDevice } from '@rfutils/shared';
 import { LevelMeter } from './LevelMeter.js';
 import { BatteryIndicator } from './BatteryIndicator.js';
 

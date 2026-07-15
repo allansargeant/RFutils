@@ -1,18 +1,18 @@
 import path from 'node:path';
 import os from 'node:os';
 import fs from 'node:fs';
-import type { CompanionButtonLocation, CompanionCrosspointConfig } from '@rfwizard/shared';
+import type { CompanionButtonLocation, CompanionCrosspointConfig } from '@rfutils/shared';
 
 /**
  * Where the user's own companion-routes.json lives. Absence of this file is
- * the default, expected state — RFWizard ships with no Dante routing
+ * the default, expected state — RFutils ships with no Dante routing
  * capability until the user opts in by creating it. Ported from MicWizard's
  * routesConfig.ts; Electron's app.getPath('userData') is replaced with a
- * plain config dir: RFWIZARD_CONFIG_DIR if set, else ~/.rfwizard.
+ * plain config dir: RFUTILS_CONFIG_DIR if set, else ~/.rfutils.
  * See companion-routes.example.json and the README.
  */
 export function companionConfigDir(): string {
-  return process.env.RFWIZARD_CONFIG_DIR ?? path.join(os.homedir(), '.rfwizard');
+  return process.env.RFUTILS_CONFIG_DIR ?? path.join(os.homedir(), '.rfutils');
 }
 
 export function companionConfigPath(): string {

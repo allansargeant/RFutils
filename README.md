@@ -1,4 +1,4 @@
-# RFWizard
+# RFutils
 
 > **AI-assisted project.** This codebase was created with [Claude Code](https://claude.com/claude-code)
 > (Anthropic), directed and reviewed by a human author. It merges three earlier tools into one
@@ -67,22 +67,22 @@ For a production build served from a single port:
 
 ```bash
 npm run build
-npm start -w @rfwizard/server   # serves the built UI + API on :8420
+npm start -w @rfutils/server   # serves the built UI + API on :8420
 ```
 
 Other scripts: `npm run typecheck` (all packages), `npm test` (server parser tests).
 
 ### Environment
 
-- `RFWIZARD_SERVER_PORT` — server port (default `8420`).
-- `RFWIZARD_DISABLE_MONITOR=1` — skip network device discovery (file conversion still works).
-- `RFWIZARD_CONFIG_DIR` — where `companion-routes.json` is read from (default `~/.rfwizard`).
+- `RFUTILS_SERVER_PORT` — server port (default `8420`).
+- `RFUTILS_DISABLE_MONITOR=1` — skip network device discovery (file conversion still works).
+- `RFUTILS_CONFIG_DIR` — where `companion-routes.json` is read from (default `~/.rfutils`).
 
 ## Convert
 
 ### Coordination files (WSM · WWB · CSV)
 
-Drop a file and RFWizard auto-detects its shape, previews the parsed channels, and lets you
+Drop a file and RFutils auto-detects its shape, previews the parsed channels, and lets you
 re-export to any supported format:
 
 **Reads:** Shure `.shw` / `.cws` (native WWB XML), Sennheiser `.wsm` project files, WSM HTML
@@ -98,12 +98,13 @@ Upload an Ofcom PMSE licence schedule PDF to generate a WWB frequency list (`.tx
 sheet (`.csv`) mapping frequencies to suggested names and coordination groups, and an experimental
 `.shw` show file.
 
-> ⚠️ **PDF parsing caveat.** The original `pmse-to-wwb` used Python's `pdfplumber` for table
-> detection. This port reconstructs the table geometry from `pdfjs-dist` positioned text and has
-> **not yet been validated against a real Ofcom licence PDF** (none was available at port time).
-> The metadata regexes and the `.shw` generator are faithful, byte-for-byte ports; the *table
-> reader* is the part to check. RFWizard surfaces a warning on every PMSE conversion to this effect
-> — always compare the parsed assignments against the source PDF before importing.
+> **PDF parsing.** The original `pmse-to-wwb` used Python's `pdfplumber` for table detection.
+> `pdfjs-dist` has no table detector, so this port buckets positioned text into the fixed Ofcom
+> ST16 template's columns (scaled by page width) and merges the multiple physical lines per row.
+> It's been validated against a real Ofcom PMSE licence schedule — all 116 assignments,
+> frequencies, sites, periods, fees and header metadata parse correctly. The column geometry is
+> calibrated to that fixed template; a materially different Ofcom template revision would need
+> re-calibration, so it's still wise to sanity-check the parsed assignments against the source PDF.
 
 > ⚠️ The `.shw` show file (both here and in the coordination exporter) is reverse-engineered from a
 > single real WWB7 file and unvalidated by Shure. Open it in Wireless Workbench and check it before
@@ -129,7 +130,7 @@ RTP group directly.
 Off by default. To route Dante crosspoints from the Monitor tab, run your own
 [Bitfocus Companion](https://bitfocus.io/companion) with a single "Make Crosspoint" button wired to
 `companion-module-audinate-dantecontroller`, then copy `companion-routes.example.json` to
-`~/.rfwizard/companion-routes.json` (or `$RFWIZARD_CONFIG_DIR`). RFWizard just sets four Companion
+`~/.rfutils/companion-routes.json` (or `$RFUTILS_CONFIG_DIR`). RFutils just sets four Companion
 custom variables and presses your button — it has no Dante integration of its own, and full Dante
 API control still requires Audinate's SDK (see `packages/server/src/monitor/audio/danteApi.ts`).
 

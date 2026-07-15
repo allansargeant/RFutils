@@ -8,7 +8,7 @@
  * device's own last-known tuning). Verified against a WSM HTML report.
  */
 
-import type { Channel, CoordinationList } from '@rfwizard/shared';
+import type { Channel, CoordinationList } from '@rfutils/shared';
 import { parseXml, findPath, findChildren, childText } from './domUtil.js';
 
 export function looksLikeWsmXml(text: string): boolean {

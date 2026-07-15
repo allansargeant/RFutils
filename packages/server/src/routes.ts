@@ -1,7 +1,7 @@
 import { Router, type Request, type Response } from 'express';
 import multer from 'multer';
-import type { CoordinationList, ExportFormat, CrosspointRequest } from '@rfwizard/shared';
-import { EXPORT_FORMATS } from '@rfwizard/shared';
+import type { CoordinationList, ExportFormat, CrosspointRequest } from '@rfutils/shared';
+import { EXPORT_FORMATS } from '@rfutils/shared';
 import {
   readText,
   writeFormat,
@@ -91,13 +91,13 @@ export function createApiRouter(monitor: MonitorService): Router {
       if (format === 'wwb-shw') {
         content = generateShow(
           list.channels.map((c) => ({ frequencyMhz: c.frequencyMhz, suggestedName: c.name })),
-          { showName: 'RFWizard Export' }
+          { showName: 'RFutils Export' }
         );
       } else {
         content = writeFormat(list, format);
       }
       res.setHeader('Content-Type', info.mimeType);
-      res.setHeader('Content-Disposition', `attachment; filename="rfwizard-export.${info.extension}"`);
+      res.setHeader('Content-Disposition', `attachment; filename="rfutils-export.${info.extension}"`);
       res.send(content);
     } catch (err) {
       res.status(500).json({ error: (err as Error).message });

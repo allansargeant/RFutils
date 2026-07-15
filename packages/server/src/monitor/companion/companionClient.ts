@@ -1,4 +1,4 @@
-import type { CompanionCrosspointConfig, CrosspointRequest } from '@rfwizard/shared';
+import type { CompanionCrosspointConfig, CrosspointRequest } from '@rfutils/shared';
 
 const REQUEST_TIMEOUT_MS = 3000;
 

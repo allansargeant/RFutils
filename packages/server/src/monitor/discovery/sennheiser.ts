@@ -1,6 +1,6 @@
 import net from 'node:net';
 import type { DeviceRegistry } from '../deviceRegistry.js';
-import type { DeviceChannel } from '@rfwizard/shared';
+import type { DeviceChannel } from '@rfutils/shared';
 
 /**
  * UNVERIFIED SKELETON — Sennheiser SSC (newline-delimited JSON over TCP:45).

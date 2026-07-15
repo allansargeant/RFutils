@@ -8,3 +8,6 @@ out/
 *.log
 companion-routes.json
 .claude/
+
+# Never commit licence PDFs or other sample docs
+*.pdf

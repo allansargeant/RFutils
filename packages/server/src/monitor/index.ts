@@ -4,7 +4,7 @@ import type {
   CrosspointRequest,
   DiscoveredDevice,
   ServerToClientEvent,
-} from '@rfwizard/shared';
+} from '@rfutils/shared';
 import { DeviceRegistry } from './deviceRegistry.js';
 import { startMdnsDiscovery, type MdnsDiscoveryHandle } from './discovery/mdns.js';
 import { startShureDiscovery, type ShureDiscoveryHandle } from './discovery/shure.js';

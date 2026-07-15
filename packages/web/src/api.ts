@@ -1,5 +1,5 @@
 /**
- * Browser-side client for the RFWizard server. Replaces MicWizard's Electron
+ * Browser-side client for the RFutils server. Replaces MicWizard's Electron
  * `window.micMonitor` IPC bridge: file conversion + Companion actions go over
  * REST (/api), live device state arrives over a WebSocket (/ws).
  */
@@ -14,7 +14,7 @@ import type {
   FieldMapping,
   PmseConversion,
   ServerToClientEvent,
-} from '@rfwizard/shared';
+} from '@rfutils/shared';
 
 async function asJson<T>(res: Response): Promise<T> {
   const body = await res.json().catch(() => ({}));
