@@ -1,0 +1,2 @@
+name;type;frequency;tolerance;minfrequency;maxfrequency;priority;squelchlevel
+Band 001;2;705000;0;400000;4000000;2;5

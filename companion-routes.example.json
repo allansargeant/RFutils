@@ -1,0 +1,17 @@
+{
+  "companion": {
+    "host": "127.0.0.1",
+    "port": 8000
+  },
+  "variablePrefix": "dante",
+  "makeCrosspointButton": {
+    "page": 1,
+    "row": 0,
+    "column": 0
+  },
+  "clearCrosspointButton": {
+    "page": 1,
+    "row": 0,
+    "column": 1
+  }
+}

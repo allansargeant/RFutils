@@ -1,0 +1,3396 @@
+<!DOCTYPE WSM>
+<WSM AppVersion="4.9.0.13" Version="2.0">
+    <DefaultRFThreshold>0</DefaultRFThreshold>
+    <Device Version="1.0" TypeID="21" Type="EM9046">
+        <Name></Name>
+        <IPAddress>0.0.0.0</IPAddress>
+        <Manual>No</Manual>
+        <DeviceNumber>1</DeviceNumber>
+        <BoosterConnected>1</BoosterConnected>
+        <BoosterConnectedDevice Index="-1" UID="1"/>
+        <CascadePosition>1</CascadePosition>
+        <FrequencyRangeCode>A1</FrequencyRangeCode>
+        <CascadeIndex>51</CascadeIndex>
+        <LowerFrequencyLimit>470000</LowerFrequencyLimit>
+        <UpperFrequencyLimit>494000</UpperFrequencyLimit>
+        <WordClockFlag>0</WordClockFlag>
+        <WordClock>0</WordClock>
+        <ChannelOutputCard1TypeFlag>0</ChannelOutputCard1TypeFlag>
+        <ChannelOutputCard1Type></ChannelOutputCard1Type>
+        <AudioOutputSlot1>
+            <AudioOutputSlot1XLR1 Value="0" Flag="0"/>
+            <AudioOutputSlot1XLR2 Value="0" Flag="0"/>
+            <AudioOutputSlot1XLR3 Value="0" Flag="0"/>
+            <AudioOutputSlot1XLR4 Value="0" Flag="0"/>
+            <AudioOutputSlot1XLR5 Value="0" Flag="0"/>
+            <AudioOutputSlot1XLR6 Value="0" Flag="0"/>
+            <AudioOutputSlot1XLR7 Value="0" Flag="0"/>
+            <AudioOutputSlot1XLR8 Value="0" Flag="0"/>
+            <AudioOutputSlot1Multicore Value="0" Flag="0"/>
+        </AudioOutputSlot1>
+        <ChannelOutputCard2TypeFlag>0</ChannelOutputCard2TypeFlag>
+        <ChannelOutputCard2Type></ChannelOutputCard2Type>
+        <AudioOutputSlot2>
+            <AudioOutputSlot2XLR1 Value="0" Flag="0"/>
+            <AudioOutputSlot2XLR2 Value="0" Flag="0"/>
+            <AudioOutputSlot2XLR3 Value="0" Flag="0"/>
+            <AudioOutputSlot2XLR4 Value="0" Flag="0"/>
+            <AudioOutputSlot2XLR5 Value="0" Flag="0"/>
+            <AudioOutputSlot2XLR6 Value="0" Flag="0"/>
+            <AudioOutputSlot2XLR7 Value="0" Flag="0"/>
+            <AudioOutputSlot2XLR8 Value="0" Flag="0"/>
+            <AudioOutputSlot2Multicore Value="0" Flag="0"/>
+        </AudioOutputSlot2>
+    </Device>
+    <Device Version="1.0" TypeID="32" Type="EW-DX EM4">
+        <Interface>1.9</Interface>
+        <Name>EWDXEM4</Name>
+        <IPAddress>0.0.0.0</IPAddress>
+        <Subnet>255.255.255.0</Subnet>
+        <Gateway>0.0.0.0</Gateway>
+        <Mode>0</Mode>
+        <MDNS>0</MDNS>
+        <MacAddress></MacAddress>
+        <SSCv2Device>0</SSCv2Device>
+        <LDMode>0</LDMode>
+        <Encryption>0</Encryption>
+        <BoosterFeed>0</BoosterFeed>
+        <DanteNetworkMode>0</DanteNetworkMode>
+        <DantePrimaryMode>0</DantePrimaryMode>
+        <DantePrimaryIPAddress></DantePrimaryIPAddress>
+        <DantePrimarySubnet></DantePrimarySubnet>
+        <DantePrimaryGateway></DantePrimaryGateway>
+        <DantePrimaryMACAddress></DantePrimaryMACAddress>
+        <DanteSecondaryMode>0</DanteSecondaryMode>
+        <DanteSecondaryIPAddress></DanteSecondaryIPAddress>
+        <DanteSecondarySubnet></DanteSecondarySubnet>
+        <DanteSecondaryGateway></DanteSecondaryGateway>
+        <DanteSecondaryMACAddress></DanteSecondaryMACAddress>
+        <DeviceNumber>2</DeviceNumber>
+        <Receiver Version="1.0" TypeID="34" UniqueId="1" Type="EWDX2CH">
+            <Port>1</Port>
+            <Name>EW-DX 1</Name>
+            <CurrentFrequency>470200</CurrentFrequency>
+            <FrequencySuffix>Q1-9 (470.200 - 550.000 MHz)</FrequencySuffix>
+            <FrequencySuffixFlag>1</FrequencySuffixFlag>
+            <ValidStdFrequencyList>0</ValidStdFrequencyList>
+            <NameFlag>0</NameFlag>
+            <CurrentFrequencyFlag>0</CurrentFrequencyFlag>
+            <FrequencyList>0</FrequencyList>
+            <FrequencyListFlag>0</FrequencyListFlag>
+            <Channel>0</Channel>
+            <ChannelFlag>0</ChannelFlag>
+            <LowerFrequency>470200</LowerFrequency>
+            <LowerFrequencyFlag>1</LowerFrequencyFlag>
+            <UpperFrequency>550000</UpperFrequency>
+            <UpperFrequencyFlag>1</UpperFrequencyFlag>
+            <FrequencyLists>
+                <ListStd/>
+                <ListStdFlag>1</ListStdFlag>
+                <ListUsr>
+                    <Channel0>470200</Channel0>
+                </ListUsr>
+                <ListUsrFlag>1</ListUsrFlag>
+            </FrequencyLists>
+            <FrequencyListsFlag>1</FrequencyListsFlag>
+            <Gain>8</Gain>
+            <GainFlag>0</GainFlag>
+            <AFOut>5</AFOut>
+            <AFOutFlag>0</AFOutFlag>
+            <Trim>12</Trim>
+            <TrimFlag>0</TrimFlag>
+            <LowCut>0</LowCut>
+            <LowCutFlag>0</LowCutFlag>
+            <Cable>0</Cable>
+            <CableFlag>0</CableFlag>
+            <MuteMode>0</MuteMode>
+            <MuteModeFlag>0</MuteModeFlag>
+            <AutoLock>0</AutoLock>
+            <AutoLockFlag>0</AutoLockFlag>
+            <LED>1</LED>
+            <LEDFlag>0</LEDFlag>
+            <SyncParameters>
+                <SyncName>1</SyncName>
+                <SyncNameFlag>0</SyncNameFlag>
+                <SyncFrequency>1</SyncFrequency>
+                <SyncFrequencyFlag>0</SyncFrequencyFlag>
+                <SyncTrim>1</SyncTrim>
+                <SyncTrimFlag>0</SyncTrimFlag>
+                <SyncLowCut>1</SyncLowCut>
+                <SyncLowCutFlag>0</SyncLowCutFlag>
+                <SyncCableEmulation>1</SyncCableEmulation>
+                <SyncCableEmulationFlag>0</SyncCableEmulationFlag>
+                <SyncMuteMode>1</SyncMuteMode>
+                <SyncMuteModeFlag>0</SyncMuteModeFlag>
+                <SyncAutoLock>1</SyncAutoLock>
+                <SyncAutoLockFlag>0</SyncAutoLockFlag>
+                <SyncLED>1</SyncLED>
+                <SyncLEDFlag>0</SyncLEDFlag>
+            </SyncParameters>
+            <CalculatedFrequencies/>
+        </Receiver>
+        <Receiver Version="1.0" TypeID="34" UniqueId="2" Type="EWDX2CH">
+            <Port>2</Port>
+            <Name>EW-DX 2</Name>
+            <CurrentFrequency>470200</CurrentFrequency>
+            <FrequencySuffix>Q1-9 (470.200 - 550.000 MHz)</FrequencySuffix>
+            <FrequencySuffixFlag>1</FrequencySuffixFlag>
+            <ValidStdFrequencyList>0</ValidStdFrequencyList>
+            <NameFlag>0</NameFlag>
+            <CurrentFrequencyFlag>0</CurrentFrequencyFlag>
+            <FrequencyList>0</FrequencyList>
+            <FrequencyListFlag>0</FrequencyListFlag>
+            <Channel>0</Channel>
+            <ChannelFlag>0</ChannelFlag>
+            <LowerFrequency>470200</LowerFrequency>
+            <LowerFrequencyFlag>1</LowerFrequencyFlag>
+            <UpperFrequency>550000</UpperFrequency>
+            <UpperFrequencyFlag>1</UpperFrequencyFlag>
+            <FrequencyLists>
+                <ListStd/>
+                <ListStdFlag>1</ListStdFlag>
+                <ListUsr>
+                    <Channel0>470200</Channel0>
+                </ListUsr>
+                <ListUsrFlag>1</ListUsrFlag>
+            </FrequencyLists>
+            <FrequencyListsFlag>1</FrequencyListsFlag>
+            <Gain>8</Gain>
+            <GainFlag>0</GainFlag>
+            <AFOut>5</AFOut>
+            <AFOutFlag>0</AFOutFlag>
+            <Trim>12</Trim>
+            <TrimFlag>0</TrimFlag>
+            <LowCut>0</LowCut>
+            <LowCutFlag>0</LowCutFlag>
+            <Cable>0</Cable>
+            <CableFlag>0</CableFlag>
+            <MuteMode>0</MuteMode>
+            <MuteModeFlag>0</MuteModeFlag>
+            <AutoLock>0</AutoLock>
+            <AutoLockFlag>0</AutoLockFlag>
+            <LED>1</LED>
+            <LEDFlag>0</LEDFlag>
+            <SyncParameters>
+                <SyncName>1</SyncName>
+                <SyncNameFlag>0</SyncNameFlag>
+                <SyncFrequency>1</SyncFrequency>
+                <SyncFrequencyFlag>0</SyncFrequencyFlag>
+                <SyncTrim>1</SyncTrim>
+                <SyncTrimFlag>0</SyncTrimFlag>
+                <SyncLowCut>1</SyncLowCut>
+                <SyncLowCutFlag>0</SyncLowCutFlag>
+                <SyncCableEmulation>1</SyncCableEmulation>
+                <SyncCableEmulationFlag>0</SyncCableEmulationFlag>
+                <SyncMuteMode>1</SyncMuteMode>
+                <SyncMuteModeFlag>0</SyncMuteModeFlag>
+                <SyncAutoLock>1</SyncAutoLock>
+                <SyncAutoLockFlag>0</SyncAutoLockFlag>
+                <SyncLED>1</SyncLED>
+                <SyncLEDFlag>0</SyncLEDFlag>
+            </SyncParameters>
+            <CalculatedFrequencies/>
+        </Receiver>
+        <Receiver Version="1.0" TypeID="34" UniqueId="3" Type="EWDX2CH">
+            <Port>3</Port>
+            <Name>EW-DX 3</Name>
+            <CurrentFrequency>470200</CurrentFrequency>
+            <FrequencySuffix>Q1-9 (470.200 - 550.000 MHz)</FrequencySuffix>
+            <FrequencySuffixFlag>1</FrequencySuffixFlag>
+            <ValidStdFrequencyList>0</ValidStdFrequencyList>
+            <NameFlag>0</NameFlag>
+            <CurrentFrequencyFlag>0</CurrentFrequencyFlag>
+            <FrequencyList>0</FrequencyList>
+            <FrequencyListFlag>0</FrequencyListFlag>
+            <Channel>0</Channel>
+            <ChannelFlag>0</ChannelFlag>
+            <LowerFrequency>470200</LowerFrequency>
+            <LowerFrequencyFlag>1</LowerFrequencyFlag>
+            <UpperFrequency>550000</UpperFrequency>
+            <UpperFrequencyFlag>1</UpperFrequencyFlag>
+            <FrequencyLists>
+                <ListStd/>
+                <ListStdFlag>1</ListStdFlag>
+                <ListUsr>
+                    <Channel0>470200</Channel0>
+                </ListUsr>
+                <ListUsrFlag>1</ListUsrFlag>
+            </FrequencyLists>
+            <FrequencyListsFlag>1</FrequencyListsFlag>
+            <Gain>8</Gain>
+            <GainFlag>0</GainFlag>
+            <AFOut>5</AFOut>
+            <AFOutFlag>0</AFOutFlag>
+            <Trim>12</Trim>
+            <TrimFlag>0</TrimFlag>
+            <LowCut>0</LowCut>
+            <LowCutFlag>0</LowCutFlag>
+            <Cable>0</Cable>
+            <CableFlag>0</CableFlag>
+            <MuteMode>0</MuteMode>
+            <MuteModeFlag>0</MuteModeFlag>
+            <AutoLock>0</AutoLock>
+            <AutoLockFlag>0</AutoLockFlag>
+            <LED>1</LED>
+            <LEDFlag>0</LEDFlag>
+            <SyncParameters>
+                <SyncName>1</SyncName>
+                <SyncNameFlag>0</SyncNameFlag>
+                <SyncFrequency>1</SyncFrequency>
+                <SyncFrequencyFlag>0</SyncFrequencyFlag>
+                <SyncTrim>1</SyncTrim>
+                <SyncTrimFlag>0</SyncTrimFlag>
+                <SyncLowCut>1</SyncLowCut>
+                <SyncLowCutFlag>0</SyncLowCutFlag>
+                <SyncCableEmulation>1</SyncCableEmulation>
+                <SyncCableEmulationFlag>0</SyncCableEmulationFlag>
+                <SyncMuteMode>1</SyncMuteMode>
+                <SyncMuteModeFlag>0</SyncMuteModeFlag>
+                <SyncAutoLock>1</SyncAutoLock>
+                <SyncAutoLockFlag>0</SyncAutoLockFlag>
+                <SyncLED>1</SyncLED>
+                <SyncLEDFlag>0</SyncLEDFlag>
+            </SyncParameters>
+            <CalculatedFrequencies/>
+        </Receiver>
+        <Receiver Version="1.0" TypeID="34" UniqueId="4" Type="EWDX2CH">
+            <Port>4</Port>
+            <Name>EW-DX 4</Name>
+            <CurrentFrequency>470200</CurrentFrequency>
+            <FrequencySuffix>Q1-9 (470.200 - 550.000 MHz)</FrequencySuffix>
+            <FrequencySuffixFlag>1</FrequencySuffixFlag>
+            <ValidStdFrequencyList>0</ValidStdFrequencyList>
+            <NameFlag>0</NameFlag>
+            <CurrentFrequencyFlag>0</CurrentFrequencyFlag>
+            <FrequencyList>0</FrequencyList>
+            <FrequencyListFlag>0</FrequencyListFlag>
+            <Channel>0</Channel>
+            <ChannelFlag>0</ChannelFlag>
+            <LowerFrequency>470200</LowerFrequency>
+            <LowerFrequencyFlag>1</LowerFrequencyFlag>
+            <UpperFrequency>550000</UpperFrequency>
+            <UpperFrequencyFlag>1</UpperFrequencyFlag>
+            <FrequencyLists>
+                <ListStd/>
+                <ListStdFlag>1</ListStdFlag>
+                <ListUsr>
+                    <Channel0>470200</Channel0>
+                </ListUsr>
+                <ListUsrFlag>1</ListUsrFlag>
+            </FrequencyLists>
+            <FrequencyListsFlag>1</FrequencyListsFlag>
+            <Gain>8</Gain>
+            <GainFlag>0</GainFlag>
+            <AFOut>5</AFOut>
+            <AFOutFlag>0</AFOutFlag>
+            <Trim>12</Trim>
+            <TrimFlag>0</TrimFlag>
+            <LowCut>0</LowCut>
+            <LowCutFlag>0</LowCutFlag>
+            <Cable>0</Cable>
+            <CableFlag>0</CableFlag>
+            <MuteMode>0</MuteMode>
+            <MuteModeFlag>0</MuteModeFlag>
+            <AutoLock>0</AutoLock>
+            <AutoLockFlag>0</AutoLockFlag>
+            <LED>1</LED>
+            <LEDFlag>0</LEDFlag>
+            <SyncParameters>
+                <SyncName>1</SyncName>
+                <SyncNameFlag>0</SyncNameFlag>
+                <SyncFrequency>1</SyncFrequency>
+                <SyncFrequencyFlag>0</SyncFrequencyFlag>
+                <SyncTrim>1</SyncTrim>
+                <SyncTrimFlag>0</SyncTrimFlag>
+                <SyncLowCut>1</SyncLowCut>
+                <SyncLowCutFlag>0</SyncLowCutFlag>
+                <SyncCableEmulation>1</SyncCableEmulation>
+                <SyncCableEmulationFlag>0</SyncCableEmulationFlag>
+                <SyncMuteMode>1</SyncMuteMode>
+                <SyncMuteModeFlag>0</SyncMuteModeFlag>
+                <SyncAutoLock>1</SyncAutoLock>
+                <SyncAutoLockFlag>0</SyncAutoLockFlag>
+                <SyncLED>1</SyncLED>
+                <SyncLEDFlag>0</SyncLEDFlag>
+            </SyncParameters>
+            <CalculatedFrequencies/>
+        </Receiver>
+    </Device>
+    <Device IsTypeII="0" Version="1.0" TypeID="18" Type="EM3732Cmd">
+        <IPAddress>0.0.0.0</IPAddress>
+        <Manual>No</Manual>
+        <DeviceNumber>3</DeviceNumber>
+        <Receiver Version="1.0" TypeID="32" UniqueId="6" Type="EM3732">
+            <Port>1</Port>
+            <NameFlag>0</NameFlag>
+            <Name>EM3732</Name>
+            <FrequencySuffix>A (470 - 560 MHz)</FrequencySuffix>
+            <FrequencySuffixFlag>1</FrequencySuffixFlag>
+            <BankFlag>0</BankFlag>
+            <Bank>0</Bank>
+            <ChannelFlag>0</ChannelFlag>
+            <Channel>0</Channel>
+            <SquelchFlag>0</SquelchFlag>
+            <Squelch>0</Squelch>
+            <AudioOutputLevelFlag>0</AudioOutputLevelFlag>
+            <AudioOutputLevel>0</AudioOutputLevel>
+            <DisplayModeFlag>0</DisplayModeFlag>
+            <DisplayMode>0</DisplayMode>
+            <LockFlag>0</LockFlag>
+            <Lock>0</Lock>
+            <BoosterFeedFlag>0</BoosterFeedFlag>
+            <BoosterFeed>0</BoosterFeed>
+            <ClockFlag>0</ClockFlag>
+            <Clock>0</Clock>
+            <CommandModeFlag>0</CommandModeFlag>
+            <CommandMode>0</CommandMode>
+            <LowerFrequencyLimitFlag>0</LowerFrequencyLimitFlag>
+            <LowerFrequencyLimit>470000</LowerFrequencyLimit>
+            <UpperFrequencyLimitFlag>0</UpperFrequencyLimitFlag>
+            <UpperFrequencyLimit>560000</UpperFrequencyLimit>
+            <CurrentFrequencyFlag>0</CurrentFrequencyFlag>
+            <CurrentFrequency>470000</CurrentFrequency>
+            <FrequencyList>
+                <Channel1 Value="470000" Flag="0"/>
+                <Channel2 Value="470000" Flag="0"/>
+                <Channel3 Value="470000" Flag="0"/>
+                <Channel4 Value="470000" Flag="0"/>
+                <Channel5 Value="470000" Flag="0"/>
+                <Channel6 Value="470000" Flag="0"/>
+                <Channel7 Value="470000" Flag="0"/>
+                <Channel8 Value="470000" Flag="0"/>
+                <Channel9 Value="470000" Flag="0"/>
+                <Channel10 Value="470000" Flag="0"/>
+                <Channel11 Value="470000" Flag="0"/>
+                <Channel12 Value="470000" Flag="0"/>
+                <Channel13 Value="470000" Flag="0"/>
+                <Channel14 Value="470000" Flag="0"/>
+                <Channel15 Value="470000" Flag="0"/>
+                <Channel16 Value="470000" Flag="0"/>
+                <Channel17 Value="470000" Flag="0"/>
+                <Channel18 Value="470000" Flag="0"/>
+                <Channel19 Value="470000" Flag="0"/>
+                <Channel20 Value="470000" Flag="0"/>
+                <Channel21 Value="470000" Flag="0"/>
+                <Channel22 Value="470000" Flag="0"/>
+                <Channel23 Value="470000" Flag="0"/>
+                <Channel24 Value="470000" Flag="0"/>
+                <Channel25 Value="470000" Flag="0"/>
+                <Channel26 Value="470000" Flag="0"/>
+                <Channel27 Value="470000" Flag="0"/>
+                <Channel28 Value="470000" Flag="0"/>
+                <Channel29 Value="470000" Flag="0"/>
+                <Channel30 Value="470000" Flag="0"/>
+                <Channel31 Value="470000" Flag="0"/>
+                <Channel32 Value="470000" Flag="0"/>
+                <Channel33 Value="470000" Flag="0"/>
+                <Channel34 Value="470000" Flag="0"/>
+                <Channel35 Value="470000" Flag="0"/>
+                <Channel36 Value="470000" Flag="0"/>
+                <Channel37 Value="470000" Flag="0"/>
+                <Channel38 Value="470000" Flag="0"/>
+                <Channel39 Value="470000" Flag="0"/>
+                <Channel40 Value="470000" Flag="0"/>
+                <Channel41 Value="470000" Flag="0"/>
+                <Channel42 Value="470000" Flag="0"/>
+                <Channel43 Value="470000" Flag="0"/>
+                <Channel44 Value="470000" Flag="0"/>
+                <Channel45 Value="470000" Flag="0"/>
+                <Channel46 Value="470000" Flag="0"/>
+                <Channel47 Value="470000" Flag="0"/>
+                <Channel48 Value="470000" Flag="0"/>
+                <Channel49 Value="470000" Flag="0"/>
+                <Channel50 Value="470000" Flag="0"/>
+                <Channel51 Value="470000" Flag="0"/>
+                <Channel52 Value="470000" Flag="0"/>
+                <Channel53 Value="470000" Flag="0"/>
+                <Channel54 Value="470000" Flag="0"/>
+                <Channel55 Value="470000" Flag="0"/>
+                <Channel56 Value="470000" Flag="0"/>
+                <Channel57 Value="470000" Flag="0"/>
+                <Channel58 Value="470000" Flag="0"/>
+                <Channel59 Value="470000" Flag="0"/>
+                <Channel60 Value="470000" Flag="0"/>
+            </FrequencyList>
+            <CalculatedFrequencies/>
+        </Receiver>
+        <Receiver Version="1.0" TypeID="32" UniqueId="7" Type="EM3732">
+            <Port>2</Port>
+            <NameFlag>0</NameFlag>
+            <Name>EM3732</Name>
+            <FrequencySuffix>A (470 - 560 MHz)</FrequencySuffix>
+            <FrequencySuffixFlag>1</FrequencySuffixFlag>
+            <BankFlag>0</BankFlag>
+            <Bank>0</Bank>
+            <ChannelFlag>0</ChannelFlag>
+            <Channel>0</Channel>
+            <SquelchFlag>0</SquelchFlag>
+            <Squelch>0</Squelch>
+            <AudioOutputLevelFlag>0</AudioOutputLevelFlag>
+            <AudioOutputLevel>0</AudioOutputLevel>
+            <DisplayModeFlag>0</DisplayModeFlag>
+            <DisplayMode>0</DisplayMode>
+            <LockFlag>0</LockFlag>
+            <Lock>0</Lock>
+            <BoosterFeedFlag>0</BoosterFeedFlag>
+            <BoosterFeed>0</BoosterFeed>
+            <ClockFlag>0</ClockFlag>
+            <Clock>0</Clock>
+            <CommandModeFlag>0</CommandModeFlag>
+            <CommandMode>0</CommandMode>
+            <LowerFrequencyLimitFlag>0</LowerFrequencyLimitFlag>
+            <LowerFrequencyLimit>470000</LowerFrequencyLimit>
+            <UpperFrequencyLimitFlag>0</UpperFrequencyLimitFlag>
+            <UpperFrequencyLimit>560000</UpperFrequencyLimit>
+            <CurrentFrequencyFlag>0</CurrentFrequencyFlag>
+            <CurrentFrequency>470000</CurrentFrequency>
+            <FrequencyList>
+                <Channel1 Value="470000" Flag="0"/>
+                <Channel2 Value="470000" Flag="0"/>
+                <Channel3 Value="470000" Flag="0"/>
+                <Channel4 Value="470000" Flag="0"/>
+                <Channel5 Value="470000" Flag="0"/>
+                <Channel6 Value="470000" Flag="0"/>
+                <Channel7 Value="470000" Flag="0"/>
+                <Channel8 Value="470000" Flag="0"/>
+                <Channel9 Value="470000" Flag="0"/>
+                <Channel10 Value="470000" Flag="0"/>
+                <Channel11 Value="470000" Flag="0"/>
+                <Channel12 Value="470000" Flag="0"/>
+                <Channel13 Value="470000" Flag="0"/>
+                <Channel14 Value="470000" Flag="0"/>
+                <Channel15 Value="470000" Flag="0"/>
+                <Channel16 Value="470000" Flag="0"/>
+                <Channel17 Value="470000" Flag="0"/>
+                <Channel18 Value="470000" Flag="0"/>
+                <Channel19 Value="470000" Flag="0"/>
+                <Channel20 Value="470000" Flag="0"/>
+                <Channel21 Value="470000" Flag="0"/>
+                <Channel22 Value="470000" Flag="0"/>
+                <Channel23 Value="470000" Flag="0"/>
+                <Channel24 Value="470000" Flag="0"/>
+                <Channel25 Value="470000" Flag="0"/>
+                <Channel26 Value="470000" Flag="0"/>
+                <Channel27 Value="470000" Flag="0"/>
+                <Channel28 Value="470000" Flag="0"/>
+                <Channel29 Value="470000" Flag="0"/>
+                <Channel30 Value="470000" Flag="0"/>
+                <Channel31 Value="470000" Flag="0"/>
+                <Channel32 Value="470000" Flag="0"/>
+                <Channel33 Value="470000" Flag="0"/>
+                <Channel34 Value="470000" Flag="0"/>
+                <Channel35 Value="470000" Flag="0"/>
+                <Channel36 Value="470000" Flag="0"/>
+                <Channel37 Value="470000" Flag="0"/>
+                <Channel38 Value="470000" Flag="0"/>
+                <Channel39 Value="470000" Flag="0"/>
+                <Channel40 Value="470000" Flag="0"/>
+                <Channel41 Value="470000" Flag="0"/>
+                <Channel42 Value="470000" Flag="0"/>
+                <Channel43 Value="470000" Flag="0"/>
+                <Channel44 Value="470000" Flag="0"/>
+                <Channel45 Value="470000" Flag="0"/>
+                <Channel46 Value="470000" Flag="0"/>
+                <Channel47 Value="470000" Flag="0"/>
+                <Channel48 Value="470000" Flag="0"/>
+                <Channel49 Value="470000" Flag="0"/>
+                <Channel50 Value="470000" Flag="0"/>
+                <Channel51 Value="470000" Flag="0"/>
+                <Channel52 Value="470000" Flag="0"/>
+                <Channel53 Value="470000" Flag="0"/>
+                <Channel54 Value="470000" Flag="0"/>
+                <Channel55 Value="470000" Flag="0"/>
+                <Channel56 Value="470000" Flag="0"/>
+                <Channel57 Value="470000" Flag="0"/>
+                <Channel58 Value="470000" Flag="0"/>
+                <Channel59 Value="470000" Flag="0"/>
+                <Channel60 Value="470000" Flag="0"/>
+            </FrequencyList>
+            <CalculatedFrequencies/>
+        </Receiver>
+    </Device>
+    <Device Version="1.0" TypeID="86" Type="SR2000IEM">
+        <DeviceNumber>4</DeviceNumber>
+        <Receiver Version="1.0" TypeID="48" UniqueId="5" Type="SR2000 IEM">
+            <Port>1</Port>
+            <Manual>Yes</Manual>
+            <IPAddressFlag>1</IPAddressFlag>
+            <IPAddress>0.0.0.0</IPAddress>
+            <NameFlag>0</NameFlag>
+            <Name>SR2000 I</Name>
+            <BankFlag>0</BankFlag>
+            <Bank>0</Bank>
+            <ChannelFlag>0</ChannelFlag>
+            <Channel>1</Channel>
+            <LowerFrequencyLimitFlag>0</LowerFrequencyLimitFlag>
+            <LowerFrequencyLimit>516000</LowerFrequencyLimit>
+            <UpperFrequencyLimitFlag>0</UpperFrequencyLimitFlag>
+            <UpperFrequencyLimit>558000</UpperFrequencyLimit>
+            <CurrentFrequencyFlag>1</CurrentFrequencyFlag>
+            <CurrentFrequency>516000</CurrentFrequency>
+            <SensitivityFlag>0</SensitivityFlag>
+            <Sensitivity>0</Sensitivity>
+            <RFModeFlag>0</RFModeFlag>
+            <RFMode>0</RFMode>
+            <EqualizerFlag>0</EqualizerFlag>
+            <Equalizer>
+                <Equalizer1>0</Equalizer1>
+                <Equalizer2>0</Equalizer2>
+                <Equalizer3>0</Equalizer3>
+                <Equalizer4>0</Equalizer4>
+                <Equalizer5>0</Equalizer5>
+                <Equalizer6>0</Equalizer6>
+            </Equalizer>
+            <AutoLockFlag>0</AutoLockFlag>
+            <AutoLock>0</AutoLock>
+            <RFMuteFlag>0</RFMuteFlag>
+            <RFMute>0</RFMute>
+            <RFPowerFlag>0</RFPowerFlag>
+            <RFPower>0</RFPower>
+            <AFPeakWarningFlag>0</AFPeakWarningFlag>
+            <AFPeakWarning>0</AFPeakWarning>
+            <RFMuteWarningFlag>0</RFMuteWarningFlag>
+            <RFMuteWarning>0</RFMuteWarning>
+            <FrequencyList>
+                <BankU1>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU1>
+                <BankU2>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU2>
+                <BankU3>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU3>
+                <BankU4>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU4>
+                <BankU5>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU5>
+                <BankU6>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU6>
+            </FrequencyList>
+            <RxSyncSettings>
+                <AutoLockFlag>0</AutoLockFlag>
+                <AutoLock>0</AutoLock>
+                <BalanceFlag>0</BalanceFlag>
+                <Balance>0</Balance>
+                <ModeFlag>0</ModeFlag>
+                <Mode>0</Mode>
+                <LimiterFlag>0</LimiterFlag>
+                <Limiter>0</Limiter>
+                <HiBoostFlag>0</HiBoostFlag>
+                <HiBoost>0</HiBoost>
+                <SquelchFlag>0</SquelchFlag>
+                <Squelch>0</Squelch>
+            </RxSyncSettings>
+            <CalculatedFrequencies/>
+        </Receiver>
+    </Device>
+    <Device Version="1.0" TypeID="88" Type="SR-IEMG4">
+        <DeviceNumber>5</DeviceNumber>
+        <Receiver Version="1.0" TypeID="51" UniqueId="8" Type="SRG4">
+            <Port>1</Port>
+            <Manual>Yes</Manual>
+            <IPAddressFlag>1</IPAddressFlag>
+            <IPAddress>0.0.0.0</IPAddress>
+            <NameFlag>0</NameFlag>
+            <Name>SRG4</Name>
+            <BankFlag>0</BankFlag>
+            <Bank>0</Bank>
+            <ChannelFlag>0</ChannelFlag>
+            <Channel>1</Channel>
+            <LowerFrequencyLimitFlag>0</LowerFrequencyLimitFlag>
+            <LowerFrequencyLimit>516000</LowerFrequencyLimit>
+            <UpperFrequencyLimitFlag>0</UpperFrequencyLimitFlag>
+            <UpperFrequencyLimit>558000</UpperFrequencyLimit>
+            <CurrentFrequencyFlag>1</CurrentFrequencyFlag>
+            <CurrentFrequency>516000</CurrentFrequency>
+            <SensitivityFlag>0</SensitivityFlag>
+            <Sensitivity>7</Sensitivity>
+            <RFModeFlag>0</RFModeFlag>
+            <RFMode>0</RFMode>
+            <AutoLockFlag>0</AutoLockFlag>
+            <AutoLock>0</AutoLock>
+            <RFMuteFlag>0</RFMuteFlag>
+            <RFMute>0</RFMute>
+            <RFPowerFlag>0</RFPowerFlag>
+            <RFPower>0</RFPower>
+            <AFPeakWarningFlag>0</AFPeakWarningFlag>
+            <AFPeakWarning>0</AFPeakWarning>
+            <RFMuteWarningFlag>0</RFMuteWarningFlag>
+            <RFMuteWarning>0</RFMuteWarning>
+            <FrequencyList>
+                <BankU1>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU1>
+                <BankU2>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU2>
+                <BankU3>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU3>
+                <BankU4>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU4>
+                <BankU5>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU5>
+                <BankU6>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU6>
+            </FrequencyList>
+            <RxSyncSettings>
+                <AutoLockFlag>0</AutoLockFlag>
+                <AutoLock>0</AutoLock>
+                <BalanceFlag>0</BalanceFlag>
+                <Balance>0</Balance>
+                <ModeFlag>0</ModeFlag>
+                <Mode>0</Mode>
+                <LimiterFlag>0</LimiterFlag>
+                <Limiter>0</Limiter>
+                <HiBoostFlag>0</HiBoostFlag>
+                <HiBoost>0</HiBoost>
+                <SquelchFlag>0</SquelchFlag>
+                <Squelch>0</Squelch>
+            </RxSyncSettings>
+            <CalculatedFrequencies/>
+        </Receiver>
+    </Device>
+    <Device Version="1.0" TypeID="88" Type="SR-IEMG4">
+        <DeviceNumber>6</DeviceNumber>
+        <Receiver Version="1.0" TypeID="51" UniqueId="9" Type="SRG4">
+            <Port>1</Port>
+            <Manual>Yes</Manual>
+            <IPAddressFlag>1</IPAddressFlag>
+            <IPAddress>0.0.0.0</IPAddress>
+            <NameFlag>0</NameFlag>
+            <Name>SRG4</Name>
+            <BankFlag>0</BankFlag>
+            <Bank>0</Bank>
+            <ChannelFlag>0</ChannelFlag>
+            <Channel>1</Channel>
+            <LowerFrequencyLimitFlag>0</LowerFrequencyLimitFlag>
+            <LowerFrequencyLimit>516000</LowerFrequencyLimit>
+            <UpperFrequencyLimitFlag>0</UpperFrequencyLimitFlag>
+            <UpperFrequencyLimit>558000</UpperFrequencyLimit>
+            <CurrentFrequencyFlag>1</CurrentFrequencyFlag>
+            <CurrentFrequency>516000</CurrentFrequency>
+            <SensitivityFlag>0</SensitivityFlag>
+            <Sensitivity>7</Sensitivity>
+            <RFModeFlag>0</RFModeFlag>
+            <RFMode>0</RFMode>
+            <AutoLockFlag>0</AutoLockFlag>
+            <AutoLock>0</AutoLock>
+            <RFMuteFlag>0</RFMuteFlag>
+            <RFMute>0</RFMute>
+            <RFPowerFlag>0</RFPowerFlag>
+            <RFPower>0</RFPower>
+            <AFPeakWarningFlag>0</AFPeakWarningFlag>
+            <AFPeakWarning>0</AFPeakWarning>
+            <RFMuteWarningFlag>0</RFMuteWarningFlag>
+            <RFMuteWarning>0</RFMuteWarning>
+            <FrequencyList>
+                <BankU1>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU1>
+                <BankU2>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU2>
+                <BankU3>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU3>
+                <BankU4>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU4>
+                <BankU5>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU5>
+                <BankU6>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU6>
+            </FrequencyList>
+            <RxSyncSettings>
+                <AutoLockFlag>0</AutoLockFlag>
+                <AutoLock>0</AutoLock>
+                <BalanceFlag>0</BalanceFlag>
+                <Balance>0</Balance>
+                <ModeFlag>0</ModeFlag>
+                <Mode>0</Mode>
+                <LimiterFlag>0</LimiterFlag>
+                <Limiter>0</Limiter>
+                <HiBoostFlag>0</HiBoostFlag>
+                <HiBoost>0</HiBoost>
+                <SquelchFlag>0</SquelchFlag>
+                <Squelch>0</Squelch>
+            </RxSyncSettings>
+            <CalculatedFrequencies/>
+        </Receiver>
+    </Device>
+    <Device Version="1.0" TypeID="88" Type="SR-IEMG4">
+        <DeviceNumber>7</DeviceNumber>
+        <Receiver Version="1.0" TypeID="51" UniqueId="10" Type="SRG4">
+            <Port>1</Port>
+            <Manual>Yes</Manual>
+            <IPAddressFlag>1</IPAddressFlag>
+            <IPAddress>0.0.0.0</IPAddress>
+            <NameFlag>0</NameFlag>
+            <Name>SRG4</Name>
+            <BankFlag>0</BankFlag>
+            <Bank>0</Bank>
+            <ChannelFlag>0</ChannelFlag>
+            <Channel>1</Channel>
+            <LowerFrequencyLimitFlag>0</LowerFrequencyLimitFlag>
+            <LowerFrequencyLimit>516000</LowerFrequencyLimit>
+            <UpperFrequencyLimitFlag>0</UpperFrequencyLimitFlag>
+            <UpperFrequencyLimit>558000</UpperFrequencyLimit>
+            <CurrentFrequencyFlag>1</CurrentFrequencyFlag>
+            <CurrentFrequency>516000</CurrentFrequency>
+            <SensitivityFlag>0</SensitivityFlag>
+            <Sensitivity>7</Sensitivity>
+            <RFModeFlag>0</RFModeFlag>
+            <RFMode>0</RFMode>
+            <AutoLockFlag>0</AutoLockFlag>
+            <AutoLock>0</AutoLock>
+            <RFMuteFlag>0</RFMuteFlag>
+            <RFMute>0</RFMute>
+            <RFPowerFlag>0</RFPowerFlag>
+            <RFPower>0</RFPower>
+            <AFPeakWarningFlag>0</AFPeakWarningFlag>
+            <AFPeakWarning>0</AFPeakWarning>
+            <RFMuteWarningFlag>0</RFMuteWarningFlag>
+            <RFMuteWarning>0</RFMuteWarning>
+            <FrequencyList>
+                <BankU1>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU1>
+                <BankU2>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU2>
+                <BankU3>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU3>
+                <BankU4>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU4>
+                <BankU5>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU5>
+                <BankU6>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU6>
+            </FrequencyList>
+            <RxSyncSettings>
+                <AutoLockFlag>0</AutoLockFlag>
+                <AutoLock>0</AutoLock>
+                <BalanceFlag>0</BalanceFlag>
+                <Balance>0</Balance>
+                <ModeFlag>0</ModeFlag>
+                <Mode>0</Mode>
+                <LimiterFlag>0</LimiterFlag>
+                <Limiter>0</Limiter>
+                <HiBoostFlag>0</HiBoostFlag>
+                <HiBoost>0</HiBoost>
+                <SquelchFlag>0</SquelchFlag>
+                <Squelch>0</Squelch>
+            </RxSyncSettings>
+            <CalculatedFrequencies/>
+        </Receiver>
+    </Device>
+    <Device Version="1.0" TypeID="88" Type="SR-IEMG4">
+        <DeviceNumber>8</DeviceNumber>
+        <Receiver Version="1.0" TypeID="51" UniqueId="11" Type="SRG4">
+            <Port>1</Port>
+            <Manual>Yes</Manual>
+            <IPAddressFlag>1</IPAddressFlag>
+            <IPAddress>0.0.0.0</IPAddress>
+            <NameFlag>0</NameFlag>
+            <Name>SRG4</Name>
+            <BankFlag>0</BankFlag>
+            <Bank>0</Bank>
+            <ChannelFlag>0</ChannelFlag>
+            <Channel>1</Channel>
+            <LowerFrequencyLimitFlag>0</LowerFrequencyLimitFlag>
+            <LowerFrequencyLimit>516000</LowerFrequencyLimit>
+            <UpperFrequencyLimitFlag>0</UpperFrequencyLimitFlag>
+            <UpperFrequencyLimit>558000</UpperFrequencyLimit>
+            <CurrentFrequencyFlag>1</CurrentFrequencyFlag>
+            <CurrentFrequency>516000</CurrentFrequency>
+            <SensitivityFlag>0</SensitivityFlag>
+            <Sensitivity>7</Sensitivity>
+            <RFModeFlag>0</RFModeFlag>
+            <RFMode>0</RFMode>
+            <AutoLockFlag>0</AutoLockFlag>
+            <AutoLock>0</AutoLock>
+            <RFMuteFlag>0</RFMuteFlag>
+            <RFMute>0</RFMute>
+            <RFPowerFlag>0</RFPowerFlag>
+            <RFPower>0</RFPower>
+            <AFPeakWarningFlag>0</AFPeakWarningFlag>
+            <AFPeakWarning>0</AFPeakWarning>
+            <RFMuteWarningFlag>0</RFMuteWarningFlag>
+            <RFMuteWarning>0</RFMuteWarning>
+            <FrequencyList>
+                <BankU1>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU1>
+                <BankU2>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU2>
+                <BankU3>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU3>
+                <BankU4>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU4>
+                <BankU5>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU5>
+                <BankU6>
+                    <Channel1 Value="516000" Flag="0"/>
+                    <Channel2 Value="516000" Flag="0"/>
+                    <Channel3 Value="516000" Flag="0"/>
+                    <Channel4 Value="516000" Flag="0"/>
+                    <Channel5 Value="516000" Flag="0"/>
+                    <Channel6 Value="516000" Flag="0"/>
+                    <Channel7 Value="516000" Flag="0"/>
+                    <Channel8 Value="516000" Flag="0"/>
+                    <Channel9 Value="516000" Flag="0"/>
+                    <Channel10 Value="516000" Flag="0"/>
+                    <Channel11 Value="516000" Flag="0"/>
+                    <Channel12 Value="516000" Flag="0"/>
+                    <Channel13 Value="516000" Flag="0"/>
+                    <Channel14 Value="516000" Flag="0"/>
+                    <Channel15 Value="516000" Flag="0"/>
+                    <Channel16 Value="516000" Flag="0"/>
+                    <Channel17 Value="516000" Flag="0"/>
+                    <Channel18 Value="516000" Flag="0"/>
+                    <Channel19 Value="516000" Flag="0"/>
+                    <Channel20 Value="516000" Flag="0"/>
+                    <Channel21 Value="516000" Flag="0"/>
+                    <Channel22 Value="516000" Flag="0"/>
+                    <Channel23 Value="516000" Flag="0"/>
+                    <Channel24 Value="516000" Flag="0"/>
+                    <Channel25 Value="516000" Flag="0"/>
+                    <Channel26 Value="516000" Flag="0"/>
+                    <Channel27 Value="516000" Flag="0"/>
+                    <Channel28 Value="516000" Flag="0"/>
+                    <Channel29 Value="516000" Flag="0"/>
+                    <Channel30 Value="516000" Flag="0"/>
+                    <Channel31 Value="516000" Flag="0"/>
+                    <Channel32 Value="516000" Flag="0"/>
+                    <Channel33 Value="516000" Flag="0"/>
+                    <Channel34 Value="516000" Flag="0"/>
+                    <Channel35 Value="516000" Flag="0"/>
+                    <Channel36 Value="516000" Flag="0"/>
+                    <Channel37 Value="516000" Flag="0"/>
+                    <Channel38 Value="516000" Flag="0"/>
+                    <Channel39 Value="516000" Flag="0"/>
+                    <Channel40 Value="516000" Flag="0"/>
+                    <Channel41 Value="516000" Flag="0"/>
+                    <Channel42 Value="516000" Flag="0"/>
+                    <Channel43 Value="516000" Flag="0"/>
+                    <Channel44 Value="516000" Flag="0"/>
+                    <Channel45 Value="516000" Flag="0"/>
+                    <Channel46 Value="516000" Flag="0"/>
+                    <Channel47 Value="516000" Flag="0"/>
+                    <Channel48 Value="516000" Flag="0"/>
+                    <Channel49 Value="516000" Flag="0"/>
+                    <Channel50 Value="516000" Flag="0"/>
+                    <Channel51 Value="516000" Flag="0"/>
+                    <Channel52 Value="516000" Flag="0"/>
+                    <Channel53 Value="516000" Flag="0"/>
+                    <Channel54 Value="516000" Flag="0"/>
+                    <Channel55 Value="516000" Flag="0"/>
+                    <Channel56 Value="516000" Flag="0"/>
+                    <Channel57 Value="516000" Flag="0"/>
+                    <Channel58 Value="516000" Flag="0"/>
+                    <Channel59 Value="516000" Flag="0"/>
+                    <Channel60 Value="516000" Flag="0"/>
+                    <Channel61 Value="516000" Flag="0"/>
+                    <Channel62 Value="516000" Flag="0"/>
+                    <Channel63 Value="516000" Flag="0"/>
+                    <Channel64 Value="516000" Flag="0"/>
+                </BankU6>
+            </FrequencyList>
+            <RxSyncSettings>
+                <AutoLockFlag>0</AutoLockFlag>
+                <AutoLock>0</AutoLock>
+                <BalanceFlag>0</BalanceFlag>
+                <Balance>0</Balance>
+                <ModeFlag>0</ModeFlag>
+                <Mode>0</Mode>
+                <LimiterFlag>0</LimiterFlag>
+                <Limiter>0</Limiter>
+                <HiBoostFlag>0</HiBoostFlag>
+                <HiBoost>0</HiBoost>
+                <SquelchFlag>0</SquelchFlag>
+                <Squelch>0</Squelch>
+            </RxSyncSettings>
+            <CalculatedFrequencies/>
+        </Receiver>
+    </Device>
+    <MainWindow>
+        <Scene Name="Master Scene">
+            <ShowGrid>1</ShowGrid>
+            <SnapToGrid>1</SnapToGrid>
+            <ChannelView Port="1" DeviceCounter="2" TypeID="32" ID="" Device="0.0.0.0">
+                <VariantType>1</VariantType>
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="0" Top="0" Height="442" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="2" DeviceCounter="2" TypeID="32" ID="" Device="0.0.0.0">
+                <VariantType>1</VariantType>
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="78" Top="0" Height="442" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="3" DeviceCounter="2" TypeID="32" ID="" Device="0.0.0.0">
+                <VariantType>1</VariantType>
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="156" Top="0" Height="442" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="4" DeviceCounter="2" TypeID="32" ID="" Device="0.0.0.0">
+                <VariantType>1</VariantType>
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="234" Top="0" Height="442" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="1" DeviceCounter="4" TypeID="86" ID="" Device="0.0.0.0">
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="312" Top="0" Height="286" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="1" DeviceCounter="3" TypeID="18" ID="" Device="0.0.0.0">
+                <VariantType>1</VariantType>
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="390" Top="0" Height="442" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="2" DeviceCounter="3" TypeID="18" ID="" Device="0.0.0.0">
+                <VariantType>1</VariantType>
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="468" Top="0" Height="442" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="1" DeviceCounter="5" TypeID="88" ID="" Device="0.0.0.0">
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="546" Top="0" Height="286" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="1" DeviceCounter="6" TypeID="88" ID="" Device="0.0.0.0">
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="624" Top="0" Height="286" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="1" DeviceCounter="7" TypeID="88" ID="" Device="0.0.0.0">
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="702" Top="0" Height="286" Width="78"/>
+            </ChannelView>
+            <ChannelView Port="1" DeviceCounter="8" TypeID="88" ID="" Device="0.0.0.0">
+                <Color Blue="-1" Red="-1" Green="-1"/>
+                <Position Left="780" Top="0" Height="286" Width="78"/>
+            </ChannelView>
+        </Scene>
+        <CurrentScene>0</CurrentScene>
+    </MainWindow>
+    <FrequencyManager ProfDeviceOldAutoUpdate="1" OldResult="0" ProfDeviceEdited="0" ProfDeviceAutoUpdate="1" RFUnit="2">
+        <NoiseThreshold NoiseThresholdValue="5"/>
+        <DeviceFilterFlags DEVICE_TYPE_DIGITAL="1" DEVICE_TYPE_OTHERS="1" DEVICE_TYPE_MIC="1" DEVICE_TYPE_IEM="1"/>
+        <SystemFilterFlags MARKERS="1" SCAN_DATA="1" INTERMODULATION="1" SYSTEM_REGIONS="1" SPARE_GROUPS="1" NOISE_THRESHOLD="1" DEVICE_RANGES="1"/>
+        <FreqBandFilterFlags USABLE_BAND_FLAG="1" INTERFERENCE_FREQUENCY_FLAG="1" DISCRETE_FREQUENCY_FLAG="1" UNUSABLE_BAND_FLAG="1"/>
+        <Devices>
+            <Device Version="1.0" Mode="0" UniqueId="1" Type="STANDARD">
+                <Name>EW-DX 1</Name>
+                <StationaryDeviceId>1</StationaryDeviceId>
+                <StationaryDeviceType>EW-DX EM2/EM4 (LD off)</StationaryDeviceType>
+                <PortableDeviceType>EW-DX SKM</PortableDeviceType>
+                <Frequency>470200</Frequency>
+                <AllocatedFrequency>470200</AllocatedFrequency>
+                <MinFrequency>470200</MinFrequency>
+                <MaxFrequency>550000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>470200</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>550000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>-87 dBm</SquelchDescription>
+                <Noise>-87</Noise>
+                <DeviceType>8</DeviceType>
+                <RFMode>1</RFMode>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EW-DX EM2/EM4 (LD off)</ReceiverId>
+                <ReceiverIndex>3</ReceiverIndex>
+                <ReceiverBandIndex>106</ReceiverBandIndex>
+                <TransmitterId>EW-DX SKM</TransmitterId>
+                <TransmitterIndex>4</TransmitterIndex>
+                <TransmitterBandIndex>106</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>600</Carriers>
+                    <Device2TxIM3>0</Device2TxIM3>
+                    <Device3TxIM3>0</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="0" UniqueId="2" Type="STANDARD">
+                <Name>EW-DX 2</Name>
+                <StationaryDeviceId>2</StationaryDeviceId>
+                <StationaryDeviceType>EW-DX EM2/EM4 (LD off)</StationaryDeviceType>
+                <PortableDeviceType>EW-DX SKM</PortableDeviceType>
+                <Frequency>470200</Frequency>
+                <AllocatedFrequency>470800</AllocatedFrequency>
+                <MinFrequency>470200</MinFrequency>
+                <MaxFrequency>550000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>470200</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>550000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>-87 dBm</SquelchDescription>
+                <Noise>-87</Noise>
+                <DeviceType>8</DeviceType>
+                <RFMode>1</RFMode>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EW-DX EM2/EM4 (LD off)</ReceiverId>
+                <ReceiverIndex>3</ReceiverIndex>
+                <ReceiverBandIndex>106</ReceiverBandIndex>
+                <TransmitterId>EW-DX SKM</TransmitterId>
+                <TransmitterIndex>4</TransmitterIndex>
+                <TransmitterBandIndex>106</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>600</Carriers>
+                    <Device2TxIM3>0</Device2TxIM3>
+                    <Device3TxIM3>0</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="0" UniqueId="3" Type="STANDARD">
+                <Name>EW-DX 3</Name>
+                <StationaryDeviceId>3</StationaryDeviceId>
+                <StationaryDeviceType>EW-DX EM2/EM4 (LD off)</StationaryDeviceType>
+                <PortableDeviceType>EW-DX SKM</PortableDeviceType>
+                <Frequency>470200</Frequency>
+                <AllocatedFrequency>471400</AllocatedFrequency>
+                <MinFrequency>470200</MinFrequency>
+                <MaxFrequency>550000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>470200</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>550000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>-87 dBm</SquelchDescription>
+                <Noise>-87</Noise>
+                <DeviceType>8</DeviceType>
+                <RFMode>1</RFMode>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EW-DX EM2/EM4 (LD off)</ReceiverId>
+                <ReceiverIndex>3</ReceiverIndex>
+                <ReceiverBandIndex>106</ReceiverBandIndex>
+                <TransmitterId>EW-DX SKM</TransmitterId>
+                <TransmitterIndex>4</TransmitterIndex>
+                <TransmitterBandIndex>106</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>600</Carriers>
+                    <Device2TxIM3>0</Device2TxIM3>
+                    <Device3TxIM3>0</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="0" UniqueId="4" Type="STANDARD">
+                <Name>EW-DX 4</Name>
+                <StationaryDeviceId>4</StationaryDeviceId>
+                <StationaryDeviceType>EW-DX EM2/EM4 (LD off)</StationaryDeviceType>
+                <PortableDeviceType>EW-DX SKM</PortableDeviceType>
+                <Frequency>470200</Frequency>
+                <AllocatedFrequency>472000</AllocatedFrequency>
+                <MinFrequency>470200</MinFrequency>
+                <MaxFrequency>550000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>470200</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>550000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>-87 dBm</SquelchDescription>
+                <Noise>-87</Noise>
+                <DeviceType>8</DeviceType>
+                <RFMode>1</RFMode>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EW-DX EM2/EM4 (LD off)</ReceiverId>
+                <ReceiverIndex>3</ReceiverIndex>
+                <ReceiverBandIndex>106</ReceiverBandIndex>
+                <TransmitterId>EW-DX SKM</TransmitterId>
+                <TransmitterIndex>4</TransmitterIndex>
+                <TransmitterBandIndex>106</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>600</Carriers>
+                    <Device2TxIM3>0</Device2TxIM3>
+                    <Device3TxIM3>0</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="0" UniqueId="5" Type="STANDARD">
+                <Name>EM3732</Name>
+                <StationaryDeviceId>6</StationaryDeviceId>
+                <StationaryDeviceType>EM 3731/3732</StationaryDeviceType>
+                <PortableDeviceType>SK5212/SKM5200</PortableDeviceType>
+                <Frequency>470000</Frequency>
+                <AllocatedFrequency>470500</AllocatedFrequency>
+                <MinFrequency>470000</MinFrequency>
+                <MaxFrequency>560000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>470000</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>560000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>0 µV</SquelchDescription>
+                <Noise>0</Noise>
+                <DeviceType>1</DeviceType>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EM 3731/3732</ReceiverId>
+                <ReceiverIndex>5</ReceiverIndex>
+                <ReceiverBandIndex>34</ReceiverBandIndex>
+                <TransmitterId>SK5212/SKM 5200</TransmitterId>
+                <TransmitterIndex>12</TransmitterIndex>
+                <TransmitterBandIndex>0</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>300</Carriers>
+                    <Device2TxIM3>100</Device2TxIM3>
+                    <Device3TxIM3>75</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="0" UniqueId="6" Type="STANDARD">
+                <Name>EM3732</Name>
+                <StationaryDeviceId>7</StationaryDeviceId>
+                <StationaryDeviceType>EM 3731/3732</StationaryDeviceType>
+                <PortableDeviceType>SK5212/SKM5200</PortableDeviceType>
+                <Frequency>470000</Frequency>
+                <AllocatedFrequency>471700</AllocatedFrequency>
+                <MinFrequency>470000</MinFrequency>
+                <MaxFrequency>560000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>470000</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>560000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>0 µV</SquelchDescription>
+                <Noise>0</Noise>
+                <DeviceType>1</DeviceType>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EM 3731/3732</ReceiverId>
+                <ReceiverIndex>5</ReceiverIndex>
+                <ReceiverBandIndex>34</ReceiverBandIndex>
+                <TransmitterId>SK5212/SKM 5200</TransmitterId>
+                <TransmitterIndex>12</TransmitterIndex>
+                <TransmitterBandIndex>0</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>300</Carriers>
+                    <Device2TxIM3>100</Device2TxIM3>
+                    <Device3TxIM3>75</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="2" UniqueId="7" Type="STANDARD">
+                <Name>SR2000 I</Name>
+                <StationaryDeviceId>5</StationaryDeviceId>
+                <StationaryDeviceType>SR 2000/2050-IEM</StationaryDeviceType>
+                <PortableDeviceType>EK 2000-IEM</PortableDeviceType>
+                <Frequency>516000</Frequency>
+                <AllocatedFrequency>556600</AllocatedFrequency>
+                <MinFrequency>516000</MinFrequency>
+                <MaxFrequency>558000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>516000</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>558000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>-1 dB</SquelchDescription>
+                <Noise>-1</Noise>
+                <DeviceType>2</DeviceType>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EK 2000-IEM</ReceiverId>
+                <ReceiverIndex>7</ReceiverIndex>
+                <ReceiverBandIndex>26</ReceiverBandIndex>
+                <TransmitterId>SR 2000/2050-IEM stereo</TransmitterId>
+                <TransmitterIndex>19</TransmitterIndex>
+                <TransmitterBandIndex>26</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>400</Carriers>
+                    <Device2TxIM3>200</Device2TxIM3>
+                    <Device3TxIM3>100</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="2" UniqueId="8" Type="STANDARD">
+                <Name>SRG4</Name>
+                <StationaryDeviceId>8</StationaryDeviceId>
+                <StationaryDeviceType>SR IEM G4</StationaryDeviceType>
+                <PortableDeviceType>EK IEM G4</PortableDeviceType>
+                <Frequency>516000</Frequency>
+                <AllocatedFrequency>557600</AllocatedFrequency>
+                <MinFrequency>516000</MinFrequency>
+                <MaxFrequency>558000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>516000</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>558000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>-1 dB</SquelchDescription>
+                <Noise>-1</Noise>
+                <DeviceType>2</DeviceType>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EK IEM G4</ReceiverId>
+                <ReceiverIndex>9</ReceiverIndex>
+                <ReceiverBandIndex>19</ReceiverBandIndex>
+                <TransmitterId>SR IEM G4 stereo</TransmitterId>
+                <TransmitterIndex>21</TransmitterIndex>
+                <TransmitterBandIndex>19</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>400</Carriers>
+                    <Device2TxIM3>200</Device2TxIM3>
+                    <Device3TxIM3>100</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="2" UniqueId="9" Type="STANDARD">
+                <Name>SRG4</Name>
+                <StationaryDeviceId>9</StationaryDeviceId>
+                <StationaryDeviceType>SR IEM G4</StationaryDeviceType>
+                <PortableDeviceType>EK IEM G4</PortableDeviceType>
+                <Frequency>516000</Frequency>
+                <AllocatedFrequency>556000</AllocatedFrequency>
+                <MinFrequency>516000</MinFrequency>
+                <MaxFrequency>558000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>516000</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>558000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>-1 dB</SquelchDescription>
+                <Noise>-1</Noise>
+                <DeviceType>2</DeviceType>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EK IEM G4</ReceiverId>
+                <ReceiverIndex>9</ReceiverIndex>
+                <ReceiverBandIndex>19</ReceiverBandIndex>
+                <TransmitterId>SR IEM G4 stereo</TransmitterId>
+                <TransmitterIndex>21</TransmitterIndex>
+                <TransmitterBandIndex>19</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>400</Carriers>
+                    <Device2TxIM3>200</Device2TxIM3>
+                    <Device3TxIM3>100</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="2" UniqueId="10" Type="STANDARD">
+                <Name>SRG4</Name>
+                <StationaryDeviceId>10</StationaryDeviceId>
+                <StationaryDeviceType>SR IEM G4</StationaryDeviceType>
+                <PortableDeviceType>EK IEM G4</PortableDeviceType>
+                <Frequency>516000</Frequency>
+                <AllocatedFrequency>557000</AllocatedFrequency>
+                <MinFrequency>516000</MinFrequency>
+                <MaxFrequency>558000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>516000</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>558000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>-1 dB</SquelchDescription>
+                <Noise>-1</Noise>
+                <DeviceType>2</DeviceType>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EK IEM G4</ReceiverId>
+                <ReceiverIndex>9</ReceiverIndex>
+                <ReceiverBandIndex>19</ReceiverBandIndex>
+                <TransmitterId>SR IEM G4 stereo</TransmitterId>
+                <TransmitterIndex>21</TransmitterIndex>
+                <TransmitterBandIndex>19</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>400</Carriers>
+                    <Device2TxIM3>200</Device2TxIM3>
+                    <Device3TxIM3>100</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+            <Device Version="1.0" Mode="2" UniqueId="11" Type="STANDARD">
+                <Name>SRG4</Name>
+                <StationaryDeviceId>11</StationaryDeviceId>
+                <StationaryDeviceType>SR IEM G4</StationaryDeviceType>
+                <PortableDeviceType>EK IEM G4</PortableDeviceType>
+                <Frequency>516000</Frequency>
+                <AllocatedFrequency>558000</AllocatedFrequency>
+                <MinFrequency>516000</MinFrequency>
+                <MaxFrequency>558000</MaxFrequency>
+                <OldMinFrequency>0</OldMinFrequency>
+                <OldMaxFrequency>0</OldMaxFrequency>
+                <FixedFrequency>0</FixedFrequency>
+                <DeviceObjectMinFrequency>516000</DeviceObjectMinFrequency>
+                <DeviceObjectMaxFrequency>558000</DeviceObjectMaxFrequency>
+                <SearchStep>25</SearchStep>
+                <SquelchDescription>-1 dB</SquelchDescription>
+                <Noise>-1</Noise>
+                <DeviceType>2</DeviceType>
+                <SpareFreqCount>0</SpareFreqCount>
+                <ReceiverId>EK IEM G4</ReceiverId>
+                <ReceiverIndex>9</ReceiverIndex>
+                <ReceiverBandIndex>19</ReceiverBandIndex>
+                <TransmitterId>SR IEM G4 stereo</TransmitterId>
+                <TransmitterIndex>21</TransmitterIndex>
+                <TransmitterBandIndex>19</TransmitterBandIndex>
+                <CascadeId>-1</CascadeId>
+                <SpacingParams>
+                    <Carriers>400</Carriers>
+                    <Device2TxIM3>200</Device2TxIM3>
+                    <Device3TxIM3>100</Device3TxIM3>
+                    <Device2TxIM5>0</Device2TxIM5>
+                    <Device3TxIM5>0</Device3TxIM5>
+                </SpacingParams>
+                <AllowAutoUpdate>0</AllowAutoUpdate>
+            </Device>
+        </Devices>
+        <SystemRegions>
+            <SystemRegion Version="1.0" Name="2">
+                <Independant>1</Independant>
+                <MinFrequency>470000</MinFrequency>
+                <MaxFrequency>560000</MaxFrequency>
+                <DeviceList>
+                    <DeviceId>9</DeviceId>
+                    <DeviceId>5</DeviceId>
+                    <DeviceId>6</DeviceId>
+                    <DeviceId>7</DeviceId>
+                </DeviceList>
+            </SystemRegion>
+            <SystemRegion Version="1.0" Name="Region 022">
+                <Independant>1</Independant>
+                <MinFrequency>516000</MinFrequency>
+                <MaxFrequency>558000</MaxFrequency>
+                <DeviceList>
+                    <DeviceId>8</DeviceId>
+                    <DeviceId>10</DeviceId>
+                </DeviceList>
+            </SystemRegion>
+        </SystemRegions>
+        <SpareGroups>
+            <SpareGroup Version="1.0" Name="Spare group 001">
+                <MinFrequency>470000</MinFrequency>
+                <MaxFrequency>560000</MaxFrequency>
+                <NumSpares>1</NumSpares>
+                <DeviceList>
+                    <DeviceId>6</DeviceId>
+                </DeviceList>
+                <SparesList>
+                    <Spare>
+                        <AllocatedFrequency>472325</AllocatedFrequency>
+                    </Spare>
+                </SparesList>
+            </SpareGroup>
+        </SpareGroups>
+        <SelectedCoordinationResult Robustness="0.48614254686785552" Low="0" Unusable="0" Medium="0" Undefined="12" High="0" Number="1">
+            <CoordinationData Robustness="0.5083333333333333" Frequency="558000" FilterWidth="400" ZF="482000" DeviceType="2">
+                <PreferredDevice>11</PreferredDevice>
+                <SystemRegion>-1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="400" TwoTxIM5="0" TwoTxIM3="200" ThreeTxIM3="100" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0.8268175582990398" Frequency="557600" FilterWidth="400" ZF="482000" DeviceType="2">
+                <PreferredDevice>8</PreferredDevice>
+                <SystemRegion>2</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="400" TwoTxIM5="0" TwoTxIM3="200" ThreeTxIM3="100" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0.46522633744855968" Frequency="557000" FilterWidth="400" ZF="482000" DeviceType="2">
+                <PreferredDevice>10</PreferredDevice>
+                <SystemRegion>2</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="400" TwoTxIM5="0" TwoTxIM3="200" ThreeTxIM3="100" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0.45833333333333337" Frequency="556600" FilterWidth="400" ZF="482000" DeviceType="2">
+                <PreferredDevice>7</PreferredDevice>
+                <SystemRegion>1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="400" TwoTxIM5="0" TwoTxIM3="200" ThreeTxIM3="100" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0.85000000000000009" Frequency="556000" FilterWidth="400" ZF="482000" DeviceType="2">
+                <PreferredDevice>9</PreferredDevice>
+                <SystemRegion>1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="400" TwoTxIM5="0" TwoTxIM3="200" ThreeTxIM3="100" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0" Frequency="470200" FilterWidth="600" ZF="0" DeviceType="8">
+                <PreferredDevice>1</PreferredDevice>
+                <SystemRegion>-1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>-1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="600" TwoTxIM5="0" TwoTxIM3="0" ThreeTxIM3="0" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0" Frequency="470800" FilterWidth="600" ZF="0" DeviceType="8">
+                <PreferredDevice>2</PreferredDevice>
+                <SystemRegion>-1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>-1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="600" TwoTxIM5="0" TwoTxIM3="0" ThreeTxIM3="0" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0" Frequency="471400" FilterWidth="600" ZF="0" DeviceType="8">
+                <PreferredDevice>3</PreferredDevice>
+                <SystemRegion>-1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>-1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="600" TwoTxIM5="0" TwoTxIM3="0" ThreeTxIM3="0" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0" Frequency="472000" FilterWidth="600" ZF="0" DeviceType="8">
+                <PreferredDevice>4</PreferredDevice>
+                <SystemRegion>-1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>-1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="600" TwoTxIM5="0" TwoTxIM3="0" ThreeTxIM3="0" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="1" Frequency="470500" FilterWidth="300" ZF="0" DeviceType="1">
+                <PreferredDevice>5</PreferredDevice>
+                <SystemRegion>1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>-1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="300" TwoTxIM5="0" TwoTxIM3="100" ThreeTxIM3="75" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0.86250000000000004" Frequency="471700" FilterWidth="300" ZF="0" DeviceType="1">
+                <PreferredDevice>6</PreferredDevice>
+                <SystemRegion>1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>-1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="300" TwoTxIM5="0" TwoTxIM3="100" ThreeTxIM3="75" ThreeTxIM5="0"/>
+            </CoordinationData>
+            <CoordinationData Robustness="0.86250000000000004" Frequency="472325" FilterWidth="300" ZF="0" DeviceType="1">
+                <PreferredDevice>-1</PreferredDevice>
+                <SystemRegion>1</SystemRegion>
+                <Allocated>true</Allocated>
+                <Priority>0</Priority>
+                <Mode>-1</Mode>
+                <Squelch>0</Squelch>
+                <SpacingParameters CarrierDistance="300" TwoTxIM5="0" TwoTxIM3="100" ThreeTxIM3="75" ThreeTxIM5="0"/>
+            </CoordinationData>
+        </SelectedCoordinationResult>
+        <RegionalGridBar>
+            <WSMBarData WSMBarName="Default Grid Bar Data v1.0" WSMBarVersion="1" WSMBarOwner="Rob Poretti - Sennheiser Canada" WSMBarDescription="Default" WSMBarDate="2013-02-18">
+                <SpectrumDefinition>
+                    <SpectrumID>UHF Range 450-865 MHz</SpectrumID>
+                    <SpectrumWidth>415000</SpectrumWidth>
+                    <SpectrumSection>
+                        <SectionName>Default - Right-Click to Set Regional Information</SectionName>
+                        <SectionShortName>Default</SectionShortName>
+                        <SectionOffset>0</SectionOffset>
+                        <SectionWidth>415000</SectionWidth>
+                        <SectionPriority>2</SectionPriority>
+                        <SectionFormat>0</SectionFormat>
+                    </SpectrumSection>
+                </SpectrumDefinition>
+                <Band>
+                    <BandType>UHF Range 450-865 MHz</BandType>
+                    <BandName>Default - Right-Click to Set Regional Information</BandName>
+                    <BandShortName>Default</BandShortName>
+                    <BandNameFormat>0</BandNameFormat>
+                    <BandComment></BandComment>
+                    <BandStart>450000</BandStart>
+                </Band>
+            </WSMBarData>
+        </RegionalGridBar>
+    </FrequencyManager>
+    <SpareFrequencyPool>
+        <SpareFrequency>
+            <AllocatedFrequency>472325</AllocatedFrequency>
+            <UpperFrequencyLimit>560000</UpperFrequencyLimit>
+            <LowerFrequencyLimit>470000</LowerFrequencyLimit>
+            <SystemRegion>0</SystemRegion>
+            <DeviceType>1</DeviceType>
+        </SpareFrequency>
+    </SpareFrequencyPool>
+    <DisturbedFrequencyPool/>
+</WSM>

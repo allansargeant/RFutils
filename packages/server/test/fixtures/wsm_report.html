@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link href="resources/css/styling.css" rel="stylesheet" type="text/css">
+	<link href="resources/css/print.css" rel="stylesheet" type="text/css" media="print">
+	<script language="JavaScript">
+	function toggleCollapseHeader(id, iconId) {
+	var el = document.getElementById(id), iconEl = document.getElementById(iconId);
+	if(el.style.display === "none") {
+	el.style.display = "";
+	iconEl.innerHTML = "-";
+	iconEl.className = "openCloseTextMinus";
+	} else {
+	el.style.display = "none";
+	iconEl.innerHTML = "+";
+	iconEl.className = "openCloseTextPlus";
+	}
+	};
+	</script>
+	</head>
+	<body>
+	<div id="main">
+	<div class="h1Container">
+	<div id="headline">WSM Coordination Report</div>
+	<img src="resources/img/logo.jpg" style="float:right">
+	</div>
+	<div class="spacer"></div>
+	<div class = "h2Container">
+	Project information:
+	</div>
+	<div class = "h3Container" onClick = "toggleCollapseHeader('projectInformation','projectInformationOpenClose')">
+	<div class = "openCloseIcon"><div class = "openCloseTextMinus" id = "projectInformationOpenClose">-</div></div>
+	<div class = "innerheadline"> - 2026-07-13 22:02:40</div></div>
+	<div id = "projectInformation"><table class = "tableWithoutBorder"><tr><td>Project name: <br>Project date: 2026-07-13 22:02:40<br></td></tr></table></div>
+	<div class = "spacer"></div>
+	<div class = "h2Container">
+	Frequencies/Bands:
+	</div>
+	<div class = "h3Container" onClick = "toggleCollapseHeader('FrequenciesBands','FrequenciesBandsOpenClose')">
+	<div class = "openCloseIcon"><div class = "openCloseTextMinus" id = "FrequenciesBandsOpenClose">
+	-
+	</div>
+	</div>
+	<div class = "innerheadline">
+	<div class = "innerHeadlineText bandLegend">
+	Band legend:
+	</div>
+	<div class = "legendItem">
+	<div class = "colorImageContainer"><img class = "colorImage" src = "resources/img/frequency_usable.png"/></div>
+	<div class = "innerHeadlineText"> - Usable band</div>
+	</div>
+	<div class = "legendItem">
+	<div class = "colorImageContainer"><img class = "colorImage" src = "resources/img/frequency_unusable.png"/></div>
+	<div class = "innerHeadlineText"> - Unusable band</div>
+	</div>
+	<div class = "legendItem">
+	<div class = "colorImageContainer"><img class = "colorImage" src = "resources/img/frequency_discrete.png"/></div>
+	<div class = "innerHeadlineText"> - Discrete frequency</div>
+	</div>
+	<div class = "legendItem">
+	<div class = "colorImageContainer"><img class = "colorImage" src = "resources/img/frequency_interference.png"/></div>
+	<div class = "innerHeadlineText"> - Interference frequency</div>
+	</div>
+	</div>
+	</div>
+	<div id = "FrequenciesBands">
+	<table rules = "all">
+	<tr>
+	<th class = "numberCol">#</th>
+	<th>Name</th>
+	<th>Type</th>
+	<th class = "frequencyRangeTableHeader">Frequencies / Range</th>
+	<th>Priority</th>
+	<th>Noise</th>
+	<th>Color</th>
+	</tr>
+	</table>
+	</div>
+<div class="spacer"></div>
+<div class="h2Container">
+    Spectrum scan &amp; chart:
+</div>
+<div class="h3Container" onClick="toggleCollapseHeader('ScanInformation','SpectrumScanOpenClose')">
+<div class="openCloseIcon"><div class="openCloseTextMinus" id="SpectrumScanOpenClose">-</div></div>
+<div class="innerheadline">
+    Scan data: </div>
+</div>
+<div id = "ScanInformation">
+<table class = "tableWithoutBorder"><tr>
+<td>
+Scan data name : <br>
+City : <br>
+Postal code : <br>
+Latitude : <br>
+Longitude : <br>
+</td>
+<td>
+Environment : <br>
+Description : <br>
+</td>
+</tr></table>
+<div class = "spacer"></div>
+</div>
+<div class = "h3Container" onClick = "toggleCollapseHeader('ChartPanel','ChartOpenClose')">
+<div class = "openCloseIcon"><div class = "openCloseTextMinus" id = "ChartOpenClose">-</div></div>
+<div class = "innerheadline">
+Chart : WSM-Report-2026-07-13.jpg</div>
+</div>
+<div id = "ChartPanel"><img id = "chart" src = "WSM-Report-2026-07-13.jpg"></div>
+<div class = "spacer"></div>
+<div class = "h2Container">
+Devices:
+</div>
+	<div class = "h3Container" onClick = "toggleCollapseHeader('panel'+1,'icon'+1)">
+	<div class = "openCloseIcon"><div class = "openCloseTextMinus" id = "icon1">-</div></div>
+	<div class = "innerheadline">
+	<div class = "deviceColorImageContainer"><image src="resources/img/device_microphone.png"/></div>
+	<div class = "deviceTitle">FM Mics:</div>
+	</div>
+	</div>
+	<div id = "panel1"><table id = "devices" rules = "all">
+	<tr>
+	<th class = "numberCol">#</th>
+	<th class = "nameTableHeader">Name</th>
+	<th class = "stationaryDeviceTableHeader">Stationary device</th>
+	<th class = "frequencyRangeTableHeader">Frequency range</th>
+	<th class = "frequencyTableHeader">Frequency</th>
+	<th class = "portableDeviceTableHeader">Portable device</th>
+	<th class = "squelchNoiseTableHeader">Squelch / Max.noise</th>
+	</tr>
+	<tr class ="greyRow">
+	<td align = "center">1</td>
+	<td>EM3732</td>
+	<td>EM 3731/3732</td>
+	<td>470.000 - 560.000 MHz
+	</td>
+	<td>470.500 MHz</td>
+	<td>SK5212/SKM5200</td>
+	<td>0 &microV</td>
+	</tr>
+	<tr class ="whiteRow">
+	<td align = "center">2</td>
+	<td>EM3732</td>
+	<td>EM 3731/3732</td>
+	<td>470.000 - 560.000 MHz
+	</td>
+	<td>471.700 MHz</td>
+	<td>SK5212/SKM5200</td>
+	<td>0 &microV</td>
+	</tr>
+	</table></div>
+	<div class = "spacer"></div>
+	<div class = "h3Container" onClick = "toggleCollapseHeader('panel'+2,'icon'+2)">
+	<div class = "openCloseIcon"><div class = "openCloseTextMinus" id = "icon2">-</div></div>
+	<div class = "innerheadline">
+	<div class = "deviceColorImageContainer"><image src="resources/img/device_iem.png"/></div>
+	<div class = "deviceTitle">IEM Systems:</div>
+	</div>
+	</div>
+	<div id = "panel2"><table id = "devices" rules = "all">
+	<tr>
+	<th class = "numberCol">#</th>
+	<th class = "nameTableHeader">Name</th>
+	<th class = "stationaryDeviceTableHeader">Stationary device</th>
+	<th class = "frequencyRangeTableHeader">Frequency range</th>
+	<th class = "frequencyTableHeader">Frequency</th>
+	<th class = "portableDeviceTableHeader">Portable device</th>
+	<th class = "squelchNoiseTableHeader">Squelch / Max.noise</th>
+	</tr>
+	<tr class ="greyRow">
+	<td align = "center">1</td>
+	<td>SR2000 I</td>
+	<td>SR 2000/2050-IEM</td>
+	<td>516.000 - 558.000 MHz
+	</td>
+	<td>556.600 MHz</td>
+	<td>EK 2000-IEM</td>
+	<td>-1 dB</td>
+	</tr>
+	<tr class ="whiteRow">
+	<td align = "center">2</td>
+	<td>SRG4</td>
+	<td>SR IEM G4</td>
+	<td>516.000 - 558.000 MHz
+	</td>
+	<td>557.600 MHz</td>
+	<td>EK IEM G4</td>
+	<td>-1 dB</td>
+	</tr>
+	<tr class ="greyRow">
+	<td align = "center">3</td>
+	<td>SRG4</td>
+	<td>SR IEM G4</td>
+	<td>516.000 - 558.000 MHz
+	</td>
+	<td>556.000 MHz</td>
+	<td>EK IEM G4</td>
+	<td>-1 dB</td>
+	</tr>
+	<tr class ="whiteRow">
+	<td align = "center">4</td>
+	<td>SRG4</td>
+	<td>SR IEM G4</td>
+	<td>516.000 - 558.000 MHz
+	</td>
+	<td>557.000 MHz</td>
+	<td>EK IEM G4</td>
+	<td>-1 dB</td>
+	</tr>
+	<tr class ="greyRow">
+	<td align = "center">5</td>
+	<td>SRG4</td>
+	<td>SR IEM G4</td>
+	<td>516.000 - 558.000 MHz
+	</td>
+	<td>558.000 MHz</td>
+	<td>EK IEM G4</td>
+	<td>-1 dB</td>
+	</tr>
+	</table></div>
+	<div class = "spacer"></div>
+	<div class = "h3Container" onClick = "toggleCollapseHeader('panel'+4,'icon'+4)">
+	<div class = "openCloseIcon"><div class = "openCloseTextMinus" id = "icon4">-</div></div>
+	<div class = "innerheadline">
+	<div class = "deviceColorImageContainer"><image src="resources/img/device_digital.png"/></div>
+	<div class = "deviceTitle">Digital devices:</div>
+	</div>
+	</div>
+	<div id = "panel4"><table id = "devices" rules = "all">
+	<tr>
+	<th class = "numberCol">#</th>
+	<th class = "nameTableHeader">Name</th>
+	<th class = "stationaryDeviceTableHeader">Stationary device</th>
+	<th class = "frequencyRangeTableHeader">Frequency range</th>
+	<th class = "frequencyTableHeader">Frequency</th>
+	<th class = "portableDeviceTableHeader">Portable device</th>
+	<th class = "squelchNoiseTableHeader">Squelch / Max.noise</th>
+	</tr>
+	<tr class ="greyRow">
+	<td align = "center">1</td>
+	<td>EW-DX 1</td>
+	<td>EW-DX EM2/EM4 (LD off)</td>
+	<td>470.200 - 550.000 MHz
+	</td>
+	<td>470.200 MHz</td>
+	<td>EW-DX SKM</td>
+	<td>-87 dBm</td>
+	</tr>
+	<tr class ="whiteRow">
+	<td align = "center">2</td>
+	<td>EW-DX 2</td>
+	<td>EW-DX EM2/EM4 (LD off)</td>
+	<td>470.200 - 550.000 MHz
+	</td>
+	<td>470.800 MHz</td>
+	<td>EW-DX SKM</td>
+	<td>-87 dBm</td>
+	</tr>
+	<tr class ="greyRow">
+	<td align = "center">3</td>
+	<td>EW-DX 3</td>
+	<td>EW-DX EM2/EM4 (LD off)</td>
+	<td>470.200 - 550.000 MHz
+	</td>
+	<td>471.400 MHz</td>
+	<td>EW-DX SKM</td>
+	<td>-87 dBm</td>
+	</tr>
+	<tr class ="whiteRow">
+	<td align = "center">4</td>
+	<td>EW-DX 4</td>
+	<td>EW-DX EM2/EM4 (LD off)</td>
+	<td>470.200 - 550.000 MHz
+	</td>
+	<td>472.000 MHz</td>
+	<td>EW-DX SKM</td>
+	<td>-87 dBm</td>
+	</tr>
+	</table></div>
+	<div class = "spacer"></div>
+</body>
+</html>

@@ -1,0 +1,2 @@
+name;type;frequency;tolerance;minfrequency;maxfrequency;priority;squelchlevel
+Frequency 001;0;510100;0;510100;510100;2;5

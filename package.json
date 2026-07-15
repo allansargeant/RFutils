@@ -1,0 +1,25 @@
+{
+  "name": "rfwizard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Unified browser-based RF coordination + wireless-mic monitoring suite: WSM/WWB file exchange, Ofcom PMSE licence import, and live receiver monitoring in one package.",
+  "workspaces": [
+    "packages/shared",
+    "packages/server",
+    "packages/web"
+  ],
+  "scripts": {
+    "build:shared": "npm run build -w @rfwizard/shared",
+    "dev": "npm run build:shared && concurrently -n server,web -c blue,magenta \"RFWIZARD_SERVER_PORT=8420 npm run dev -w @rfwizard/server\" \"npm run dev -w @rfwizard/web\"",
+    "dev:server": "npm run build:shared && RFWIZARD_SERVER_PORT=8420 npm run dev -w @rfwizard/server",
+    "dev:web": "npm run build:shared && npm run dev -w @rfwizard/web",
+    "dev:verify": "npm run build:shared && concurrently -n server,web -c blue,magenta \"RFWIZARD_DISABLE_MONITOR=1 RFWIZARD_SERVER_PORT=8420 npm run dev -w @rfwizard/server\" \"npm run dev -w @rfwizard/web\"",
+    "build": "npm run build:shared && npm run build -w @rfwizard/server && npm run build -w @rfwizard/web",
+    "typecheck": "npm run typecheck -w @rfwizard/shared && npm run typecheck -w @rfwizard/server && npm run typecheck -w @rfwizard/web",
+    "test": "npm run test -w @rfwizard/server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "typescript": "^5.6.3"
+  }
+}

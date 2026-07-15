@@ -1,0 +1,33 @@
+{
+  "name": "@rfwizard/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json && npm run copy:templates",
+    "copy:templates": "node -e \"const fs=require('fs'),p=require('path'),s='src/pmse/templates',d='dist/pmse/templates';fs.mkdirSync(d,{recursive:true});for(const f of fs.readdirSync(s))fs.copyFileSync(p.join(s,f),p.join(d,f))\"",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@rfwizard/shared": "*",
+    "@xmldom/xmldom": "^0.9.5",
+    "bonjour-service": "^1.2.1",
+    "express": "^4.21.1",
+    "multer": "^2.0.1",
+    "pdfjs-dist": "^4.7.76",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.7.0",
+    "@types/ws": "^8.5.12",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3"
+  }
+}
