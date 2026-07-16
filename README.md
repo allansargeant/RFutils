@@ -86,6 +86,17 @@ without any hardware — how the Monitor screenshot above was captured).
   `RFUTILS_CAPTURE_CMD`, `RFUTILS_CUE_BUS_DEVICE` / `_CHANNEL`, `RFUTILS_CUE_SRC_DEVICE` — audio
   capture (DVS/Dante interface) cue mode; see [Audio cueing](#audio-cueing-to-headphones).
 
+### Desktop launcher
+
+Prefer not to touch the terminal? A Bitfocus Companion–style menu-bar launcher
+lets you pick the network interface + port, Start/Stop the server, and open the
+web UI. Because RFutils is a Node app, the launcher spawns your local build
+(`node dist/index.js`) — so it needs Node and a built RFutils on the machine.
+Grab the `.dmg` from [Releases](https://github.com/allansargeant/RFutils/releases),
+or see [launcher/](launcher/) to build it.
+
+<p align="center"><img src="launcher/docs/panel.png" width="320" alt="RFutils Launcher"></p>
+
 ## Convert
 
 ### Coordination files (WSM · WWB · CSV)

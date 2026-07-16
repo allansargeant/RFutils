@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AV Launcher</title>
+  </head>
+  <body>
+    <main class="panel">
+      <!-- Header -->
+      <header class="header">
+        <button id="gear" class="gear" title="Open config folder" aria-label="Settings">⚙</button>
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 100 100" width="76" height="76">
+            <circle cx="50" cy="50" r="46" fill="#111" stroke="#8a8a8a" stroke-width="3" />
+            <circle id="logo-dot" cx="30" cy="50" r="7" fill="#e11d1d" />
+            <g stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round">
+              <path d="M34 50 H58" />
+              <path d="M50 44 Q58 44 58 34" />
+              <path d="M50 50 H62" />
+              <path d="M50 56 Q58 56 58 66" />
+            </g>
+            <g fill="#fff">
+              <circle cx="70" cy="34" r="6" />
+              <circle cx="70" cy="50" r="6" />
+              <circle cx="70" cy="66" r="6" />
+            </g>
+          </svg>
+        </div>
+        <div class="title" id="app-name">AV Launcher</div>
+        <div class="subtitle" id="app-sub">Loading…</div>
+      </header>
+
+      <!-- Status band -->
+      <section class="status" id="status-band">
+        <div class="status-word" id="status-word">Stopped</div>
+        <a class="status-url" id="status-url" href="#" target="_blank" rel="noreferrer">—</a>
+      </section>
+
+      <!-- Controls -->
+      <section class="controls">
+        <div class="fields">
+          <div class="field field-grow">
+            <label for="iface">GUI Interface</label>
+            <div class="select-wrap">
+              <select id="iface"></select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="port">Port</label>
+            <input id="port" type="number" min="1" max="65535" inputmode="numeric" />
+          </div>
+        </div>
+
+        <button id="toggle" class="btn btn-primary btn-block">Start</button>
+
+        <div class="button-row">
+          <button id="launch" class="btn btn-light">Launch GUI</button>
+          <button id="hide" class="btn btn-ghost">Hide</button>
+          <button id="quit" class="btn btn-ghost">Quit</button>
+        </div>
+
+        <div class="msg" id="msg"></div>
+      </section>
+    </main>
+
+    <script src="main.js" type="module"></script>
+  </body>
+</html>

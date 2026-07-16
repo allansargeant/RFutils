@@ -1,0 +1,22 @@
+# RFutils launcher config.
+#
+# RFutils is a Node app, so unlike the Rust launchers this one is NOT a fully
+# self-contained binary: it spawns the system `node` against your local RFutils
+# build and injects host/port via environment variables. It therefore requires
+# Node installed and RFutils built (`npm run build` in ~/Projects/RFutils) on
+# the machine. Edit the two absolute paths below if RFutils lives elsewhere.
+
+[app]
+name = "RFutils"
+command = "node"
+args = ["/Users/allansargeant/Projects/RFutils/packages/server/dist/index.js"]
+url = "http://{host}:{port}/"
+default_port = 8420
+cwd = "/Users/allansargeant/Projects/RFutils/packages/server"
+
+[inject]
+mode = "env"
+
+[inject.env]
+RFUTILS_SERVER_PORT = "{port}"
+RFUTILS_HOST = "{host}"
