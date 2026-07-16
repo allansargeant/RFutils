@@ -1,0 +1,58 @@
+name: release
+
+# RFutils is a Node (ESM) web monorepo — server + web + shared — not a native
+# binary. This produces a portable build bundle (run with `node` on any arch)
+# containing the compiled server, the built web assets and production manifests.
+# Trigger manually (Actions > release > Run workflow) or by pushing a v* tag.
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build all workspaces
+        run: npm run build
+
+      - name: Assemble bundle
+        shell: bash
+        run: |
+          mkdir -p bundle
+          # Ship each workspace's build output + manifest so it runs with `npm ci --omit=dev && node`
+          for ws in shared server web; do
+            mkdir -p "bundle/packages/$ws"
+            cp "packages/$ws/package.json" "bundle/packages/$ws/"
+            [ -d "packages/$ws/dist" ] && cp -R "packages/$ws/dist" "bundle/packages/$ws/dist"
+          done
+          cp package.json package-lock.json bundle/ 2>/dev/null || true
+          tar czf rfutils-node-bundle.tar.gz -C bundle .
+          ls -la rfutils-node-bundle.tar.gz
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rfutils-node-bundle
+          path: rfutils-node-bundle.tar.gz
+          if-no-files-found: error
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: rfutils-node-bundle.tar.gz
+          generate_release_notes: true
