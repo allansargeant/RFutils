@@ -22,6 +22,8 @@ export interface InventoryItem {
   quantity: number;
   /** Include in coordination/allocation counts. */
   coordinate: boolean;
+  /** Links to an EquipmentProfile id (fills vendor/model + coord defaults). */
+  profileId?: string;
   /** Where it came from. */
   source: 'manual' | 'discovered';
   /** Links to a live DiscoveredDevice id when source === 'discovered'. */

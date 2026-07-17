@@ -134,3 +134,44 @@ export interface ProfileCatalog {
 export function builtinCatalog(): ProfileCatalog {
   return { profiles: EQUIPMENT_PROFILES, bandPresets: BAND_PRESETS };
 }
+
+export interface DerivedCoordDefaults {
+  /** Most conservative recommended spacing across the gear (so all are happy). */
+  minSpacingMhz: number;
+  /** Finest tuning raster across the gear. */
+  stepMhz: number;
+  /** Most common suggested band preset among the gear, if any. */
+  bandPresetId?: string;
+}
+
+/**
+ * Derive coordination defaults from a mix of equipment profiles: the widest
+ * recommended spacing, the finest step, and the most common suggested band.
+ * Falls back to safe generic defaults when nothing matches.
+ */
+export function deriveCoordDefaults(
+  profileIds: (string | undefined)[],
+  catalog: ProfileCatalog
+): DerivedCoordDefaults {
+  const profiles = profileIds
+    .map((id) => (id ? catalog.profiles.find((p) => p.id === id) : undefined))
+    .filter((p): p is EquipmentProfile => !!p);
+  if (profiles.length === 0) return { minSpacingMhz: 0.4, stepMhz: 0.025 };
+
+  const minSpacingMhz = Math.max(...profiles.map((p) => p.recommendedSpacingMhz));
+  const stepMhz = Math.min(...profiles.map((p) => p.tuningStepKhz)) / 1000;
+
+  const counts = new Map<string, number>();
+  for (const p of profiles) {
+    if (p.defaultBandPresetId) counts.set(p.defaultBandPresetId, (counts.get(p.defaultBandPresetId) ?? 0) + 1);
+  }
+  let bandPresetId: string | undefined;
+  let best = 0;
+  for (const [id, c] of counts) {
+    if (c > best) {
+      best = c;
+      bandPresetId = id;
+    }
+  }
+  return { minSpacingMhz, stepMhz, bandPresetId };
+}

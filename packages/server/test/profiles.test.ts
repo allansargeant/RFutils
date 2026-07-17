@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { builtinCatalog } from '@rfutils/shared';
+import { builtinCatalog, deriveCoordDefaults } from '@rfutils/shared';
 
 describe('equipment profile catalog', () => {
   const { profiles, bandPresets } = builtinCatalog();
@@ -33,5 +33,24 @@ describe('equipment profile catalog', () => {
     for (const p of profiles) {
       if (p.defaultBandPresetId) expect(ids.has(p.defaultBandPresetId)).toBe(true);
     }
+  });
+});
+
+describe('deriveCoordDefaults', () => {
+  const catalog = builtinCatalog();
+
+  it('falls back to generic defaults with no profiles', () => {
+    expect(deriveCoordDefaults([undefined, undefined], catalog)).toEqual({
+      minSpacingMhz: 0.4,
+      stepMhz: 0.025,
+    });
+  });
+
+  it('takes the widest recommended spacing across the gear mix', () => {
+    // EW-D recommends 0.6, EW-DX 0.35 → mix should use 0.6 so both are happy.
+    const d = deriveCoordDefaults(['sennheiser-ewd', 'sennheiser-ewdx'], catalog);
+    expect(d.minSpacingMhz).toBe(0.6);
+    expect(d.stepMhz).toBe(0.025);
+    expect(d.bandPresetId).toBe('uk-uhf-core');
   });
 });

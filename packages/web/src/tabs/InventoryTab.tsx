@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import type { InventoryItem, InventoryRole } from '@rfutils/shared';
+import type { InventoryItem, InventoryRole, EquipmentProfile } from '@rfutils/shared';
 import { channelsNeeded } from '@rfutils/shared';
 import { usePlanStore } from '../planStore.js';
+import { getProfiles } from '../api.js';
 
 const ROLES: InventoryRole[] = ['mic', 'iem', 'other'];
 
@@ -16,6 +17,13 @@ export function InventoryTab(): JSX.Element {
   const importFromLive = usePlanStore((s) => s.importFromLive);
 
   const [importMsg, setImportMsg] = useState<string | null>(null);
+  const [profiles, setProfiles] = useState<EquipmentProfile[]>([]);
+
+  useEffect(() => {
+    getProfiles()
+      .then((c) => setProfiles(c.profiles))
+      .catch(() => setProfiles([]));
+  }, []);
 
   useEffect(() => {
     if (!loaded) void load();
@@ -65,6 +73,7 @@ export function InventoryTab(): JSX.Element {
             <thead>
               <tr>
                 <th>Label / talent</th>
+                <th>Profile</th>
                 <th>Vendor</th>
                 <th>Model</th>
                 <th>Band</th>
@@ -80,6 +89,7 @@ export function InventoryTab(): JSX.Element {
                 <InventoryRow
                   key={item.id}
                   item={item}
+                  profiles={profiles}
                   onChange={(patch) => updateItem(item.id, patch)}
                   onRemove={() => removeItem(item.id)}
                 />
@@ -94,17 +104,42 @@ export function InventoryTab(): JSX.Element {
 
 function InventoryRow({
   item,
+  profiles,
   onChange,
   onRemove,
 }: {
   item: InventoryItem;
+  profiles: EquipmentProfile[];
   onChange: (patch: Partial<InventoryItem>) => void;
   onRemove: () => void;
 }): JSX.Element {
+  const pickProfile = (id: string): void => {
+    const p = profiles.find((x) => x.id === id);
+    if (!p) {
+      onChange({ profileId: undefined });
+      return;
+    }
+    onChange({
+      profileId: p.id,
+      vendor: p.manufacturer,
+      model: p.model,
+      role: p.category === 'iem' ? 'iem' : p.category === 'mic' ? 'mic' : 'other',
+    });
+  };
   return (
     <tr>
       <td>
         <input className="cell" value={item.label} onChange={(e) => onChange({ label: e.target.value })} />
+      </td>
+      <td>
+        <select className="cell cell--sm" value={item.profileId ?? ''} onChange={(e) => pickProfile(e.target.value)}>
+          <option value="">— custom —</option>
+          {profiles.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.manufacturer} {p.model}
+            </option>
+          ))}
+        </select>
       </td>
       <td>
         <input className="cell cell--sm" value={item.vendor} onChange={(e) => onChange({ vendor: e.target.value })} />

@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { ExportFormat } from '@rfutils/shared';
-import { channelNames, defaultCoordinationParams, EXPORT_FORMATS } from '@rfutils/shared';
+import {
+  channelNames,
+  defaultCoordinationParams,
+  deriveCoordDefaults,
+  EXPORT_FORMATS,
+} from '@rfutils/shared';
 import { usePlanStore, type Allocation } from '../planStore.js';
-import { coordinateFrequencies, exportModel } from '../api.js';
+import { coordinateFrequencies, exportModel, getProfiles } from '../api.js';
 
 function download(text: string, filename: string, mime: string): void {
   const url = URL.createObjectURL(new Blob([text], { type: mime }));
@@ -54,7 +59,23 @@ export function AllocationTab(): JSX.Element {
         setError('No inventory channels flagged for coordination. Add equipment on the Inventory tab.');
         return;
       }
-      const res = await coordinateFrequencies(count, defaultCoordinationParams(), names);
+      // Derive coordination settings from the gear mix (widest spacing, finest
+      // step, most common band) so the request suits the actual equipment.
+      const params = defaultCoordinationParams();
+      try {
+        const catalog = await getProfiles();
+        const profileIds = items.filter((i) => i.coordinate).map((i) => i.profileId);
+        const derived = deriveCoordDefaults(profileIds, catalog);
+        params.minSpacingMhz = derived.minSpacingMhz;
+        params.stepMhz = derived.stepMhz;
+        const band = derived.bandPresetId
+          ? catalog.bandPresets.find((b) => b.id === derived.bandPresetId)
+          : undefined;
+        if (band) params.ranges = band.ranges;
+      } catch {
+        /* fall back to defaults if the catalog can't be fetched */
+      }
+      const res = await coordinateFrequencies(count, params, names);
       setCoordination(res);
       setAllocations(
         res.assigned.map((a) => ({ frequencyMhz: a.frequencyMhz, name: a.name, locked: a.locked }))
