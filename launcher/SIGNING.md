@@ -1,17 +1,22 @@
-# Signing & notarizing the RFutils desktop app
+# Signing & notarizing the RFutils desktop app (optional)
 
-By default the `.dmg` is **unsigned** — macOS Gatekeeper blocks it on first launch,
-so users right-click the app → **Open**. To ship a signed + notarized build that
-opens normally, add your Apple Developer credentials as **GitHub Actions secrets**;
-the [`release-macos`](../.github/workflows/release-macos.yml) workflow picks them
-up automatically. You add these in the repo yourself — they are never entered or
-stored anywhere else.
+**You do not need any of this to use RFutils.** By default the `.dmg` is
+**unsigned** — macOS Gatekeeper just asks you to right-click the app → **Open**
+the first time, and it runs fine after that. The release workflow builds and
+ships that unsigned `.dmg` automatically.
 
-## What you need
+This page is only relevant **if** you have a **paid Apple Developer Program**
+membership and want a signed + notarized build that opens with a normal
+double-click. Notarization is a paid-account feature — there's no free path — so
+if you don't have an account, ignore this file. When the secrets below are
+absent the [`release-macos`](../.github/workflows/release-macos.yml) workflow
+simply produces the unsigned `.dmg`; add them and it produces a signed one. You
+add them in the repo yourself — they are never entered or stored anywhere else.
 
-An **Apple Developer Program** membership (individual or organization) and a
-**Developer ID Application** certificate (this is the cert type for distributing
-apps *outside* the App Store).
+## What you'd need
+
+A **paid Apple Developer Program** membership and a **Developer ID Application**
+certificate (the cert type for distributing apps *outside* the App Store).
 
 ## Secrets to create
 

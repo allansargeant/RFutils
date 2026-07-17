@@ -97,9 +97,11 @@ interface + port, Start/Stop the server, and open the web UI. It's **fully
 self-contained** — the `.dmg` embeds a Node runtime plus the whole app (server +
 built web UI), so nothing needs to be installed, not even Node. Grab it from
 [Releases](https://github.com/allansargeant/RFutils/releases), or see
-[launcher/](launcher/) to build it. Release `.dmg`s are unsigned by default
-(right-click → **Open** on first launch); add Apple credentials as repo secrets
-to ship a signed + notarized build — see [launcher/SIGNING.md](launcher/SIGNING.md).
+[launcher/](launcher/) to build it. The `.dmg` is **unsigned** (a signed +
+notarized build needs a paid Apple Developer account) — on first launch,
+right-click the app → **Open** to get past Gatekeeper. If you ever get a
+Developer account, [launcher/SIGNING.md](launcher/SIGNING.md) shows how to turn
+signing on; until then it's not needed.
 
 <p align="center"><img src="launcher/docs/panel.png" width="300" alt="RFutils desktop app"></p>
 
