@@ -27,14 +27,6 @@ permissions:
 jobs:
   dmg:
     runs-on: macos-14 # Apple Silicon
-    # Expose the gating secrets as env so steps can conditionally sign.
-    env:
-      APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-      APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-      APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-      APPLE_ID: ${{ secrets.APPLE_ID }}
-      APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
     steps:
       - uses: actions/checkout@v4
 
@@ -45,6 +37,15 @@ jobs:
 
       - uses: dtolnay/rust-toolchain@stable
 
+      # Decide whether to do a signed build WITHOUT leaking the secret and
+      # without setting the Apple env vars for the unsigned path (an empty-but-
+      # present APPLE_CERTIFICATE makes Tauri attempt a failing keychain import).
+      - id: cfg
+        env:
+          CERT: ${{ secrets.APPLE_CERTIFICATE }}
+        run: |
+          if [ -n "$CERT" ]; then echo "signing=true" >> "$GITHUB_OUTPUT"; else echo "signing=false" >> "$GITHUB_OUTPUT"; fi
+
       - name: Install launcher deps
         run: cd launcher && npm ci
 
@@ -52,24 +53,40 @@ jobs:
         run: cd launcher && bash scripts/prepare.sh
 
       - name: Import signing certificate
-        if: env.APPLE_CERTIFICATE != ''
+        if: steps.cfg.outputs.signing == 'true'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
         run: |
           KEYCHAIN="$RUNNER_TEMP/app-signing.keychain-db"
-          KPASS="${APPLE_CERTIFICATE_PASSWORD}"
-          security create-keychain -p "$KPASS" "$KEYCHAIN"
+          security create-keychain -p "$APPLE_CERTIFICATE_PASSWORD" "$KEYCHAIN"
           security set-keychain-settings -lut 21600 "$KEYCHAIN"
-          security unlock-keychain -p "$KPASS" "$KEYCHAIN"
+          security unlock-keychain -p "$APPLE_CERTIFICATE_PASSWORD" "$KEYCHAIN"
           echo "$APPLE_CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/cert.p12"
           security import "$RUNNER_TEMP/cert.p12" -k "$KEYCHAIN" -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
           security list-keychain -d user -s "$KEYCHAIN" login.keychain-db
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KPASS" "$KEYCHAIN" >/dev/null
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$APPLE_CERTIFICATE_PASSWORD" "$KEYCHAIN" >/dev/null
           rm -f "$RUNNER_TEMP/cert.p12"
 
       - name: Pre-sign embedded Node
-        if: env.APPLE_SIGNING_IDENTITY != ''
+        if: steps.cfg.outputs.signing == 'true'
+        env:
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
         run: cd launcher && bash scripts/sign-embedded.sh
 
-      - name: Build .dmg (signs + notarizes when secrets are set)
+      - name: Build signed + notarized .dmg
+        if: steps.cfg.outputs.signing == 'true'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: cd launcher && npm run tauri build
+
+      - name: Build unsigned .dmg
+        if: steps.cfg.outputs.signing != 'true'
         run: cd launcher && npm run tauri build
 
       - name: Attach .dmg to the release
