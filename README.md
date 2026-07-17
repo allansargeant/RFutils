@@ -204,9 +204,18 @@ Off by default. To route Dante crosspoints from the Monitor tab, run your own
 custom variables and presses your button — it has no Dante integration of its own, and full Dante
 API control still requires Audinate's SDK (see `packages/server/src/monitor/audio/danteApi.ts`).
 
+## Coordinate
+
+Compute a set of mutually-compatible frequencies. Enter tuning ranges, how many you need, spacing,
+and IM options; the engine builds a candidate grid (ranges minus exclusions + guard) and places
+carriers that are adequately spaced and free of third-order (`2·f1−f2`, `f1+f2−f3`) and optional
+fifth-order (`3·f1−2·f2`) intermodulation products landing on any carrier. Lock existing
+frequencies to coordinate around them, re-check the result for conflicts, and export straight to
+any WWB/WSM format. Works on an integer-kHz raster and is deterministic (seeded), so a given request
+always reproduces. See [`coordination/engine.ts`](packages/server/src/coordination/engine.ts).
+
 ## Roadmap
 
-The **Coordination**, **Allocation**, and **Deployment** tabs are placeholders for the services this
-suite is being built to grow into — intermod-aware frequency coordination, assigning coordinated
-frequencies to talent/receivers, and pushing them to the gear. The unified channel model and device
-registry already powering Convert and Monitor are the foundation for those.
+The **Allocation** and **Deployment** tabs are placeholders for the remaining services — assigning
+coordinated frequencies to talent/receivers, and programming/pushing them to the gear. The unified
+channel model, coordination engine, and device registry are the foundation for those.

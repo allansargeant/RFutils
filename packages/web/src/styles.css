@@ -232,6 +232,60 @@ body {
   font-size: 13px;
 }
 
+/* --- coordination form --- */
+.coord-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.field code {
+  background: var(--panel-2);
+  padding: 0 4px;
+  border-radius: 3px;
+  color: var(--muted);
+}
+.field input[type='text'],
+.field input[type='number'],
+.field input:not([type]) {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 9px;
+  font-size: 13px;
+}
+.field--wide {
+  grid-column: 1 / -1;
+}
+.field--check {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 13px;
+}
+.callout ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  line-height: 1.7;
+}
+.callout code {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
 /* --- export bar --- */
 .export-bar {
   display: flex;

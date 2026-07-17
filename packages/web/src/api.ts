@@ -14,6 +14,9 @@ import type {
   FieldMapping,
   PmseConversion,
   ServerToClientEvent,
+  CoordinationParams,
+  CoordinationResult,
+  AnalysisResult,
 } from '@rfutils/shared';
 
 async function asJson<T>(res: Response): Promise<T> {
@@ -58,6 +61,33 @@ export async function convertPmsePdf(file: File): Promise<PmseConversion> {
   const form = new FormData();
   form.append('file', file);
   return asJson<PmseConversion>(await fetch('/api/pmse/convert', { method: 'POST', body: form }));
+}
+
+export async function coordinateFrequencies(
+  count: number,
+  params: CoordinationParams,
+  names?: string[]
+): Promise<CoordinationResult> {
+  return asJson<CoordinationResult>(
+    await fetch('/api/coordinate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ count, params, names }),
+    })
+  );
+}
+
+export async function analyzeFrequencies(
+  frequencies: number[],
+  params: CoordinationParams
+): Promise<AnalysisResult> {
+  return asJson<AnalysisResult>(
+    await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ frequencies, params }),
+    })
+  );
 }
 
 export async function companionStatus(): Promise<CompanionStatus> {

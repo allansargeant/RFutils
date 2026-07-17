@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ConvertTab } from './tabs/ConvertTab.js';
 import { MonitorTab } from './tabs/MonitorTab.js';
+import { CoordinationTab } from './tabs/CoordinationTab.js';
 import { PlaceholderTab } from './tabs/PlaceholderTab.js';
 
 type TabId = 'convert' | 'monitor' | 'coordination' | 'allocation' | 'deployment';
@@ -14,7 +15,7 @@ interface TabDef {
 const TABS: TabDef[] = [
   { id: 'convert', label: 'Convert' },
   { id: 'monitor', label: 'Monitor' },
-  { id: 'coordination', label: 'Coordination', planned: true },
+  { id: 'coordination', label: 'Coordination' },
   { id: 'allocation', label: 'Allocation', planned: true },
   { id: 'deployment', label: 'Deployment', planned: true },
 ];
@@ -48,17 +49,7 @@ export function App(): JSX.Element {
       <main>
         {tab === 'convert' && <ConvertTab />}
         {tab === 'monitor' && <MonitorTab />}
-        {tab === 'coordination' && (
-          <PlaceholderTab
-            title="Frequency coordination"
-            blurb="Run intermodulation-aware coordination across your whole inventory instead of importing pre-coordinated lists — the natural next step once WSM/WWB files and live devices share one model here."
-            bullets={[
-              'Compute compatible frequency sets with IM3/IM5 exclusion',
-              'Respect Ofcom PMSE licences and local TV allocations as constraints',
-              'Reserve backups per zone and export straight to WWB / WSM',
-            ]}
-          />
-        )}
+        {tab === 'coordination' && <CoordinationTab />}
         {tab === 'allocation' && (
           <PlaceholderTab
             title="Allocation"

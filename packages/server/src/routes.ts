@@ -12,6 +12,8 @@ import {
 } from './formats/index.js';
 import { convertLicence, generateShow } from './pmse/index.js';
 import type { MonitorService } from './monitor/index.js';
+import { coordinate, analyze } from './coordination/engine.js';
+import type { CoordinationParams } from '@rfutils/shared';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
 
@@ -132,6 +134,39 @@ export function createApiRouter(monitor: MonitorService): Router {
       res.json(conversion);
     } catch (err) {
       res.status(422).json({ error: `Could not parse this PDF: ${(err as Error).message}` });
+    }
+  });
+
+  // --- Frequency coordination ---------------------------------------------
+
+  /** Coordinate `count` new frequencies. Body: { count, params, names? }. */
+  router.post('/coordinate', (req: Request, res: Response) => {
+    const count = Number(req.body?.count);
+    const params = req.body?.params as CoordinationParams | undefined;
+    const names = req.body?.names as string[] | undefined;
+    if (!Number.isFinite(count) || !params || !Array.isArray(params.ranges)) {
+      res.status(400).json({ error: 'Body must be { count, params: { ranges, ... } }.' });
+      return;
+    }
+    try {
+      res.json(coordinate(count, params, names));
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  /** Analyze an existing set for conflicts. Body: { frequencies: number[], params }. */
+  router.post('/analyze', (req: Request, res: Response) => {
+    const frequencies = req.body?.frequencies as number[] | undefined;
+    const params = req.body?.params as CoordinationParams | undefined;
+    if (!Array.isArray(frequencies) || !params) {
+      res.status(400).json({ error: 'Body must be { frequencies: number[], params }.' });
+      return;
+    }
+    try {
+      res.json(analyze(frequencies, params));
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
     }
   });
 
