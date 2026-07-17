@@ -29,7 +29,7 @@
     "targets": ["app", "dmg"],
     "resources": [
       "launcher.toml",
-      "node",
+      "node*",
       "rfutils-app/**/*"
     ],
     "icon": [

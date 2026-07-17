@@ -226,6 +226,27 @@ fn resolve_against(path: &str, base: Option<&Path>) -> String {
     }
 }
 
+/// On Windows a bundled command ships with a `.exe` extension (e.g. `node.exe`),
+/// but `launcher.toml` names it without one (`node`). If the extension-less
+/// program isn't present and a `.exe` sibling is, prefer that so the spawn finds
+/// the executable. No-op on other platforms.
+#[cfg(windows)]
+fn with_windows_exe(program: String) -> String {
+    let p = Path::new(&program);
+    if p.extension().is_none() && !p.exists() {
+        let exe = format!("{program}.exe");
+        if Path::new(&exe).exists() {
+            return exe;
+        }
+    }
+    program
+}
+
+#[cfg(not(windows))]
+fn with_windows_exe(program: String) -> String {
+    program
+}
+
 /// Build the concrete [`Launch`] for the given host/port, performing whatever
 /// injection the app's `launcher.toml` calls for.
 ///
@@ -285,7 +306,10 @@ pub fn build_launch(
 
     // Substitute {resource} in the command, then resolve any remaining relative
     // path against the resource dir (covers both `{resource}/node` and `bin/x`).
-    let program = resolve_against(&subst(&cfg.app.command, bind_host, port, None, res), resource_dir);
+    let program = with_windows_exe(resolve_against(
+        &subst(&cfg.app.command, bind_host, port, None, res),
+        resource_dir,
+    ));
 
     // Prefer an explicit cwd; otherwise run from the writable work dir so a
     // bundled server can persist state (it can't write inside a read-only .app).
