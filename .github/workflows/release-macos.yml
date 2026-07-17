@@ -1,0 +1,86 @@
+name: release-macos
+
+# Builds the RFutils desktop .dmg on macOS and attaches it to the release.
+# If the Apple signing/notarization secrets are configured it produces a
+# signed + notarized .dmg; otherwise it produces an unsigned one (right-click →
+# Open on first launch). Required repo secrets for a signed build:
+#   APPLE_CERTIFICATE           base64 of your "Developer ID Application" .p12
+#   APPLE_CERTIFICATE_PASSWORD  password for that .p12
+#   APPLE_SIGNING_IDENTITY      e.g. "Developer ID Application: Name (TEAMID)"
+#   APPLE_ID                    Apple ID email (for notarization)
+#   APPLE_PASSWORD              app-specific password for that Apple ID
+#   APPLE_TEAM_ID               10-char Team ID
+# See launcher/SIGNING.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to attach the .dmg to (e.g. v0.2.0)'
+        required: true
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  dmg:
+    runs-on: macos-14 # Apple Silicon
+    # Expose the gating secrets as env so steps can conditionally sign.
+    env:
+      APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+      APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+      APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install launcher deps
+        run: cd launcher && npm ci
+
+      - name: Build + stage embedded app
+        run: cd launcher && bash scripts/prepare.sh
+
+      - name: Import signing certificate
+        if: env.APPLE_CERTIFICATE != ''
+        run: |
+          KEYCHAIN="$RUNNER_TEMP/app-signing.keychain-db"
+          KPASS="${APPLE_CERTIFICATE_PASSWORD}"
+          security create-keychain -p "$KPASS" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KPASS" "$KEYCHAIN"
+          echo "$APPLE_CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" -k "$KEYCHAIN" -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security list-keychain -d user -s "$KEYCHAIN" login.keychain-db
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KPASS" "$KEYCHAIN" >/dev/null
+          rm -f "$RUNNER_TEMP/cert.p12"
+
+      - name: Pre-sign embedded Node
+        if: env.APPLE_SIGNING_IDENTITY != ''
+        run: cd launcher && bash scripts/sign-embedded.sh
+
+      - name: Build .dmg (signs + notarizes when secrets are set)
+        run: cd launcher && npm run tauri build
+
+      - name: Attach .dmg to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          # On a fresh tag, release.yml creates the release (with notes) first;
+          # wait for it so we only ever append the .dmg.
+          for i in $(seq 1 30); do
+            if gh release view "$TAG" >/dev/null 2>&1; then break; fi
+            echo "waiting for release $TAG…"; sleep 10
+          done
+          gh release upload "$TAG" launcher/src-tauri/target/release/bundle/dmg/*.dmg --clobber
