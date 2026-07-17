@@ -21,19 +21,23 @@ flowchart LR
     subgraph Browser["Browser (React / Vite)"]
         C[Convert tab]
         M[Monitor tab]
-        R[Coordination · Allocation · Deployment<br/>roadmap tabs]
+        P[Inventory · Coordinate ·<br/>Allocate · Deploy]
     end
     subgraph Server["Node server (Express + WebSocket)"]
         F[Format parsers<br/>WWB/WSM/PMSE]
+        E[Coordination engine<br/>+ inventory store]
         D[Device discovery<br/>mDNS · Shure TCP · AES67]
     end
     C -- REST /api --> F
+    P -- REST /api --> E
     M -- WebSocket /ws --> D
     D -.raw sockets.-> Net[(Local network)]
+    P -. program .-> D
 ```
 
 Everything routes through **one internal channel model** (`packages/shared`), so any supported input
-can be re-exported as any supported output, and the same model feeds the planned coordination tools.
+can be re-exported as any supported output, and the same model feeds coordination, allocation, and
+deployment.
 
 ![RFutils Convert tab: a Sennheiser WSM Coordination Report parsed into the channel table with an export-format picker](docs/screenshots/convert-coordination.png)
 
@@ -214,8 +218,22 @@ frequencies to coordinate around them, re-check the result for conflicts, and ex
 any WWB/WSM format. Works on an integer-kHz raster and is deterministic (seeded), so a given request
 always reproduces. See [`coordination/engine.ts`](packages/server/src/coordination/engine.ts).
 
-## Roadmap
+## Inventory, Allocate & Deploy
 
-The **Allocation** and **Deployment** tabs are placeholders for the remaining services — assigning
-coordinated frequencies to talent/receivers, and programming/pushing them to the gear. The unified
-channel model, coordination engine, and device registry are the foundation for those.
+The suite carries a plan end to end:
+
+- **Inventory** — build your equipment list by hand or import it from live-discovered devices;
+  it's persisted server-side (`~/.rfutils/inventory.json`) and drives how many channels coordination
+  places. See [`inventory/store.ts`](packages/server/src/inventory/store.ts).
+- **Allocation** — pair coordinated frequencies with talent / inventory channels (auto-populated
+  from the last coordination, or coordinated straight from the inventory), then export any format.
+- **Deployment** — bind allocations to live receiver channels and program them, or export files for
+  offline programming. Live programming uses Shure command strings (`SET … FREQUENCY`) and is
+  **dry-run by default** — it shows the exact strings before anything is sent.
+  ⚠️ Live programming is experimental and untested against hardware; only Shure command-strings
+  channels are live-programmable (others export). Verify against your receiver's Command Strings PDF
+  before sending. See [`programming/shureProgrammer.ts`](packages/server/src/programming/shureProgrammer.ts).
+
+![RFutils Deployment tab: allocated frequencies bound to live device channels with a dry-run showing the exact Shure command strings](docs/screenshots/deployment.png)
+
+*Screenshot captured with `RFUTILS_MOCK_DEVICES=1` (simulated receivers).*
