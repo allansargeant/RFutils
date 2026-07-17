@@ -13,6 +13,8 @@ export interface Allocation {
   name: string;
   /** Inventory item this frequency is allocated to, if any. */
   itemId?: string;
+  /** Live device channel bound for programming (e.g. "shure:10.0.0.21:1"). */
+  deviceChannelId?: string;
   locked?: boolean;
 }
 

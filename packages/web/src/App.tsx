@@ -3,7 +3,8 @@ import { ConvertTab } from './tabs/ConvertTab.js';
 import { MonitorTab } from './tabs/MonitorTab.js';
 import { InventoryTab } from './tabs/InventoryTab.js';
 import { CoordinationTab } from './tabs/CoordinationTab.js';
-import { PlaceholderTab } from './tabs/PlaceholderTab.js';
+import { AllocationTab } from './tabs/AllocationTab.js';
+import { DeploymentTab } from './tabs/DeploymentTab.js';
 
 type TabId = 'convert' | 'monitor' | 'inventory' | 'coordination' | 'allocation' | 'deployment';
 
@@ -18,8 +19,8 @@ const TABS: TabDef[] = [
   { id: 'monitor', label: 'Monitor' },
   { id: 'inventory', label: 'Inventory' },
   { id: 'coordination', label: 'Coordination' },
-  { id: 'allocation', label: 'Allocation', planned: true },
-  { id: 'deployment', label: 'Deployment', planned: true },
+  { id: 'allocation', label: 'Allocation' },
+  { id: 'deployment', label: 'Deployment' },
 ];
 
 export function App(): JSX.Element {
@@ -53,28 +54,8 @@ export function App(): JSX.Element {
         {tab === 'monitor' && <MonitorTab />}
         {tab === 'inventory' && <InventoryTab />}
         {tab === 'coordination' && <CoordinationTab />}
-        {tab === 'allocation' && (
-          <PlaceholderTab
-            title="Allocation"
-            blurb="Assign coordinated frequencies to specific talent, channels and receivers, tracking who carries what across a multi-day, multi-zone production."
-            bullets={[
-              'Map channels to talent / role and to physical receiver slots',
-              'Per-zone and per-day allocation with conflict detection',
-              'Label sheets and paperwork generated from the same data',
-            ]}
-          />
-        )}
-        {tab === 'deployment' && (
-          <PlaceholderTab
-            title="Deployment"
-            blurb="Push allocations to the gear and confirm they landed — closing the loop between the plan and the live receivers already visible on the Monitor tab."
-            bullets={[
-              'Deploy frequencies to Shure / Sennheiser receivers over the network',
-              'Verify deployed tuning against the plan and flag drift',
-              'One-click re-deploy when coordination changes mid-show',
-            ]}
-          />
-        )}
+        {tab === 'allocation' && <AllocationTab />}
+        {tab === 'deployment' && <DeploymentTab />}
       </main>
 
       <footer className="app__footer">

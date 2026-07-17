@@ -14,6 +14,7 @@ import { convertLicence, generateShow } from './pmse/index.js';
 import type { MonitorService } from './monitor/index.js';
 import { coordinate, analyze } from './coordination/engine.js';
 import { loadInventory, saveInventory } from './inventory/store.js';
+import { buildShureSetCommand, sendShureCommands, type ProgramTargetResult } from './programming/shureProgrammer.js';
 import type { CoordinationParams, InventoryItem } from '@rfutils/shared';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
@@ -189,6 +190,66 @@ export function createApiRouter(monitor: MonitorService): Router {
     } catch (err) {
       res.status(500).json({ error: (err as Error).message });
     }
+  });
+
+  // --- Programming (push frequencies to devices) ---------------------------
+
+  /**
+   * Program frequencies into receivers. Body: { targets: [{channelId,
+   * frequencyMhz}], dryRun }. Dry-run (the default) returns the exact command
+   * strings without connecting. Only Shure command-strings channels are
+   * supported for live programming; export a file for anything else.
+   */
+  router.post('/program', async (req: Request, res: Response) => {
+    const targets = req.body?.targets as Array<{ channelId: string; frequencyMhz: number }> | undefined;
+    const dryRun = req.body?.dryRun !== false; // default to safe dry-run
+    if (!Array.isArray(targets)) {
+      res.status(400).json({ error: 'Body must be { targets: [{channelId, frequencyMhz}], dryRun }.' });
+      return;
+    }
+
+    const results: ProgramTargetResult[] = [];
+    const byAddress = new Map<string, Array<{ channelId: string; command: string }>>();
+
+    for (const t of targets) {
+      const parts = String(t.channelId).split(':');
+      if (parts[0] !== 'shure' || parts.length !== 3) {
+        results.push({
+          channelId: t.channelId,
+          address: '',
+          command: '',
+          sent: false,
+          ok: false,
+          error: 'Only Shure channels can be live-programmed; export a file for other devices.',
+        });
+        continue;
+      }
+      const address = parts[1]!;
+      const command = buildShureSetCommand(parts[2]!, Number(t.frequencyMhz));
+      results.push({ channelId: t.channelId, address, command, sent: false, ok: dryRun });
+      if (!dryRun) {
+        const arr = byAddress.get(address) ?? [];
+        arr.push({ channelId: t.channelId, command });
+        byAddress.set(address, arr);
+      }
+    }
+
+    if (!dryRun) {
+      for (const [address, cmds] of byAddress) {
+        const r = await sendShureCommands(address, cmds.map((c) => c.command));
+        for (const c of cmds) {
+          const entry = results.find((x) => x.channelId === c.channelId);
+          if (entry) {
+            entry.sent = true;
+            entry.ok = r.ok;
+            entry.reply = r.reply;
+            if (r.error) entry.error = r.error;
+          }
+        }
+      }
+    }
+
+    res.json({ dryRun, results });
   });
 
   // --- Live monitoring (device snapshot + Companion routing) ---------------

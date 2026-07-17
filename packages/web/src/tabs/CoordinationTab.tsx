@@ -8,6 +8,7 @@ import type {
 } from '@rfutils/shared';
 import { defaultCoordinationParams, EXPORT_FORMATS } from '@rfutils/shared';
 import { coordinateFrequencies, analyzeFrequencies, exportModel } from '../api.js';
+import { usePlanStore } from '../planStore.js';
 
 function parseRanges(text: string): FreqRange[] {
   return text
@@ -76,6 +77,7 @@ export function CoordinationTab(): JSX.Element {
     try {
       const res = await coordinateFrequencies(count, buildParams());
       setResult(res);
+      usePlanStore.getState().setCoordination(res); // share with Allocation/Deployment
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
       setResult(null);

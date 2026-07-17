@@ -112,6 +112,29 @@ export async function getDevices(): Promise<DiscoveredDevice[]> {
   return r.devices;
 }
 
+export interface ProgramTargetResult {
+  channelId: string;
+  address: string;
+  command: string;
+  sent: boolean;
+  ok: boolean;
+  reply?: string;
+  error?: string;
+}
+
+export async function programFrequencies(
+  targets: Array<{ channelId: string; frequencyMhz: number }>,
+  dryRun: boolean
+): Promise<{ dryRun: boolean; results: ProgramTargetResult[] }> {
+  return asJson(
+    await fetch('/api/program', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ targets, dryRun }),
+    })
+  );
+}
+
 export async function companionStatus(): Promise<CompanionStatus> {
   return asJson<CompanionStatus>(await fetch('/api/companion/status'));
 }
