@@ -14,6 +14,7 @@ import { convertLicence, generateShow } from './pmse/index.js';
 import type { MonitorService } from './monitor/index.js';
 import { coordinate, analyze } from './coordination/engine.js';
 import { loadInventory, saveInventory } from './inventory/store.js';
+import { loadCatalog } from './profiles/catalog.js';
 import { buildShureSetCommand, sendShureCommands, type ProgramTargetResult } from './programming/shureProgrammer.js';
 import type { CoordinationParams, InventoryItem } from '@rfutils/shared';
 
@@ -155,6 +156,11 @@ export function createApiRouter(monitor: MonitorService): Router {
     } catch (err) {
       res.status(500).json({ error: (err as Error).message });
     }
+  });
+
+  /** Equipment profiles + band presets (built-in merged with the user's file). */
+  router.get('/profiles', (_req: Request, res: Response) => {
+    res.json(loadCatalog());
   });
 
   /** Analyze an existing set for conflicts. Body: { frequencies: number[], params }. */

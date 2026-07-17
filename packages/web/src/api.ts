@@ -20,6 +20,7 @@ import type {
   Inventory,
   InventoryItem,
   DiscoveredDevice,
+  ProfileCatalog,
 } from '@rfutils/shared';
 
 async function asJson<T>(res: Response): Promise<T> {
@@ -91,6 +92,10 @@ export async function analyzeFrequencies(
       body: JSON.stringify({ frequencies, params }),
     })
   );
+}
+
+export async function getProfiles(): Promise<ProfileCatalog> {
+  return asJson<ProfileCatalog>(await fetch('/api/profiles'));
 }
 
 export async function getInventory(): Promise<Inventory> {

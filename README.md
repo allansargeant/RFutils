@@ -210,8 +210,13 @@ API control still requires Audinate's SDK (see `packages/server/src/monitor/audi
 
 ## Coordinate
 
-Compute a set of mutually-compatible frequencies. Enter tuning ranges, how many you need, spacing,
-and IM options; the engine builds a candidate grid (ranges minus exclusions + guard) and places
+Compute a set of mutually-compatible frequencies. Pick an **equipment profile** (Shure, Sennheiser,
+Wisycom, Lectrosonics, Audio-Technica, Sony …) to prefill the tuning raster and recommended
+spacing, and a **band preset** (UK Ch38, UK/US UHF core, Ch70, 2.4 GHz …) to prefill the ranges —
+or type them in. The profile catalog is a starting point (values are flagged unverified — check
+against your unit and licence) and is user-extensible via `~/.rfutils/profiles.json`. Then set how
+many you need, spacing, and IM options; the engine builds a candidate grid (ranges minus exclusions
++ guard) and places
 carriers that are adequately spaced and free of third-order (`2·f1−f2`, `f1+f2−f3`) and optional
 fifth-order (`3·f1−2·f2`) intermodulation products landing on any carrier. Lock existing
 frequencies to coordinate around them, re-check the result for conflicts, and export straight to

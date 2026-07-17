@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type {
   CoordinationParams,
   CoordinationResult,
   AnalysisResult,
   FreqRange,
   ExportFormat,
+  ProfileCatalog,
 } from '@rfutils/shared';
 import { defaultCoordinationParams, EXPORT_FORMATS } from '@rfutils/shared';
-import { coordinateFrequencies, analyzeFrequencies, exportModel } from '../api.js';
+import { coordinateFrequencies, analyzeFrequencies, exportModel, getProfiles } from '../api.js';
 import { usePlanStore } from '../planStore.js';
+
+function formatRanges(ranges: FreqRange[]): string {
+  return ranges.map((r) => `${r.startMhz}-${r.endMhz}`).join(', ');
+}
 
 function parseRanges(text: string): FreqRange[] {
   return text
@@ -56,6 +61,37 @@ export function CoordinationTab(): JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [exportFormat, setExportFormat] = useState<ExportFormat>('wwb-frequency-list');
+
+  const [catalog, setCatalog] = useState<ProfileCatalog | null>(null);
+  const [bandId, setBandId] = useState('');
+  const [profileId, setProfileId] = useState('');
+  const [profileNote, setProfileNote] = useState<string | null>(null);
+
+  useEffect(() => {
+    getProfiles().then(setCatalog).catch(() => setCatalog(null));
+  }, []);
+
+  const applyBand = (id: string): void => {
+    setBandId(id);
+    const preset = catalog?.bandPresets.find((b) => b.id === id);
+    if (preset) setRangesText(formatRanges(preset.ranges));
+  };
+
+  const applyProfile = (id: string): void => {
+    setProfileId(id);
+    const profile = catalog?.profiles.find((p) => p.id === id);
+    if (!profile) {
+      setProfileNote(null);
+      return;
+    }
+    setSpacing(profile.recommendedSpacingMhz);
+    setStep(profile.tuningStepKhz / 1000);
+    if (profile.defaultBandPresetId) applyBand(profile.defaultBandPresetId);
+    setProfileNote(
+      `${profile.manufacturer} ${profile.model}: ~${profile.occupiedBandwidthKhz} kHz occupied, ` +
+        `${profile.recommendedSpacingMhz} MHz spacing recommended. ${profile.protocol === 'shure-command-strings' ? 'Programmable over the network.' : profile.protocol === 'sennheiser-ssc' ? 'Monitored over SSC.' : 'File export only.'} Verify against your unit.`
+    );
+  };
 
   const buildParams = (): CoordinationParams => ({
     ranges: parseRanges(rangesText),
@@ -126,6 +162,29 @@ export function CoordinationTab(): JSX.Element {
       </p>
 
       <div className="coord-form">
+        <label className="field">
+          Equipment profile
+          <select value={profileId} onChange={(e) => applyProfile(e.target.value)}>
+            <option value="">— pick gear (prefills spacing/step) —</option>
+            {catalog?.profiles.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.manufacturer} {p.model}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field">
+          Band preset
+          <select value={bandId} onChange={(e) => applyBand(e.target.value)}>
+            <option value="">— pick a band (prefills ranges) —</option>
+            {catalog?.bandPresets.map((b) => (
+              <option key={b.id} value={b.id}>
+                {b.name} · {b.region}
+              </option>
+            ))}
+          </select>
+        </label>
+        {profileNote && <p className="field--wide export-note">{profileNote}</p>}
         <label className="field field--wide">
           <span>
             Tuning ranges — MHz, e.g. <code>606.5-614, 470-478</code>
