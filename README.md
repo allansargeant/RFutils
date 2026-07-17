@@ -223,9 +223,13 @@ frequencies to coordinate around them, re-check the result for conflicts, and ex
 any WWB/WSM format. Works on an integer-kHz raster and is deterministic (seeded), so a given request
 always reproduces. See [`coordination/engine.ts`](packages/server/src/coordination/engine.ts).
 
+![RFutils Coordination tab: an equipment profile (Sennheiser EW-DX) and band preset (UK UHF PMSE 470–608) selected, with tuning ranges, spacing, IM-guard and third/fifth-order intermodulation options](docs/screenshots/coordination.png)
+
 ## Inventory, Allocate & Deploy
 
 The suite carries a plan end to end:
+
+![RFutils Inventory tab: an equipment list with Label/talent, Profile, Vendor, Model, Band, Role, Qty and coordinate columns, plus Add item / Import from live devices](docs/screenshots/inventory.png)
 
 - **Inventory** — build your equipment list by hand or import it from live-discovered devices;
   it's persisted server-side (`~/.rfutils/inventory.json`) and drives how many channels coordination
