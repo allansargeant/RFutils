@@ -17,6 +17,9 @@ import type {
   CoordinationParams,
   CoordinationResult,
   AnalysisResult,
+  Inventory,
+  InventoryItem,
+  DiscoveredDevice,
 } from '@rfutils/shared';
 
 async function asJson<T>(res: Response): Promise<T> {
@@ -88,6 +91,25 @@ export async function analyzeFrequencies(
       body: JSON.stringify({ frequencies, params }),
     })
   );
+}
+
+export async function getInventory(): Promise<Inventory> {
+  return asJson<Inventory>(await fetch('/api/inventory'));
+}
+
+export async function putInventory(items: InventoryItem[]): Promise<Inventory> {
+  return asJson<Inventory>(
+    await fetch('/api/inventory', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items }),
+    })
+  );
+}
+
+export async function getDevices(): Promise<DiscoveredDevice[]> {
+  const r = await asJson<{ devices: DiscoveredDevice[] }>(await fetch('/api/devices'));
+  return r.devices;
 }
 
 export async function companionStatus(): Promise<CompanionStatus> {

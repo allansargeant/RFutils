@@ -33,6 +33,7 @@ struct AppInfo {
     name: String,
     default_port: u16,
     url_template: String,
+    theme: std::collections::BTreeMap<String, String>,
 }
 
 /// The launcher's current status, mirrored into the panel.
@@ -81,6 +82,7 @@ fn get_app_info() -> Result<AppInfo, String> {
         name: cfg.app.name,
         default_port: cfg.app.default_port,
         url_template: cfg.app.url,
+        theme: cfg.app.theme,
     })
 }
 
@@ -280,14 +282,17 @@ pub fn run() {
         .setup(|app| {
             pin_config_path(&app.handle().clone());
 
+            // Name the tray after the app being launched, when we can read it.
+            let app_name = config::load().map(|c| c.app.name).unwrap_or_else(|_| "Launcher".into());
+
             // Tray menu: Show / Quit.
-            let show = MenuItem::with_id(app, "show", "Show Launcher", true, None::<&str>)?;
+            let show = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
             let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
             let menu = Menu::with_items(app, &[&show, &quit])?;
 
             TrayIconBuilder::new()
                 .icon(app.default_window_icon().unwrap().clone())
-                .tooltip("AV Launcher")
+                .tooltip(&app_name)
                 .menu(&menu)
                 .show_menu_on_left_click(false)
                 .on_menu_event(|app, event| match event.id.as_ref() {

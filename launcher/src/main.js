@@ -1,19 +1,20 @@
-// av-launcher panel controller.
+// Launcher panel controller.
 //
-// Talks to the Rust backend via Tauri's global `invoke`. When opened in a plain
-// browser (no Tauri), it falls back to mock data so the panel still renders —
-// handy for previewing the design.
+// Talks to the Rust backend via Tauri's global `invoke`. In a plain browser it
+// falls back to mock data (with per-app themes) so the panel — and its theming
+// — can be previewed and screenshotted without the native app.
 
 const hasTauri = !!(window.__TAURI__ && window.__TAURI__.core);
 const invoke = hasTauri ? window.__TAURI__.core.invoke : mockInvoke;
 
 const el = (id) => document.getElementById(id);
 const ui = {
-  appName: el("app-name"),
-  appSub: el("app-sub"),
-  band: el("status-band"),
-  word: el("status-word"),
-  url: el("status-url"),
+  mark: el("mark"),
+  name: el("app-name"),
+  sub: el("app-sub"),
+  card: el("server-card"),
+  state: el("state"),
+  url: el("url"),
   iface: el("iface"),
   port: el("port"),
   toggle: el("toggle"),
@@ -21,7 +22,6 @@ const ui = {
   hide: el("hide"),
   quit: el("quit"),
   gear: el("gear"),
-  dot: el("logo-dot"),
   msg: el("msg"),
 };
 
@@ -33,17 +33,22 @@ function flash(text, isError = false) {
   ui.msg.classList.toggle("error", isError);
 }
 
+function applyTheme(theme) {
+  if (!theme) return;
+  for (const [k, v] of Object.entries(theme)) {
+    document.documentElement.style.setProperty(`--${k}`, v);
+  }
+}
+
 function renderStatus(status) {
   running = status.running;
-  ui.word.textContent = status.running ? "Running" : "Stopped";
-  ui.url.textContent = status.url || "—";
+  ui.state.textContent = status.running ? "Running" : "Stopped";
+  ui.url.textContent = status.url || "not running";
   ui.url.href = status.url || "#";
-  ui.band.classList.toggle("running", status.running);
-  ui.dot.setAttribute("fill", status.running ? "#37d05a" : "#e11d1d");
+  ui.card.classList.toggle("running", status.running);
 
-  ui.toggle.textContent = status.running ? "Stop" : "Start";
+  ui.toggle.textContent = status.running ? "Stop server" : "Start server";
   ui.toggle.classList.toggle("is-running", status.running);
-  // Interface/port are locked while the server is running.
   ui.iface.disabled = status.running;
   ui.port.disabled = status.running;
   ui.launch.disabled = !status.running;
@@ -80,7 +85,7 @@ async function persist() {
   }
   try {
     await invoke("save_settings", { port, interface: ui.iface.value });
-    await refreshStatus(); // updates the URL preview
+    await refreshStatus();
   } catch (e) {
     flash(String(e), true);
   }
@@ -89,9 +94,10 @@ async function persist() {
 async function init() {
   try {
     const info = await invoke("get_app_info");
-    ui.appName.textContent = info.name;
-    ui.appSub.textContent = "AV Launcher";
-    document.title = `${info.name} — AV Launcher`;
+    applyTheme(info.theme);
+    ui.name.textContent = info.name;
+    ui.mark.textContent = (info.name.trim()[0] || "◆").toUpperCase();
+    document.title = `${info.name} Launcher`;
 
     const ifaces = await invoke("list_interfaces");
     const settings = await invoke("get_settings");
@@ -127,28 +133,39 @@ ui.toggle.addEventListener("click", async () => {
   }
 });
 
-ui.launch.addEventListener("click", async () => {
-  try {
-    await invoke("open_gui");
-  } catch (e) {
-    flash(String(e), true);
-  }
-});
-
+ui.launch.addEventListener("click", () => invoke("open_gui").catch((e) => flash(String(e), true)));
 ui.hide.addEventListener("click", () => invoke("hide_window").catch(() => {}));
 ui.quit.addEventListener("click", () => invoke("quit_app").catch(() => {}));
 ui.gear.addEventListener("click", () =>
-  flash("Config: ~/Library/Application Support/com.allansargeant.av-launcher")
+  flash("Config: ~/Library/Application Support/<launcher-id>")
 );
 
 window.addEventListener("DOMContentLoaded", init);
 
 // ---------- Mock backend (browser preview + screenshots only) ----------
-// Query params let a headless render pick the app/port/state, e.g.
-//   index.html?app=flock&port=8080&state=running&host=10.147.17.93
+// ?app=flock&port=8080&state=running&host=10.147.17.93 picks the app/state.
+const MOCK_THEMES = {
+  "SRT Router": {
+    bg: "#14161a", panel: "#1a1d24", "panel-2": "#22262e", border: "#2a2d33",
+    text: "#e6e6e6", muted: "#b7bfca", dim: "#6b7280",
+    accent: "#9fb4ff", "accent-soft": "#1c2333", good: "#37835c",
+  },
+  flock: {
+    bg: "#14161a", panel: "#1b1e24", "panel-2": "#21252c", border: "#2c313a",
+    text: "#e6e8eb", muted: "#9aa1ac", dim: "#6b7280",
+    accent: "#1fae63", "accent-soft": "#15271d", good: "#1fae63",
+  },
+  RFutils: {
+    bg: "#12141a", panel: "#1a1d26", "panel-2": "#232733", border: "#2a2e3a",
+    text: "#e8eaf0", muted: "#9aa1b2", dim: "#6b7080",
+    accent: "#6ea8fe", "accent-soft": "#172138", good: "#3fae5a",
+  },
+};
+
 function mockInvoke(cmd, args = {}) {
   const q = new URLSearchParams(location.search);
   const host = q.get("host") || "10.147.17.93";
+  const app = q.get("app") || "SRT Router";
   const s =
     mockInvoke.state ||
     (mockInvoke.state = {
@@ -156,10 +173,7 @@ function mockInvoke(cmd, args = {}) {
       port: Number(q.get("port")) || 8080,
       iface: q.get("iface") || "en0",
     });
-  const url = () => {
-    const h = s.iface === "lo0" ? "127.0.0.1" : host;
-    return `http://${h}:${s.port}/`;
-  };
+  const url = () => `http://${s.iface === "lo0" ? "127.0.0.1" : host}:${s.port}/`;
   const status = () => ({
     running: s.running,
     url: url(),
@@ -170,9 +184,10 @@ function mockInvoke(cmd, args = {}) {
   switch (cmd) {
     case "get_app_info":
       return Promise.resolve({
-        name: q.get("app") || "SRT Router",
+        name: app,
         default_port: s.port,
         url_template: "http://{host}:{port}/",
+        theme: MOCK_THEMES[app] || MOCK_THEMES["SRT Router"],
       });
     case "list_interfaces":
       return Promise.resolve([
@@ -183,17 +198,13 @@ function mockInvoke(cmd, args = {}) {
     case "get_settings":
       return Promise.resolve({ port: s.port, interface: s.iface });
     case "save_settings":
-      s.port = args.port;
-      s.iface = args.interface;
-      return Promise.resolve();
+      s.port = args.port; s.iface = args.interface; return Promise.resolve();
     case "get_status":
       return Promise.resolve(status());
     case "start_server":
-      s.running = true;
-      return Promise.resolve(status());
+      s.running = true; return Promise.resolve(status());
     case "stop_server":
-      s.running = false;
-      return Promise.resolve(status());
+      s.running = false; return Promise.resolve(status());
     default:
       return Promise.resolve();
   }

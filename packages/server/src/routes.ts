@@ -13,7 +13,8 @@ import {
 import { convertLicence, generateShow } from './pmse/index.js';
 import type { MonitorService } from './monitor/index.js';
 import { coordinate, analyze } from './coordination/engine.js';
-import type { CoordinationParams } from '@rfutils/shared';
+import { loadInventory, saveInventory } from './inventory/store.js';
+import type { CoordinationParams, InventoryItem } from '@rfutils/shared';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
 
@@ -165,6 +166,26 @@ export function createApiRouter(monitor: MonitorService): Router {
     }
     try {
       res.json(analyze(frequencies, params));
+    } catch (err) {
+      res.status(500).json({ error: (err as Error).message });
+    }
+  });
+
+  // --- System inventory (persisted equipment list) -------------------------
+
+  router.get('/inventory', (_req: Request, res: Response) => {
+    res.json(loadInventory());
+  });
+
+  /** Replace the whole inventory. Body: { items: InventoryItem[] }. */
+  router.put('/inventory', (req: Request, res: Response) => {
+    const items = req.body?.items as InventoryItem[] | undefined;
+    if (!Array.isArray(items)) {
+      res.status(400).json({ error: 'Body must be { items: InventoryItem[] }.' });
+      return;
+    }
+    try {
+      res.json(saveInventory(items));
     } catch (err) {
       res.status(500).json({ error: (err as Error).message });
     }

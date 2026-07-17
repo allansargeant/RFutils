@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { ConvertTab } from './tabs/ConvertTab.js';
 import { MonitorTab } from './tabs/MonitorTab.js';
+import { InventoryTab } from './tabs/InventoryTab.js';
 import { CoordinationTab } from './tabs/CoordinationTab.js';
 import { PlaceholderTab } from './tabs/PlaceholderTab.js';
 
-type TabId = 'convert' | 'monitor' | 'coordination' | 'allocation' | 'deployment';
+type TabId = 'convert' | 'monitor' | 'inventory' | 'coordination' | 'allocation' | 'deployment';
 
 interface TabDef {
   id: TabId;
@@ -15,6 +16,7 @@ interface TabDef {
 const TABS: TabDef[] = [
   { id: 'convert', label: 'Convert' },
   { id: 'monitor', label: 'Monitor' },
+  { id: 'inventory', label: 'Inventory' },
   { id: 'coordination', label: 'Coordination' },
   { id: 'allocation', label: 'Allocation', planned: true },
   { id: 'deployment', label: 'Deployment', planned: true },
@@ -49,6 +51,7 @@ export function App(): JSX.Element {
       <main>
         {tab === 'convert' && <ConvertTab />}
         {tab === 'monitor' && <MonitorTab />}
+        {tab === 'inventory' && <InventoryTab />}
         {tab === 'coordination' && <CoordinationTab />}
         {tab === 'allocation' && (
           <PlaceholderTab

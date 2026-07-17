@@ -402,6 +402,44 @@ body {
   margin: 0;
 }
 
+/* --- inventory table --- */
+.inventory-table td {
+  padding: 5px 6px;
+}
+.cell {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 5px 7px;
+  font-size: 13px;
+  width: 100%;
+  min-width: 90px;
+}
+.cell--sm {
+  min-width: 70px;
+}
+.cell--xs {
+  min-width: 48px;
+  width: 60px;
+}
+.tag {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  color: var(--muted);
+}
+.tag--discovered {
+  background: #2d3a4a;
+  color: #9cc4ff;
+}
+.tag--manual {
+  background: var(--panel-2);
+}
+
 /* --- placeholder tabs --- */
 .placeholder {
   background: var(--panel);

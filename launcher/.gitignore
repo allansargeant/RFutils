@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Embedded Node runtime + app tree (produced by scripts/prepare.sh; ship in the Release)
+src-tauri/node
+src-tauri/node.tar.gz
+src-tauri/rfutils-app/

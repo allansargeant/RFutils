@@ -1,18 +1,18 @@
-# RFutils launcher config.
+# RFutils desktop app config.
 #
-# RFutils is a Node app, so unlike the Rust launchers this one is NOT a fully
-# self-contained binary: it spawns the system `node` against your local RFutils
-# build and injects host/port via environment variables. It therefore requires
-# Node installed and RFutils built (`npm run build` in ~/Projects/RFutils) on
-# the machine. Edit the two absolute paths below if RFutils lives elsewhere.
+# RFutils is a Node app, so this bundle embeds BOTH a self-contained Node
+# runtime (`node`) and the whole app (server ESM bundle + PMSE templates + built
+# web UI, mirroring the repo's packages/{server,web}/dist layout so the server's
+# import.meta.url-relative paths resolve). {resource} = the .app resource dir.
+# Fully standalone: nothing needs to be installed on the machine.
 
 [app]
 name = "RFutils"
-command = "node"
-args = ["/Users/allansargeant/Projects/RFutils/packages/server/dist/index.js"]
+command = "{resource}/node"
+args = ["{resource}/rfutils-app/packages/server/dist/index.mjs"]
 url = "http://{host}:{port}/"
 default_port = 8420
-cwd = "/Users/allansargeant/Projects/RFutils/packages/server"
+# cwd omitted -> runs from the writable app-config dir.
 
 [inject]
 mode = "env"
@@ -20,3 +20,16 @@ mode = "env"
 [inject.env]
 RFUTILS_SERVER_PORT = "{port}"
 RFUTILS_HOST = "{host}"
+
+# Palette mirrored from RFutils' web UI (dark + royal-blue accent).
+[app.theme]
+bg = "#12141a"
+panel = "#1a1d26"
+"panel-2" = "#232733"
+border = "#2a2e3a"
+text = "#e8eaf0"
+muted = "#9aa1b2"
+dim = "#6b7080"
+accent = "#6ea8fe"
+"accent-soft" = "#172138"
+good = "#3fae5a"

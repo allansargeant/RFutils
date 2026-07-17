@@ -40,6 +40,12 @@ pub struct AppSpec {
     /// resolve). Optional; defaults to the binary's directory.
     #[serde(default)]
     pub cwd: Option<String>,
+    /// Optional palette (CSS custom-property name -> value) applied to the
+    /// panel so each launcher matches its app's own web UI. Keys like
+    /// `bg`, `panel`, `border`, `text`, `muted`, `accent`, `accent-soft`,
+    /// `good`. Anything omitted falls back to the shell's built-in defaults.
+    #[serde(default)]
+    pub theme: BTreeMap<String, String>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -95,11 +101,22 @@ pub struct Launch {
     pub cwd: Option<PathBuf>,
 }
 
-/// Substitute `{host}`/`{port}` (and `{config}` when provided) in a template.
-fn subst(s: &str, host: &str, port: u16, config: Option<&str>) -> String {
+/// Substitute `{host}`/`{port}` (plus `{config}`/`{resource}` when provided).
+/// `{resource}` is the bundle's resource dir — lets a shipped config point at
+/// bundled files (e.g. an embedded Node runtime + server) by absolute path.
+fn subst(
+    s: &str,
+    host: &str,
+    port: u16,
+    config: Option<&str>,
+    resource: Option<&str>,
+) -> String {
     let mut out = s
         .replace("{host}", host)
         .replace("{port}", &port.to_string());
+    if let Some(r) = resource {
+        out = out.replace("{resource}", r);
+    }
     if let Some(c) = config {
         out = out.replace("{config}", c);
     }
@@ -226,6 +243,8 @@ pub fn build_launch(
 ) -> Result<Launch, String> {
     let mut envs: Vec<(String, String)> = Vec::new();
     let mut rendered_config: Option<String> = None;
+    let res_str = resource_dir.map(|p| p.to_string_lossy().into_owned());
+    let res = res_str.as_deref();
 
     match cfg.inject.mode.as_str() {
         "configfile" => {
@@ -238,7 +257,7 @@ pub fn build_launch(
             let mut doc = raw
                 .parse::<toml_edit::DocumentMut>()
                 .map_err(|e| format!("parsing template {template}: {e}"))?;
-            let value = subst(&ci.value, bind_host, port, None);
+            let value = subst(&ci.value, bind_host, port, None, res);
             set_dotted(&mut doc, &ci.set_key, &value);
 
             std::fs::create_dir_all(work_dir)
@@ -250,7 +269,7 @@ pub fn build_launch(
         }
         "env" => {
             for (k, v) in &cfg.inject.env {
-                envs.push((k.clone(), subst(v, bind_host, port, None)));
+                envs.push((k.clone(), subst(v, bind_host, port, None, res)));
             }
         }
         "args" => { /* host/port already substituted into args below */ }
@@ -261,10 +280,12 @@ pub fn build_launch(
         .app
         .args
         .iter()
-        .map(|a| subst(a, bind_host, port, rendered_config.as_deref()))
+        .map(|a| subst(a, bind_host, port, rendered_config.as_deref(), res))
         .collect();
 
-    let program = resolve_against(&cfg.app.command, resource_dir);
+    // Substitute {resource} in the command, then resolve any remaining relative
+    // path against the resource dir (covers both `{resource}/node` and `bin/x`).
+    let program = resolve_against(&subst(&cfg.app.command, bind_host, port, None, res), resource_dir);
 
     // Prefer an explicit cwd; otherwise run from the writable work dir so a
     // bundled server can persist state (it can't write inside a read-only .app).
