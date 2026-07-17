@@ -76,17 +76,24 @@ audioWss.on('connection', (socket) => {
     }
     if (msg.type === 'cue') {
       const requested = msg.channelId;
-      if (cued && cued !== requested) monitor.stopCue(cued);
+      if (cued === requested) return; // already cued/cueing this channel — no double count
+      // Claim synchronously and stop the previous cue now — startCue()'s
+      // ref-count increment is synchronous, so this stays balanced even when
+      // cues arrive faster than startCue() resolves.
+      const previous = cued;
+      cued = requested;
+      streamId = null; // no frames until the format handshake for THIS cue
+      if (previous) monitor.stopCue(previous);
       void monitor
         .startCue(requested)
         .then((format) => {
+          if (cued !== requested) return; // superseded by a newer cue/stop; it already reconciled
           if (!format) {
             cued = null;
             streamId = null;
             send({ type: 'audio-error', channelId: requested, message: 'Channel is not cueable (in direct AES67 mode only live AES67 channels carry audio).' });
             return;
           }
-          cued = requested;
           streamId = format.streamChannelId;
           send({ type: 'audio-format', channelId: requested, sampleRate: format.sampleRate, channels: 1, encoding: 'pcm16' });
         })
