@@ -1,0 +1,12 @@
+{
+  "id": "example-brand-x1",
+  "manufacturer": "Example Brand",
+  "model": "X1 Digital",
+  "category": "mic",
+  "tuningStepKhz": 25,
+  "occupiedBandwidthKhz": 200,
+  "recommendedSpacingMhz": 0.35,
+  "defaultBandPresetId": "uk-uhf-core",
+  "verified": false,
+  "notes": "Example user plugin. Copy to ~/.rfutils/plugins/ and edit. Add a `control` block with transport 'shure-command-strings' + programTemplate to make it programmable, or leave it off for coordinate + export only."
+}

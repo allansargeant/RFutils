@@ -1,6 +1,8 @@
 # Brand support
 
-RFutils supports gear at three levels:
+Device support is organised as **one [product plugin](PLUGINS.md) per product** (Shure ULX-D,
+Axient Digital, QLX-D … are separate plugins), and users can add or override plugins with plain
+JSON. RFutils supports gear at three levels:
 
 1. **Coordinate + export** — works for *any* UHF wireless brand. Add it to the inventory (or pick an
    equipment profile) and it feeds coordination; export the result to WWB/WSM/CSV to load into the

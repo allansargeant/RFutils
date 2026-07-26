@@ -16,6 +16,8 @@
  * override entries.
  */
 
+import { BUILTIN_PLUGINS, type ProductPlugin, type TransportId } from './plugins.js';
+
 /** Control protocol RFutils can use to talk to (and program) a device. */
 export type DeviceProtocol =
   | 'shure-command-strings' // Shure TCP :2202 — discover, monitor, program
@@ -97,42 +99,37 @@ export const BAND_PRESETS: BandPreset[] = [
   },
 ];
 
-/**
- * Product catalog. Ranges intentionally omitted (see band presets). Bandwidth
- * and spacing are conservative typical values — verify per mode/datasheet.
- */
-export const EQUIPMENT_PROFILES: EquipmentProfile[] = [
-  // --- Shure (command strings: discover / monitor / program) ---------------
-  { id: 'shure-axient-digital', manufacturer: 'Shure', model: 'Axient Digital (AD/ADX)', category: 'mic', protocol: 'shure-command-strings', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Very wide tuning across many bands; set your unit\'s actual band.' },
-  { id: 'shure-ulxd', manufacturer: 'Shure', model: 'ULX-D', category: 'mic', protocol: 'shure-command-strings', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false },
-  { id: 'shure-qlxd', manufacturer: 'Shure', model: 'QLX-D', category: 'mic', protocol: 'shure-command-strings', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false },
-  { id: 'shure-slxd', manufacturer: 'Shure', model: 'SLX-D', category: 'mic', protocol: 'shure-command-strings', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Networked control only on Ethernet variants.' },
-  { id: 'shure-psm1000', manufacturer: 'Shure', model: 'PSM 1000 (IEM)', category: 'iem', protocol: 'shure-command-strings', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false },
-  { id: 'shure-glxd', manufacturer: 'Shure', model: 'GLX-D', category: 'mic', protocol: 'other', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'ism-2g4', verified: false, notes: '2.4 GHz, self-coordinating; not UHF.' },
+/** Map a product plugin's transport to the coarse DeviceProtocol the UI shows. */
+function transportToProtocol(t: TransportId | undefined): DeviceProtocol {
+  switch (t) {
+    case 'shure-command-strings':
+      return 'shure-command-strings';
+    case 'sennheiser-ssc':
+      return 'sennheiser-ssc';
+    default:
+      return 'other';
+  }
+}
 
-  // --- Sennheiser (SSC: discover / monitor) --------------------------------
-  { id: 'sennheiser-ewdx', manufacturer: 'Sennheiser', model: 'EW-DX', category: 'mic', protocol: 'sennheiser-ssc', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false },
-  { id: 'sennheiser-ewd', manufacturer: 'Sennheiser', model: 'EW-D', category: 'mic', protocol: 'sennheiser-ssc', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.6, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Equidistant tuning; wider default spacing.' },
-  { id: 'sennheiser-d6000', manufacturer: 'Sennheiser', model: 'Digital 6000', category: 'mic', protocol: 'sennheiser-ssc', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false },
-  { id: 'sennheiser-d9000', manufacturer: 'Sennheiser', model: 'Digital 9000', category: 'mic', protocol: 'sennheiser-ssc', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'In HD mode can pack tightly; verify per mode.' },
-  { id: 'sennheiser-ew-g4', manufacturer: 'Sennheiser', model: 'evolution wireless G4', category: 'mic', protocol: 'analog', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Analog FM, IR-sync only — no networked control; file export.' },
-  { id: 'sennheiser-2000', manufacturer: 'Sennheiser', model: '2000 series', category: 'mic', protocol: 'analog', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false },
-  { id: 'sennheiser-iem-g4', manufacturer: 'Sennheiser', model: 'IEM G4 (SR)', category: 'iem', protocol: 'analog', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false },
+/** A coordination-facing view of a product plugin (backward-compatible shape). */
+export function pluginToProfile(p: ProductPlugin): EquipmentProfile {
+  return {
+    id: p.id,
+    manufacturer: p.manufacturer,
+    model: p.model,
+    category: p.category,
+    protocol: transportToProtocol(p.control?.transport),
+    tuningStepKhz: p.tuningStepKhz,
+    occupiedBandwidthKhz: p.occupiedBandwidthKhz,
+    recommendedSpacingMhz: p.recommendedSpacingMhz,
+    defaultBandPresetId: p.defaultBandPresetId,
+    verified: p.verified,
+    notes: p.notes,
+  };
+}
 
-  // --- Other manufacturers -------------------------------------------------
-  // No RFutils *control* adapter yet (only Shure command strings + Sennheiser
-  // SSC are wired for live control); these are coordination + file export.
-  // Where a model has Dante/AES67 out, audio can still be cued via the DVS
-  // capture path. `notes` records each vendor's own control situation.
-  { id: 'wisycom-mtp', manufacturer: 'Wisycom', model: 'MTP / MCR54 (wideband)', category: 'mic', protocol: 'other', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Very wide tuning. Ethernet "Wisycom Remote Protocol" via Wisycom Manager; Dante on some models. No RFutils control adapter — coordinate + export (cue Dante audio via capture mode).' },
-  { id: 'lectrosonics-dsqd', manufacturer: 'Lectrosonics', model: 'DSQD / D Squared', category: 'mic', protocol: 'other', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Ethernet control port supports Wireless Designer + third-party software — the most open of the "other" brands, so a control adapter is plausible. Dante-capable.' },
-  { id: 'sounddevices-a20', manufacturer: 'Sound Devices', model: 'A20 (Astral / A20-Nexus)', category: 'mic', protocol: 'other', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'IP web-app control + NexLink TX control + Dante. Proprietary web API (reverse-engineerable), no RFutils adapter. Dante audio can be cued via capture mode.' },
-  { id: 'audioltd-a10', manufacturer: 'Audio Ltd (Sound Devices)', model: 'A10', category: 'mic', protocol: 'other', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Audio Limited A10, now under Sound Devices. Limited networked control on its own; coordinate + export.' },
-  { id: 'sony-dwx', manufacturer: 'Sony', model: 'DWX (DWR-R03D)', category: 'mic', protocol: 'other', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Wireless Studio (PC) control + Dante. Proprietary protocol, no RFutils adapter; Dante audio can be cued via capture mode.' },
-  { id: 'mipro-act', manufacturer: 'MiPro', model: 'ACT series', category: 'mic', protocol: 'other', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'RCS2.Net software over proprietary ACT-BUS; Dante on some ACT-7x models. No RFutils adapter — coordinate + export.' },
-  { id: 'deity-theos', manufacturer: 'Deity', model: 'Theos', category: 'mic', protocol: 'other', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: '550–960 MHz. Control + its own coordination via the Sidus Audio phone app (app/Bluetooth, not open network) — not remotely controllable by RFutils; coordinate + export.' },
-  { id: 'audiotechnica-5000', manufacturer: 'Audio-Technica', model: '5000 series', category: 'mic', protocol: 'other', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false },
-];
+/** The built-in equipment profiles, derived from the product-plugin catalog. */
+export const EQUIPMENT_PROFILES: EquipmentProfile[] = BUILTIN_PLUGINS.map(pluginToProfile);
 
 export interface ProfileCatalog {
   profiles: EquipmentProfile[];

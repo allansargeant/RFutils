@@ -15,7 +15,9 @@ import type { MonitorService } from './monitor/index.js';
 import { coordinate, analyze } from './coordination/engine.js';
 import { loadInventory, saveInventory } from './inventory/store.js';
 import { loadCatalog } from './profiles/catalog.js';
+import { loadPlugins, findPlugin } from './plugins/registry.js';
 import { buildShureSetCommand, sendShureCommands, type ProgramTargetResult } from './programming/shureProgrammer.js';
+import { renderProgramCommand } from '@rfutils/shared';
 import type { CoordinationParams, InventoryItem } from '@rfutils/shared';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
@@ -176,6 +178,11 @@ export function createApiRouter(monitor: MonitorService): Router {
     res.json(loadCatalog());
   });
 
+  /** Product plugins (built-in + user plugins from ~/.rfutils/plugins/). */
+  router.get('/plugins', (_req: Request, res: Response) => {
+    res.json({ plugins: loadPlugins() });
+  });
+
   /** Analyze an existing set for conflicts. Body: { frequencies: number[], params }. */
   router.post('/analyze', (req: Request, res: Response) => {
     const frequencies = req.body?.frequencies as number[] | undefined;
@@ -220,7 +227,9 @@ export function createApiRouter(monitor: MonitorService): Router {
    * supported for live programming; export a file for anything else.
    */
   router.post('/program', wrap(async (req: Request, res: Response) => {
-    const targets = req.body?.targets as Array<{ channelId: string; frequencyMhz: number }> | undefined;
+    const targets = req.body?.targets as
+      | Array<{ channelId: string; frequencyMhz: number; pluginId?: string }>
+      | undefined;
     const dryRun = req.body?.dryRun !== false; // default to safe dry-run
     if (!Array.isArray(targets)) {
       res.status(400).json({ error: 'Body must be { targets: [{channelId, frequencyMhz}], dryRun }.' });
@@ -239,12 +248,21 @@ export function createApiRouter(monitor: MonitorService): Router {
           command: '',
           sent: false,
           ok: false,
-          error: 'Only Shure channels can be live-programmed; export a file for other devices.',
+          error: 'Only Shure command-strings channels can be live-programmed; export a file for other devices.',
         });
         continue;
       }
       const address = parts[1]!;
-      const command = buildShureSetCommand(parts[2]!, Number(t.frequencyMhz));
+      // Prefer the product plugin's own program template (per-product command
+      // format); fall back to the generic Shure SET command.
+      const plugin = findPlugin(t.pluginId);
+      const template =
+        plugin?.control?.transport === 'shure-command-strings' && plugin.control.programTemplate
+          ? plugin.control.programTemplate
+          : undefined;
+      const command = template
+        ? renderProgramCommand(template, parts[2]!, Number(t.frequencyMhz))
+        : buildShureSetCommand(parts[2]!, Number(t.frequencyMhz));
       results.push({ channelId: t.channelId, address, command, sent: false, ok: dryRun });
       if (!dryRun) {
         const arr = byAddress.get(address) ?? [];
