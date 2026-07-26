@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { BUILTIN_PLUGINS, renderProgramCommand, pluginToProfile } from '@rfutils/shared';
+import { findPluginForModel } from '../src/plugins/registry.js';
 
 describe('product plugin catalog', () => {
   it('has unique ids and one plugin per product', () => {
@@ -37,5 +38,13 @@ describe('product plugin catalog', () => {
     expect(profile.tuningStepKhz).toBe(ulxd.tuningStepKhz);
     const dpa = pluginToProfile(BUILTIN_PLUGINS.find((p) => p.id === 'dpa-nseries')!);
     expect(dpa.protocol).toBe('other');
+  });
+
+  it('matches a discovered device model to its programmable plugin', () => {
+    expect(findPluginForModel('ULXD4Q', BUILTIN_PLUGINS)?.id).toBe('shure-ulxd');
+    expect(findPluginForModel('AD4Q', BUILTIN_PLUGINS)?.id).toBe('shure-axient-digital');
+    expect(findPluginForModel('QLXD4', BUILTIN_PLUGINS)?.id).toBe('shure-qlxd');
+    expect(findPluginForModel(null, BUILTIN_PLUGINS)).toBeUndefined();
+    expect(findPluginForModel('EW-DX', BUILTIN_PLUGINS)).toBeUndefined(); // not Shure-programmable
   });
 });

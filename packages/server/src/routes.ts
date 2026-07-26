@@ -15,7 +15,7 @@ import type { MonitorService } from './monitor/index.js';
 import { coordinate, analyze } from './coordination/engine.js';
 import { loadInventory, saveInventory } from './inventory/store.js';
 import { loadCatalog } from './profiles/catalog.js';
-import { loadPlugins, findPlugin } from './plugins/registry.js';
+import { loadPlugins, findPlugin, findPluginForModel } from './plugins/registry.js';
 import { buildShureSetCommand, sendShureCommands, type ProgramTargetResult } from './programming/shureProgrammer.js';
 import { renderProgramCommand } from '@rfutils/shared';
 import type { CoordinationParams, InventoryItem } from '@rfutils/shared';
@@ -254,8 +254,10 @@ export function createApiRouter(monitor: MonitorService): Router {
       }
       const address = parts[1]!;
       // Prefer the product plugin's own program template (per-product command
-      // format); fall back to the generic Shure SET command.
-      const plugin = findPlugin(t.pluginId);
+      // format). Resolve it from an explicit pluginId, else auto-match the
+      // discovered device's model; fall back to the generic Shure SET command.
+      const deviceModel = monitor.snapshot().find((d) => d.address === address)?.model;
+      const plugin = findPlugin(t.pluginId) ?? findPluginForModel(deviceModel);
       const template =
         plugin?.control?.transport === 'shure-command-strings' && plugin.control.programTemplate
           ? plugin.control.programTemplate
