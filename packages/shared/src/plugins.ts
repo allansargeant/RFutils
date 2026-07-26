@@ -87,10 +87,16 @@ const SSC_MONITOR: ProductControl = {
   capabilities: { discover: true, monitor: true, program: false },
 };
 
-/** Known protocol but no adapter yet — signals "controllable in principle". */
-const stubControl = (transport: TransportId): ProductControl => ({
-  transport,
-  capabilities: { discover: false, monitor: false, program: false },
+/**
+ * Lectrosonics networked receivers (DSQD / Duet). The adapter exists but its
+ * wire format is an unverified placeholder — see the server's
+ * lectrosonicsProtocol.ts. `program` is enabled (dry-run-safe by default).
+ */
+const LECTRO_CONTROL = (matchModel: string): ProductControl => ({
+  transport: 'lectrosonics-net',
+  capabilities: { discover: true, monitor: true, program: true },
+  matchModel,
+  programTemplate: 'SET {ch} FREQ {khz}',
 });
 
 export const BUILTIN_PLUGINS: ProductPlugin[] = [
@@ -112,7 +118,7 @@ export const BUILTIN_PLUGINS: ProductPlugin[] = [
   { id: 'sennheiser-iem-g4', manufacturer: 'Sennheiser', model: 'IEM G4 (SR)', category: 'iem', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false },
 
   // --- Other makers: coordination + export; control stubs where a protocol exists ---
-  { id: 'lectrosonics-dsqd', manufacturer: 'Lectrosonics', model: 'DSQD / D Squared', category: 'mic', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', control: stubControl('lectrosonics-net'), verified: false, notes: 'Ethernet control port supports Wireless Designer + third-party software — most open of the non-Shure/Sennheiser brands; adapter is a work item. Dante-capable.' },
+  { id: 'lectrosonics-dsqd', manufacturer: 'Lectrosonics', model: 'DSQD / D Squared', category: 'mic', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', control: LECTRO_CONTROL('DSQD|DSR|Duet|DCR'), verified: false, notes: 'Ethernet control port (Wireless Designer + third-party). Adapter wired, but wire format is an unverified placeholder — see server lectrosonicsProtocol.ts; dry-run and verify before sending. Dante-capable.' },
   { id: 'wisycom-mcr54', manufacturer: 'Wisycom', model: 'MCR54 / MTP (wideband)', category: 'mic', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Ethernet "Wisycom Remote Protocol" (Wisycom Manager); Dante on some. Proprietary — cue Dante audio via capture mode.' },
   { id: 'sounddevices-a20', manufacturer: 'Sound Devices', model: 'A20 (Astral / A20-Nexus)', category: 'mic', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'IP web-app control + NexLink + Dante. Proprietary web API; cue Dante audio via capture mode.' },
   { id: 'audioltd-a10', manufacturer: 'Audio Ltd (Sound Devices)', model: 'A10', category: 'mic', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', verified: false, notes: 'Audio Limited A10, now Sound Devices. Coordinate + export.' },

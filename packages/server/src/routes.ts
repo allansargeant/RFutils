@@ -17,7 +17,10 @@ import { loadInventory, saveInventory } from './inventory/store.js';
 import { loadCatalog } from './profiles/catalog.js';
 import { loadPlugins, findPlugin, findPluginForModel } from './plugins/registry.js';
 import { buildShureSetCommand, sendShureCommands, type ProgramTargetResult } from './programming/shureProgrammer.js';
+import { sendLectrosonicsCommands } from './programming/lectrosonicsProgrammer.js';
+import { LECTRO_PROGRAM_TEMPLATE } from './monitor/discovery/lectrosonicsProtocol.js';
 import { renderProgramCommand } from '@rfutils/shared';
+import type { TransportId } from '@rfutils/shared';
 import type { CoordinationParams, InventoryItem } from '@rfutils/shared';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
@@ -39,6 +42,13 @@ function wrap(
   return (req, res, next) => {
     handler(req, res).catch(next);
   };
+}
+
+/** Infer a control transport from a device-channel id's vendor prefix. */
+function inferTransport(vendor: string): TransportId {
+  if (vendor === 'lectrosonics') return 'lectrosonics-net';
+  if (vendor === 'shure') return 'shure-command-strings';
+  return 'none';
 }
 
 export function createApiRouter(monitor: MonitorService): Router {
@@ -237,45 +247,64 @@ export function createApiRouter(monitor: MonitorService): Router {
     }
 
     const results: ProgramTargetResult[] = [];
-    const byAddress = new Map<string, Array<{ channelId: string; command: string }>>();
+    // Group live sends by transport + address so one connection carries all of
+    // a receiver's channels. Key is `${transport} ${address}`.
+    const groups = new Map<
+      string,
+      { transport: TransportId; address: string; cmds: Array<{ channelId: string; command: string }> }
+    >();
 
     for (const t of targets) {
       const parts = String(t.channelId).split(':');
-      if (parts[0] !== 'shure' || parts.length !== 3) {
+      if (parts.length !== 3) {
         results.push({
-          channelId: t.channelId,
-          address: '',
-          command: '',
-          sent: false,
-          ok: false,
-          error: 'Only Shure command-strings channels can be live-programmed; export a file for other devices.',
+          channelId: t.channelId, address: '', command: '', sent: false, ok: false,
+          error: 'channelId must be "vendor:address:channel".',
         });
         continue;
       }
-      const address = parts[1]!;
-      // Prefer the product plugin's own program template (per-product command
-      // format). Resolve it from an explicit pluginId, else auto-match the
-      // discovered device's model; fall back to the generic Shure SET command.
+      const [vendor, address, chan] = parts as [string, string, string];
+
+      // Resolve the product plugin: explicit pluginId wins, else auto-match the
+      // discovered device's model. The transport is the plugin's, else inferred
+      // from the channel's vendor prefix.
       const deviceModel = monitor.snapshot().find((d) => d.address === address)?.model;
       const plugin = findPlugin(t.pluginId) ?? findPluginForModel(deviceModel);
+      const transport: TransportId = plugin?.control?.transport ?? inferTransport(vendor);
+
       const template =
-        plugin?.control?.transport === 'shure-command-strings' && plugin.control.programTemplate
+        plugin?.control?.transport === transport && plugin.control.programTemplate
           ? plugin.control.programTemplate
           : undefined;
-      const command = template
-        ? renderProgramCommand(template, parts[2]!, Number(t.frequencyMhz))
-        : buildShureSetCommand(parts[2]!, Number(t.frequencyMhz));
+
+      let command: string;
+      if (transport === 'shure-command-strings') {
+        command = template
+          ? renderProgramCommand(template, chan, Number(t.frequencyMhz))
+          : buildShureSetCommand(chan, Number(t.frequencyMhz));
+      } else if (transport === 'lectrosonics-net') {
+        command = renderProgramCommand(template ?? LECTRO_PROGRAM_TEMPLATE, chan, Number(t.frequencyMhz));
+      } else {
+        results.push({
+          channelId: t.channelId, address, command: '', sent: false, ok: false,
+          error: `This device's transport (${transport}) can't be live-programmed; export a file instead.`,
+        });
+        continue;
+      }
+
       results.push({ channelId: t.channelId, address, command, sent: false, ok: dryRun });
       if (!dryRun) {
-        const arr = byAddress.get(address) ?? [];
-        arr.push({ channelId: t.channelId, command });
-        byAddress.set(address, arr);
+        const key = `${transport} ${address}`;
+        const group = groups.get(key) ?? { transport, address, cmds: [] };
+        group.cmds.push({ channelId: t.channelId, command });
+        groups.set(key, group);
       }
     }
 
     if (!dryRun) {
-      for (const [address, cmds] of byAddress) {
-        const r = await sendShureCommands(address, cmds.map((c) => c.command));
+      for (const { transport, address, cmds } of groups.values()) {
+        const send = transport === 'lectrosonics-net' ? sendLectrosonicsCommands : sendShureCommands;
+        const r = await send(address, cmds.map((c) => c.command));
         for (const c of cmds) {
           const entry = results.find((x) => x.channelId === c.channelId);
           if (entry) {

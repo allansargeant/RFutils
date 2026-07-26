@@ -8,6 +8,10 @@ import type {
 import { DeviceRegistry } from './deviceRegistry.js';
 import { startMdnsDiscovery, type MdnsDiscoveryHandle } from './discovery/mdns.js';
 import { startShureDiscovery, type ShureDiscoveryHandle } from './discovery/shure.js';
+import {
+  startLectrosonicsDiscovery,
+  type LectrosonicsDiscoveryHandle,
+} from './discovery/lectrosonics.js';
 import { SapListener } from './audio/sap.js';
 import { monitorAes67Stream, type Aes67StreamHandle } from './audio/aes67.js';
 import { loadCompanionConfig } from './companion/routesConfig.js';
@@ -50,6 +54,7 @@ export class MonitorService extends EventEmitter {
   private registry = new DeviceRegistry();
   private mdns: MdnsDiscoveryHandle | null = null;
   private shure: ShureDiscoveryHandle | null = null;
+  private lectrosonics: LectrosonicsDiscoveryHandle | null = null;
   private sap: SapListener | null = null;
   private aes67Streams = new Map<string, Aes67StreamHandle>();
   private aes67SampleRates = new Map<string, number>();
@@ -108,6 +113,7 @@ export class MonitorService extends EventEmitter {
 
     this.mdns = startMdnsDiscovery(this.registry);
     this.shure = startShureDiscovery(this.registry);
+    this.lectrosonics = startLectrosonicsDiscovery(this.registry);
 
     const sap = new SapListener();
     sap.on('session', (session) => {
@@ -159,6 +165,7 @@ export class MonitorService extends EventEmitter {
   stop(): void {
     this.mdns?.stop();
     this.shure?.stop();
+    this.lectrosonics?.stop();
     this.sap?.stop();
     for (const handle of this.aes67Streams.values()) handle.stop();
     this.aes67Streams.clear();

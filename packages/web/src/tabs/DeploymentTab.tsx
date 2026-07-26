@@ -26,7 +26,7 @@ function channelOptions(devices: DiscoveredDevice[]): ChannelOption[] {
       out.push({
         id: ch.id,
         label: `${d.name} · ${ch.name}`,
-        programmable: ch.id.startsWith('shure:'),
+        programmable: ch.id.startsWith('shure:') || ch.id.startsWith('lectrosonics:'),
       });
     }
   }

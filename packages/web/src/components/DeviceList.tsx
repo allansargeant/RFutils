@@ -6,6 +6,7 @@ import { CueButton } from './CueButton.js';
 const VENDOR_LABEL: Record<DiscoveredDevice['vendor'], string> = {
   shure: 'Shure',
   sennheiser: 'Sennheiser',
+  lectrosonics: 'Lectrosonics',
   'unknown-dante': 'Dante / AES67',
 };
 

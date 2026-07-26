@@ -4,7 +4,7 @@
  * real-time RF / audio / battery telemetry.
  */
 
-export type DeviceVendor = 'shure' | 'sennheiser' | 'unknown-dante';
+export type DeviceVendor = 'shure' | 'sennheiser' | 'lectrosonics' | 'unknown-dante';
 
 export type TransportKind = 'aes67' | 'dante-api' | 'usb' | 'none';
 

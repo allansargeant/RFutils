@@ -12,10 +12,11 @@ describe('product plugin catalog', () => {
     }
   });
 
-  it('programmable plugins carry a Shure command template; others do not claim program', () => {
+  it('programmable plugins use a program-capable transport and carry a template', () => {
+    const PROGRAMMABLE = new Set(['shure-command-strings', 'lectrosonics-net']);
     for (const p of BUILTIN_PLUGINS) {
       if (p.control?.capabilities.program) {
-        expect(p.control.transport).toBe('shure-command-strings');
+        expect(PROGRAMMABLE.has(p.control.transport)).toBe(true);
         expect(typeof p.control.programTemplate).toBe('string');
       }
     }

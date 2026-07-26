@@ -9,14 +9,16 @@ JSON. RFutils supports gear at three levels:
    vendor's own software. Available for everything below.
 2. **Audio cue to headphones** — for anything with a **Dante/AES67** output, via capture mode (a
    DVS/Dante interface routed with Companion). This is generic — no per-brand adapter needed.
-3. **Live discover / monitor / program** — needs a per-brand network-control adapter. Today only
-   **Shure** (Command Strings, TCP 2202) and **Sennheiser** (SSC — skeleton) are wired.
+3. **Live discover / monitor / program** — needs a per-brand network-control adapter. Wired today:
+   **Shure** (Command Strings, TCP 2202), **Sennheiser** (SSC — skeleton), and **Lectrosonics**
+   (Ethernet control, DSQD/Duet — adapter wired but wire format is an unverified placeholder; see
+   below).
 
 | Brand | Systems | Control interface | Live control in RFutils? | Dante audio cue? |
 |---|---|---|---|---|
 | **Shure** | ULX-D, QLX-D, Axient Digital, SLX-D, PSM 1000 | Command Strings (TCP 2202, documented) | ✅ discover/monitor/**program** | via Dante models |
 | **Sennheiser** | EW-DX, EW-D, Digital 6000/9000, G4, 2000 | SSC (JSON over TCP) | ⚠️ monitor (skeleton, untested) | via Dante models |
-| **Lectrosonics** | DSQD, D Squared, DCR822 | **Ethernet control port — Wireless Designer *or third-party*** | ❌ not yet — **best candidate** for a new adapter | via Dante |
+| **Lectrosonics** | DSQD, D Squared, DCR822 | **Ethernet control port — Wireless Designer *or third-party*** | ⚠️ discover/monitor/**program** — adapter wired, wire format unverified | via Dante |
 | **Wisycom** | MCR54, MTP | Ethernet "Wisycom Remote Protocol" (Wisycom Manager) | ❌ proprietary; reverse-engineerable | via Dante models |
 | **Sound Devices** | A20-Nexus / Astral | IP web-app API + NexLink + Dante | ❌ proprietary web API; reverse-engineerable | ✅ Dante |
 | **Audio Ltd** | A10 (now Sound Devices) | limited | ❌ | — |
@@ -33,8 +35,11 @@ program — pick the transmitter's brand instead.
 
 Two paths, in order of tractability:
 
-- **Lectrosonics DSQD** — its Ethernet control port is explicitly documented for third-party
-  software, so an adapter is the most realistic next step if there's demand.
+- **Lectrosonics DSQD** — adapter is **wired** (discover/monitor/program), but its wire format is an
+  unverified placeholder isolated in
+  [`lectrosonicsProtocol.ts`](../packages/server/src/monitor/discovery/lectrosonicsProtocol.ts).
+  Correct the port + framing there from a packet capture / the official IP-control spec, set
+  `RFUTILS_LECTRO_SCAN=1` to enable discovery and `verified: true` on the plugin once confirmed.
 - **Wisycom / Sony / Sound Devices / MiPro** — have real network protocols but proprietary and
   undocumented; an adapter means packet-capturing the vendor software (the same approach used to
   build the Shure/Sennheiser adapters) — feasible but more effort and hardware-dependent.

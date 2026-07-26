@@ -50,7 +50,7 @@ Built-ins + your plugins are listed at `GET /api/plugins`.
 |---|---|
 | `shure-command-strings` | Shure's ASCII protocol (TCP 2202) — discover, monitor, and **program** via `programTemplate`. |
 | `sennheiser-ssc` | Sennheiser SSC — discover/monitor (skeleton). |
-| `lectrosonics-net` | Reserved for a future Lectrosonics adapter (stub). |
+| `lectrosonics-net` | Lectrosonics Ethernet control (DSQD/Duet) — discover/monitor/**program**. Adapter wired; wire format is an unverified placeholder (see server `lectrosonicsProtocol.ts`) — dry-run and verify. Opt-in scan via `RFUTILS_LECTRO_SCAN=1`; port via `RFUTILS_LECTRO_PORT`. |
 | `none` / omit `control` | No live control — coordination + file export only. |
 
 ### Program-command placeholders

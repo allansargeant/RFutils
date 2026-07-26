@@ -77,8 +77,8 @@ export function findPlugin(id: string | undefined): ProductPlugin | undefined {
 
 /**
  * Best-effort match of a discovered device's reported model string to a
- * programmable Shure plugin, via each plugin's `control.matchModel` regex.
- * Lets the deployment path pick the right per-product command template
+ * programmable plugin (any transport), via each plugin's `control.matchModel`
+ * regex. Lets the deployment path pick the right per-product command template
  * automatically, without the client having to know the product.
  */
 export function findPluginForModel(
@@ -88,7 +88,7 @@ export function findPluginForModel(
   if (!model) return undefined;
   for (const p of plugins) {
     const c = p.control;
-    if (c?.transport !== 'shure-command-strings' || !c.matchModel) continue;
+    if (!c?.matchModel || !c.capabilities.program) continue;
     try {
       if (new RegExp(c.matchModel, 'i').test(model)) return p;
     } catch {
