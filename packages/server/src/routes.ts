@@ -1,4 +1,4 @@
-import { Router, type Request, type Response } from 'express';
+import { Router, type Request, type Response, type NextFunction } from 'express';
 import multer from 'multer';
 import type { CoordinationList, ExportFormat, CrosspointRequest } from '@rfutils/shared';
 import { EXPORT_FORMATS } from '@rfutils/shared';
@@ -24,6 +24,19 @@ function decodeText(buf: Buffer): string {
   let text = buf.toString('utf-8');
   if (text.charCodeAt(0) === 0xfeff) text = text.slice(1); // strip BOM
   return text;
+}
+
+/**
+ * Wrap an async route handler so a rejected promise is forwarded to Express's
+ * error handling instead of becoming an unhandled rejection (Express 4 doesn't
+ * do this itself).
+ */
+function wrap(
+  handler: (req: Request, res: Response) => Promise<unknown>
+): (req: Request, res: Response, next: NextFunction) => void {
+  return (req, res, next) => {
+    handler(req, res).catch(next);
+  };
 }
 
 export function createApiRouter(monitor: MonitorService): Router {
@@ -111,7 +124,7 @@ export function createApiRouter(monitor: MonitorService): Router {
 
   // --- PMSE licence PDF -> WWB ---------------------------------------------
 
-  router.post('/pmse/convert', upload.single('file'), async (req: Request, res: Response) => {
+  router.post('/pmse/convert', upload.single('file'), wrap(async (req: Request, res: Response) => {
     if (!req.file) {
       res.status(400).json({ error: 'No PDF uploaded (field name must be "file").' });
       return;
@@ -138,7 +151,7 @@ export function createApiRouter(monitor: MonitorService): Router {
     } catch (err) {
       res.status(422).json({ error: `Could not parse this PDF: ${(err as Error).message}` });
     }
-  });
+  }));
 
   // --- Frequency coordination ---------------------------------------------
 
@@ -206,7 +219,7 @@ export function createApiRouter(monitor: MonitorService): Router {
    * strings without connecting. Only Shure command-strings channels are
    * supported for live programming; export a file for anything else.
    */
-  router.post('/program', async (req: Request, res: Response) => {
+  router.post('/program', wrap(async (req: Request, res: Response) => {
     const targets = req.body?.targets as Array<{ channelId: string; frequencyMhz: number }> | undefined;
     const dryRun = req.body?.dryRun !== false; // default to safe dry-run
     if (!Array.isArray(targets)) {
@@ -256,7 +269,7 @@ export function createApiRouter(monitor: MonitorService): Router {
     }
 
     res.json({ dryRun, results });
-  });
+  }));
 
   // --- Live monitoring (device snapshot + Companion routing) ---------------
 
@@ -270,20 +283,20 @@ export function createApiRouter(monitor: MonitorService): Router {
     res.json({ mode: monitor.audioMode(), cueBusConfigured: monitor.cueBusConfigured() });
   });
 
-  router.get('/companion/status', async (_req: Request, res: Response) => {
+  router.get('/companion/status', wrap(async (_req: Request, res: Response) => {
     res.json(await monitor.companionStatus());
-  });
+  }));
 
-  router.post('/companion/make-crosspoint', async (req: Request, res: Response) => {
+  router.post('/companion/make-crosspoint', wrap(async (req: Request, res: Response) => {
     try {
       await monitor.makeCrosspoint(req.body as CrosspointRequest);
       res.json({ ok: true });
     } catch (err) {
       res.status(400).json({ error: (err as Error).message });
     }
-  });
+  }));
 
-  router.post('/companion/clear-crosspoint', async (req: Request, res: Response) => {
+  router.post('/companion/clear-crosspoint', wrap(async (req: Request, res: Response) => {
     try {
       const { destinationChannel, destinationDevice } = req.body ?? {};
       await monitor.clearCrosspoint(destinationChannel, destinationDevice);
@@ -291,7 +304,7 @@ export function createApiRouter(monitor: MonitorService): Router {
     } catch (err) {
       res.status(400).json({ error: (err as Error).message });
     }
-  });
+  }));
 
   return router;
 }

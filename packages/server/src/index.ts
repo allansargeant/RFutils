@@ -68,9 +68,11 @@ audioWss.on('connection', (socket) => {
 
   socket.on('message', (data, isBinary) => {
     if (isBinary) return; // clients don't send audio
+    // A text frame arrives as a Buffer (default nodebuffer binaryType).
+    const text = Array.isArray(data) ? Buffer.concat(data).toString('utf8') : (data as Buffer).toString('utf8');
     let msg: AudioClientMessage;
     try {
-      msg = JSON.parse(data.toString());
+      msg = JSON.parse(text);
     } catch {
       return;
     }

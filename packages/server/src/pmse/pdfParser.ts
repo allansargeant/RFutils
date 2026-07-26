@@ -25,7 +25,7 @@ import type { Assignment, ParsedLicence } from '@rfutils/shared';
 import { emptyLicence } from '@rfutils/shared';
 
 // pdfjs-dist legacy ESM build works under Node.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 
 const NGR_SITE_RE = /^([A-Z]{2}\s?\d{3}\s?\d{3})\s+(.*)$/;

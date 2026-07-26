@@ -245,7 +245,7 @@ export function analyze(frequenciesMhz: number[], params: CoordinationParams): A
     params.ranges.some((r) => f >= toKhz(r.startMhz) && f <= toKhz(r.endMhz));
   const exclusions: FreqRange[] = params.exclusions;
 
-  freqs.forEach((f, i) => {
+  freqs.forEach((f) => {
     if (params.ranges.length && !inAnyRange(f)) {
       conflicts.push({
         kind: 'out-of-range',

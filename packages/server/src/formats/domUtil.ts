@@ -17,7 +17,7 @@ export function parseXml(text: string): El {
   const doc = new DOMParser({
     // Stay quiet on the malformed-but-parseable vendor exports.
     onError: () => {},
-  } as any).parseFromString(text, 'text/xml');
+  }).parseFromString(text, 'text/xml');
   return doc.documentElement;
 }
 

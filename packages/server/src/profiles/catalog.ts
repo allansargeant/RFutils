@@ -9,7 +9,7 @@
 import path from 'node:path';
 import os from 'node:os';
 import fs from 'node:fs';
-import type { ProfileCatalog, EquipmentProfile, BandPreset } from '@rfutils/shared';
+import type { ProfileCatalog } from '@rfutils/shared';
 import { builtinCatalog } from '@rfutils/shared';
 
 function configDir(): string {
@@ -29,8 +29,8 @@ export function loadCatalog(): ProfileCatalog {
   try {
     const user = JSON.parse(fs.readFileSync(file, 'utf8')) as Partial<ProfileCatalog>;
     return {
-      profiles: mergeById(builtin.profiles, (user.profiles ?? []) as EquipmentProfile[]),
-      bandPresets: mergeById(builtin.bandPresets, (user.bandPresets ?? []) as BandPreset[]),
+      profiles: mergeById(builtin.profiles, (user.profiles ?? [])),
+      bandPresets: mergeById(builtin.bandPresets, (user.bandPresets ?? [])),
     };
   } catch (err) {
     console.error(`[profiles] failed to parse ${file}:`, (err as Error).message);

@@ -69,7 +69,7 @@ function handleMessage(
 
   const channel: DeviceChannel = {
     id: `${deviceId}:1`,
-    name: String(dig(rx1, ['identity', 'name']) ?? 'Sennheiser RX'),
+    name: asText(dig(rx1, ['identity', 'name'])) || 'Sennheiser RX',
     rfLevel: numeric(dig(rx1, ['rf', 'level'])),
     audioLevelDb: numeric(dig(rx1, ['audio', 'out1', 'level'])),
     batteryPercent: numeric(dig(rx1, ['battery', 'gauge'])),
@@ -84,7 +84,7 @@ function handleMessage(
   registry.upsert({
     id: deviceId,
     vendor: 'sennheiser',
-    model: String(dig(rx1, ['identity', 'product']) ?? '') || null,
+    model: asText(dig(rx1, ['identity', 'product'])) || null,
     name: channel.name,
     address,
     port: SSC_PORT,
@@ -92,6 +92,11 @@ function handleMessage(
     identified: true,
     channels,
   });
+}
+
+/** Safely coerce an unknown SSC value to a display string (never "[object Object]"). */
+function asText(value: unknown): string {
+  return typeof value === 'string' ? value : typeof value === 'number' ? String(value) : '';
 }
 
 function dig(obj: unknown, path: string[]): unknown {

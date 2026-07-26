@@ -246,7 +246,7 @@ export class MonitorService extends EventEmitter {
     if (!parsed) return;
 
     if (this.mockToneTimers.has(channelId)) {
-      clearInterval(this.mockToneTimers.get(channelId)!);
+      clearInterval(this.mockToneTimers.get(channelId));
       this.mockToneTimers.delete(channelId);
       this.mockTonePhase.delete(channelId);
       return;

@@ -89,7 +89,7 @@ export function AllocationTab(): JSX.Element {
 
   const nameFromInventory = (): void => {
     const names = channelNames({ items });
-    setAllocations(allocations.map((a, i) => (names[i] ? { ...a, name: names[i]! } : a)));
+    setAllocations(allocations.map((a, i) => (names[i] ? { ...a, name: names[i] } : a)));
   };
 
   const setName = (idx: number, name: string): void => {
