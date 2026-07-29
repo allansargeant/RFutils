@@ -12,6 +12,7 @@ import os from 'node:os';
 import fs from 'node:fs';
 import type { ProductPlugin } from '@rfutils/shared';
 import { BUILTIN_PLUGINS } from '@rfutils/shared';
+import { say } from '../diag/index.js';
 
 function configDir(): string {
   return process.env.RFUTILS_CONFIG_DIR ?? path.join(os.homedir(), '.rfutils');
@@ -52,11 +53,11 @@ function loadUserPlugins(): ProductPlugin[] {
         if (isValidPlugin(item)) {
           out.push({ ...item, source: 'user' });
         } else {
-          console.error(`[plugins] ${file}: skipped an entry that isn't a valid ProductPlugin`);
+          say.error(`[plugins] ${file}: skipped an entry that isn't a valid ProductPlugin`);
         }
       }
     } catch (err) {
-      console.error(`[plugins] failed to parse ${full}:`, (err as Error).message);
+      say.error(`[plugins] failed to parse ${full}:`, (err as Error).message);
     }
   }
   return out;

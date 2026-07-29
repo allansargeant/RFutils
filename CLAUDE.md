@@ -20,3 +20,11 @@ Unified browser app for RF/wireless-mic coordination — merges wsm-wwb-bridge +
 - `shared` must be built before server/web — every dev/build script does this first.
 - Parsers here vs the standalone wsm-wwb-bridge (Python): check which is canonical before extending.
 - Public repo (github.com/stoatworks-labs/RFutils). "Commit" = commit **and** push.
+
+## Diagnostics
+
+Log via `log` (structured: `log.warn({ device }, 'reconnecting')`) or `say` (console-shaped,
+for existing call sites) from the vendored `diag` module — never `console`. Anything written
+to stdout corrupts `--collect-diagnostics`, whose stdout is a path. File writes are
+synchronous on purpose: an async stream loses the crashing run's log.
+See [docs/diagnostics.md](docs/diagnostics.md).

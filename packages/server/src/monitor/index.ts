@@ -18,6 +18,7 @@ import { loadCompanionConfig } from './companion/routesConfig.js';
 import { CompanionClient } from './companion/companionClient.js';
 import { seedMockDevices } from './mockDevices.js';
 import { resolveCaptureConfig, CaptureSource, type CaptureConfig } from './captureSource.js';
+import { say } from '../diag/index.js';
 
 /** Fixed channelId for the DVS/Dante-interface "cue bus" the server captures. */
 const CAPTURE_CUE_ID = 'capture:cue';
@@ -207,7 +208,7 @@ export class MonitorService extends EventEmitter {
     if (this.captureConfig && this.capture) {
       // Best-effort: route the clicked channel to the cue bus via Companion.
       void this.routeChannelToCueBus(channelId).catch((e) =>
-        console.error('[cue] Companion route failed:', (e as Error).message)
+        say.error('[cue] Companion route failed:', (e as Error).message)
       );
       this.captureCount++;
       if (this.captureCount === 1) this.capture.start();

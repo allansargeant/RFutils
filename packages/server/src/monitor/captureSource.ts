@@ -1,4 +1,5 @@
 import { spawn, type ChildProcess } from 'node:child_process';
+import { say } from '../diag/index.js';
 
 /**
  * Captures one local audio channel (a DVS / Dante interface "cue bus" the user
@@ -105,7 +106,7 @@ export class CaptureSource {
 
   start(): void {
     if (this.proc) return;
-    console.log(`[capture] starting: ${this.config.description}`);
+    say.info(`[capture] starting: ${this.config.description}`);
     const proc = spawn(this.config.program, this.config.args, {
       shell: this.config.shell,
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -113,13 +114,13 @@ export class CaptureSource {
     proc.stdout?.on('data', (chunk: Buffer) => this.enqueue(chunk));
     proc.stderr?.on('data', (d: Buffer) => {
       const line = d.toString().trim();
-      if (line) console.error('[capture]', line);
+      if (line) say.error('[capture]', line);
     });
-    proc.on('error', (e) => console.error('[capture] failed to spawn:', e.message));
+    proc.on('error', (e) => say.error('[capture] failed to spawn:', e.message));
     proc.on('close', (code) => {
       if (this.proc === proc) {
         this.proc = null;
-        if (code) console.error(`[capture] process exited with code ${code}`);
+        if (code) say.error(`[capture] process exited with code ${code}`);
       }
     });
     this.proc = proc;

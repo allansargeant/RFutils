@@ -9,6 +9,7 @@ import os from 'node:os';
 import fs from 'node:fs';
 import type { Inventory, InventoryItem } from '@rfutils/shared';
 import { emptyInventory } from '@rfutils/shared';
+import { say } from '../diag/index.js';
 
 function configDir(): string {
   return process.env.RFUTILS_CONFIG_DIR ?? path.join(os.homedir(), '.rfutils');
@@ -26,7 +27,7 @@ export function loadInventory(): Inventory {
     if (!raw || !Array.isArray(raw.items)) return emptyInventory();
     return raw;
   } catch (err) {
-    console.error(`[inventory] failed to parse ${file}:`, (err as Error).message);
+    say.error(`[inventory] failed to parse ${file}:`, (err as Error).message);
     return emptyInventory();
   }
 }
