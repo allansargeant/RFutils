@@ -10,6 +10,12 @@
 A browser-based RF-coordination and wireless-mic suite that unifies three separate tools into one
 package, with room to grow into full frequency coordination, allocation, and deployment services:
 
+[![Watch RFutils running — 50 seconds](docs/video-thumb.png)](https://www.youtube.com/watch?v=8f6VZ9qt1kw)
+
+*A 50-second tour. Every frame is the real application: a genuine 291-channel Wireless Workbench
+report goes into Convert, and the eight frequencies in Coordination are computed live. The
+receivers in Monitor are the app's mock devices — no wireless rack was attached.*
+
 | Merged tool | What it did | Where it lives now |
 |---|---|---|
 | [wsm-wwb-bridge](https://github.com/stoatworks-labs/wsm-wwb-bridge) | Move coordination data between Shure Wireless Workbench (WWB) and Sennheiser Wireless Systems Manager (WSM), plus any CSV | **Convert › Coordination files** |
