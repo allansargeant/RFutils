@@ -91,3 +91,11 @@ means experimental.
   helpers are SIGKILLed silently.
 - Multi-platform release CI; cross-compile macOS x86_64 on `macos-14`, never `macos-13`.
 - Public repo. "Commit" means commit **and** push.
+
+## Diagnostics
+
+Log via `log` (structured: `log.warn({ device }, 'reconnecting')`) or `say` (console-shaped,
+for existing call sites) from the vendored `diag` module — never `console`. Anything written
+to stdout corrupts `--collect-diagnostics`, whose stdout is a path. File writes are
+synchronous on purpose: an async stream loses the crashing run's log.
+See [docs/diagnostics.md](docs/diagnostics.md).

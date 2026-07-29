@@ -7,6 +7,21 @@ import { WebSocketServer, WebSocket } from 'ws';
 import type { ServerToClientEvent, AudioClientMessage, AudioServerMessage } from '@rfutils/shared';
 import { createApiRouter } from './routes.js';
 import { MonitorService, type AudioFrame } from './monitor/index.js';
+import { collectDiagnostics, init as initDiag, log, say } from './diag/index.js';
+
+// Before anything that can fail, so a failure during startup is logged and
+// captured like any other.
+initDiag({
+  app: 'rfutils',
+  envPrefix: 'RFUTILS',
+  version: '0.2.0',
+});
+
+if (process.argv.includes('--collect-diagnostics')) {
+  // stdout, so it can be used in a script; logging went to stderr.
+  say.info(collectDiagnostics());
+  process.exit(0);
+}
 
 const PORT = Number(process.env.RFUTILS_SERVER_PORT ?? process.env.PORT ?? 8420);
 const HOST = process.env.RFUTILS_HOST ?? '0.0.0.0';
@@ -130,17 +145,17 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`[rfutils] server listening on http://${HOST}:${PORT}`);
+  say.info(`[rfutils] server listening on http://${HOST}:${PORT}`);
   if (ENABLE_MONITOR) {
     monitor.start();
-    console.log('[rfutils] device discovery started (mDNS / Shure / AES67)');
+    say.info('[rfutils] device discovery started (mDNS / Shure / AES67)');
   } else {
-    console.log('[rfutils] device discovery disabled (RFUTILS_DISABLE_MONITOR=1)');
+    say.info('[rfutils] device discovery disabled (RFUTILS_DISABLE_MONITOR=1)');
   }
 });
 
 function shutdown(): void {
-  console.log('[rfutils] shutting down');
+  say.info('[rfutils] shutting down');
   monitor.stop();
   wss.close();
   audioWss.close();

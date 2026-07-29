@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import type { ProfileCatalog, BandPreset } from '@rfutils/shared';
 import { BAND_PRESETS, pluginToProfile } from '@rfutils/shared';
 import { loadPlugins } from '../plugins/registry.js';
+import { say } from '../diag/index.js';
 
 function configDir(): string {
   return process.env.RFUTILS_CONFIG_DIR ?? path.join(os.homedir(), '.rfutils');
@@ -23,7 +24,7 @@ function loadUserBandPresets(): BandPreset[] {
     const raw = JSON.parse(fs.readFileSync(file, 'utf8')) as { bandPresets?: BandPreset[] };
     return Array.isArray(raw.bandPresets) ? raw.bandPresets : [];
   } catch (err) {
-    console.error(`[profiles] failed to parse ${file}:`, (err as Error).message);
+    say.error(`[profiles] failed to parse ${file}:`, (err as Error).message);
     return [];
   }
 }

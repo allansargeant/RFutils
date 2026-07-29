@@ -2,6 +2,7 @@ import path from 'node:path';
 import os from 'node:os';
 import fs from 'node:fs';
 import type { CompanionButtonLocation, CompanionCrosspointConfig } from '@rfutils/shared';
+import { say } from '../../diag/index.js';
 
 /**
  * Where the user's own companion-routes.json lives. Absence of this file is
@@ -27,13 +28,13 @@ export function loadCompanionConfig(): CompanionCrosspointConfig | null {
   try {
     raw = JSON.parse(fs.readFileSync(configPath, 'utf8'));
   } catch (err) {
-    console.error(`[companion] failed to parse ${configPath}`, err);
+    say.error(`[companion] failed to parse ${configPath}`, err);
     return null;
   }
 
   const parsed = validate(raw);
   if (!parsed) {
-    console.error(
+    say.error(
       `[companion] ${configPath} does not match the expected shape — see companion-routes.example.json`
     );
     return null;
