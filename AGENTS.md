@@ -17,7 +17,7 @@ allocation and deployment services.
 | `pmse-to-wwb` | Convert an Ofcom PMSE licence schedule PDF into WWB import files | **Convert › Ofcom PMSE licence** |
 | `MicWizard` | Discover networked Shure/Sennheiser/AES67 receivers, monitor audio/battery/RF | **Monitor** |
 
-Node/TypeScript, npm-workspaces monorepo. Public repo (github.com/allansargeant/RFutils).
+Node/TypeScript, npm-workspaces monorepo. Public repo (github.com/stoatworks-labs/RFutils).
 
 ## 2. The thing to understand before touching a parser
 

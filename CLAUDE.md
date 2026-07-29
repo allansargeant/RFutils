@@ -19,4 +19,4 @@ Unified browser app for RF/wireless-mic coordination — merges wsm-wwb-bridge +
 ## Notes
 - `shared` must be built before server/web — every dev/build script does this first.
 - Parsers here vs the standalone wsm-wwb-bridge (Python): check which is canonical before extending.
-- Public repo (github.com/allansargeant/RFutils). "Commit" = commit **and** push.
+- Public repo (github.com/stoatworks-labs/RFutils). "Commit" = commit **and** push.

@@ -12,9 +12,9 @@ package, with room to grow into full frequency coordination, allocation, and dep
 
 | Merged tool | What it did | Where it lives now |
 |---|---|---|
-| [wsm-wwb-bridge](https://github.com/allansargeant/wsm-wwb-bridge) | Move coordination data between Shure Wireless Workbench (WWB) and Sennheiser Wireless Systems Manager (WSM), plus any CSV | **Convert › Coordination files** |
-| [pmse-to-wwb](https://github.com/allansargeant/pmse-to-wwb) | Convert an Ofcom PMSE licence schedule PDF into WWB import files | **Convert › Ofcom PMSE licence** |
-| [MicWizard](https://github.com/allansargeant/MicWizard) | Discover networked Shure/Sennheiser/AES67 receivers and monitor audio / battery / RF | **Monitor** |
+| [wsm-wwb-bridge](https://github.com/stoatworks-labs/wsm-wwb-bridge) | Move coordination data between Shure Wireless Workbench (WWB) and Sennheiser Wireless Systems Manager (WSM), plus any CSV | **Convert › Coordination files** |
+| [pmse-to-wwb](https://github.com/stoatworks-labs/pmse-to-wwb) | Convert an Ofcom PMSE licence schedule PDF into WWB import files | **Convert › Ofcom PMSE licence** |
+| [MicWizard](https://github.com/stoatworks-labs/MicWizard) | Discover networked Shure/Sennheiser/AES67 receivers and monitor audio / battery / RF | **Monitor** |
 
 ```mermaid
 flowchart LR
@@ -96,7 +96,7 @@ Prefer not to touch the terminal? A small menu-bar app lets you pick the network
 interface + port, Start/Stop the server, and open the web UI. It's **fully
 self-contained** — the `.dmg` embeds a Node runtime plus the whole app (server +
 built web UI), so nothing needs to be installed, not even Node. Grab it from
-[Releases](https://github.com/allansargeant/RFutils/releases), or see
+[Releases](https://github.com/stoatworks-labs/RFutils/releases), or see
 [launcher/](launcher/) to build it. The `.dmg` is **unsigned** (a signed +
 notarized build needs a paid Apple Developer account) — on first launch,
 right-click the app → **Open** to get past Gatekeeper. If you ever get a

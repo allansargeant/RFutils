@@ -10,7 +10,7 @@ that bite, read [`AGENTS.md`](../AGENTS.md) as well.
 Node.js with npm workspaces support (Node 18+). No other services or databases.
 
 ```bash
-git clone https://github.com/allansargeant/RFutils
+git clone https://github.com/stoatworks-labs/RFutils
 cd RFutils
 npm install
 ```
@@ -98,7 +98,7 @@ rejection.
 
 ### Add or change a parser
 **Stop and check which copy is canonical first.** The original parsers are Python, in the
-standalone [`wsm-wwb-bridge`](https://github.com/allansargeant/wsm-wwb-bridge) repo; the
+standalone [`wsm-wwb-bridge`](https://github.com/stoatworks-labs/wsm-wwb-bridge) repo; the
 TypeScript versions here were **byte-verified** against them. A fix applied to only one side
 silently invalidates that guarantee.
 

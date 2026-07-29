@@ -7,7 +7,7 @@ Built with [Tauri v2](https://tauri.app).
 ![panel](docs/panel.png)
 
 Download the `.dmg` from
-[Releases](https://github.com/allansargeant/RFutils/releases).
+[Releases](https://github.com/stoatworks-labs/RFutils/releases).
 
 > **Fully self-contained.** Because RFutils is a Node app, this bundle embeds a
 > Node runtime **and** the whole app (server + PMSE templates + built web UI).
@@ -53,6 +53,6 @@ npm run tauri build           # -> src-tauri/target/release/bundle/{macos,dmg}/
 ```
 
 The panel/tray shell is a copy of the reusable
-[av-launcher](https://github.com/allansargeant/av-launcher); only
+[av-launcher](https://github.com/stoatworks-labs/av-launcher); only
 `src-tauri/launcher.toml` (config + theme), the icon, and the embedded runtime
 are app-specific.
