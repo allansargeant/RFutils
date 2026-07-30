@@ -188,6 +188,34 @@ means experimental.
 - Multi-platform release CI; cross-compile macOS x86_64 on `macos-14`, never `macos-13`.
 - Public repo. "Commit" means commit **and** push.
 
+### Cutting a release: the version lives in six places
+
+`npm version <v> --workspaces --include-workspace-root` covers the root and
+`packages/{shared,server,web}`. It does **not** reach the launcher, and Tauri takes the app
+version from its own files:
+
+```
+launcher/package.json
+launcher/src-tauri/Cargo.toml          (and the av-launcher entry in Cargo.lock)
+launcher/src-tauri/tauri.conf.json     ← this one names the .dmg
+```
+
+v0.3.0 shipped a `.dmg` labelled `0.2.0` because only the first four were bumped; v0.3.1 then
+bumped the launcher but left the three workspaces behind. Check all six.
+
+### Regenerating package-lock.json: delete node_modules too
+
+```bash
+rm -rf node_modules package-lock.json && npm install    # correct
+rm -f package-lock.json && npm install                  # breaks Linux CI
+```
+
+With `node_modules` still present npm builds the lock from what is on disk — this machine —
+and silently drops the `optionalDependencies` for every other platform. Linux CI then dies on
+`Cannot find module @rollup/rollup-linux-x64-gnu` (npm/cli#4828). A good lock has ~25
+`@rollup/rollup-*` entries and the matching `@esbuild/*` ones; grep for
+`@rollup/rollup-linux-x64-gnu` before committing.
+
 ## Diagnostics
 
 Log via `log` (structured: `log.warn({ device }, 'reconnecting')`) or `say` (console-shaped,
