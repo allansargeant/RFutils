@@ -1,0 +1,60 @@
+version: 2
+
+# Why this file exists: with no config, Dependabot auto-discovered every
+# package.json in the repo and tried to update packages/server and packages/web
+# as if each were its own project. They are **npm workspace members** — there is
+# no lockfile beside them, only the one at the repo root — so every security
+# update against those directories died with `dependency_file_not_supported`
+# and the alerts sat open with no PR behind them.
+#
+# Pointing npm at "/" is what makes workspaces work: the root lockfile is the
+# only one that resolves packages/{shared,server,web}. launcher/ is a genuinely
+# separate project with its own lockfile, so it gets its own entry.
+
+updates:
+  # Root workspace: covers packages/shared, packages/server and packages/web.
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # The build/test toolchain moves together — vite, vitest and their
+      # shared esbuild are the source of most of the noise here, and bumping
+      # them in one PR is the only way the result is actually testable.
+      build-tooling:
+        patterns:
+          - "vite"
+          - "vitest"
+          - "@vitejs/*"
+          - "esbuild"
+          - "@vitest/*"
+      types:
+        patterns:
+          - "@types/*"
+
+  # The Tauri launcher: separate package.json + package-lock.json.
+  - package-ecosystem: npm
+    directory: "/launcher"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+
+  # The Rust side of the launcher.
+  #
+  # Note: the open `glib` advisory here is not fixable from this repo. glib
+  # arrives only through Tauri's GTK stack (gtk, webkit2gtk, gdk, atk, pango,
+  # soup3, libappindicator), which pins the 0.18 line, while the advisory needs
+  # 0.20.0 — Dependabot's own runs report `security_update_not_possible,
+  # latest-resolvable-version 0.18.5`. It also only affects the Linux backend;
+  # macOS builds use WKWebView and never compile it. It clears when Tauri moves.
+  - package-ecosystem: cargo
+    directory: "/launcher/src-tauri"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
