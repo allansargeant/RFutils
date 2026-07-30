@@ -17,6 +17,8 @@
  */
 
 import type { FreqRange } from './coordination.js';
+import type { BandVariant, RfMode } from './rf/types.js';
+import { rfDataFor } from './rf/index.js';
 
 export type PluginCategory = 'mic' | 'iem' | 'other';
 
@@ -46,13 +48,37 @@ export interface ProductPlugin {
   model: string;
   category: PluginCategory;
   // --- coordination ---
+  /**
+   * Default tuning raster, kHz. A {@link BandVariant} may override it — Shure
+   * SLX-D tunes in 25 kHz steps everywhere except the JB band, which is 125 kHz.
+   */
   tuningStepKhz: number;
+  /**
+   * RF footprint of one carrier, kHz. This is NOT the spacing to coordinate at
+   * — see `recommendedSpacingMhz` and `modes`. A Shure PSM 1000 occupies
+   * ~175 kHz but needs roughly 1.85 MHz between compatible channels.
+   */
   occupiedBandwidthKhz: number;
+  /**
+   * Minimum carrier-to-carrier spacing, MHz — the figure coordination actually
+   * uses. Derived from the default (first) entry in `modes` when the product has
+   * been researched.
+   */
   recommendedSpacingMhz: number;
   /** Suggested band preset id for the coordination form. */
   defaultBandPresetId?: string;
   /** Optional product-specific tuning ranges (rarely needed; bands cover most). */
   bands?: FreqRange[];
+  /**
+   * Frequency-range variants this product is sold in, with their real tunable
+   * spectrum. Present only for products researched against vendor documentation.
+   */
+  bandVariants?: BandVariant[];
+  /**
+   * Operating modes, each with its own required spacing (standard vs high
+   * density / link density). The first entry is the default.
+   */
+  modes?: RfMode[];
   // --- control (optional) ---
   control?: ProductControl;
   verified: boolean;
@@ -99,7 +125,12 @@ const LECTRO_CONTROL = (matchModel: string): ProductControl => ({
   programTemplate: 'SET {ch} FREQ {khz}',
 });
 
-export const BUILTIN_PLUGINS: ProductPlugin[] = [
+/**
+ * The declarative catalog. Coordination numbers here are the *fallback* — for
+ * any product with an entry in the sourced-RF registry, `applyRfData` below
+ * replaces them with the vendor-documented figures.
+ */
+const RAW_PLUGINS: ProductPlugin[] = [
   // --- Shure (command strings: discover / monitor / program) ---------------
   { id: 'shure-axient-digital', manufacturer: 'Shure', model: 'Axient Digital (AD/ADX)', category: 'mic', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', control: SHURE_CMD('< SET {ch} CHAN_FREQ {khz6} >', '^AD|Axient'), verified: false, notes: 'Very wide tuning; set your unit\'s actual band. Command keyword unverified.' },
   { id: 'shure-ulxd', manufacturer: 'Shure', model: 'ULX-D', category: 'mic', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.35, defaultBandPresetId: 'uk-uhf-core', control: SHURE_CMD('< SET {ch} FREQUENCY {khz6} >', 'ULXD?'), verified: false },
@@ -128,3 +159,32 @@ export const BUILTIN_PLUGINS: ProductPlugin[] = [
   { id: 'deity-theos', manufacturer: 'Deity', model: 'Theos', category: 'mic', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', bands: [{ startMhz: 550, endMhz: 663 }], verified: false, notes: '550–663 MHz (region-dependent). Control + its own coordination via the Sidus Audio phone app (app/Bluetooth) — not an open network; coordinate + export.' },
   { id: 'audiotechnica-5000', manufacturer: 'Audio-Technica', model: '5000 series', category: 'mic', tuningStepKhz: 25, occupiedBandwidthKhz: 200, recommendedSpacingMhz: 0.4, defaultBandPresetId: 'uk-uhf-core', verified: false },
 ];
+
+/**
+ * Overlay the researched RF data onto a raw catalog entry.
+ *
+ * The product's headline numbers become the ones its **default mode** actually
+ * requires, so nothing downstream has to know about modes to get a correct
+ * answer — but `modes` and `bandVariants` are there for anything that does.
+ *
+ * `verified` is set only when the default mode's spacing figure is quoted from
+ * vendor documentation. A derived or assumed figure leaves it false, which is
+ * what the README's "verify before a live show" warning depends on.
+ */
+function applyRfData(p: ProductPlugin): ProductPlugin {
+  const rf = rfDataFor(p.id);
+  if (!rf) return p;
+  const primary = rf.modes[0];
+  return {
+    ...p,
+    tuningStepKhz: rf.tuningStepKhz,
+    occupiedBandwidthKhz: primary?.occupiedBandwidthKhz ?? p.occupiedBandwidthKhz,
+    recommendedSpacingMhz: primary ? primary.minSpacingKhz / 1000 : p.recommendedSpacingMhz,
+    bandVariants: rf.bandVariants.length ? rf.bandVariants : undefined,
+    modes: rf.modes,
+    verified: primary?.spacing.basis === 'vendor-doc',
+  };
+}
+
+/** The built-in product catalog, with vendor-sourced RF data merged in. */
+export const BUILTIN_PLUGINS: ProductPlugin[] = RAW_PLUGINS.map(applyRfData);

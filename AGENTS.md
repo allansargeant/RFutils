@@ -37,6 +37,42 @@ Two consequences:
 original **Python** parsers, and this repo holds **TypeScript** ports. Before extending
 either, work out which is canonical for the change you're making — otherwise the two drift.
 
+## 2a. The RF data is sourced, and every number says where it came from
+
+`packages/shared/src/rf/` holds the real tuning ranges, occupied bandwidths and required
+spacings for Shure, Sennheiser, Lectrosonics and Wisycom, quoted from vendor documentation
+with a URL and a retrieval date on each figure. It replaced a catalog in which **every**
+product claimed a flat 200 kHz occupied bandwidth, a 25 kHz raster and a hand-picked
+spacing. Three things that catalog got wrong, and that you must not reintroduce:
+
+- **Occupied bandwidth is not required spacing.** A Shure PSM 1000 occupies ~175 kHz but
+  Shure's own compatible-frequency count implies ~1.85 MHz of practical separation. Both
+  numbers are carried; they are not interchangeable.
+- **Tuning raster is per-band, not per-product.** Shure SLX-D is 25 kHz everywhere except
+  the JB band, which is 125 kHz. Wisycom is 5 kHz throughout.
+- **Required spacing is per-mode.** Axient Digital is 350 kHz standard / 125 kHz HD;
+  EW-DX is 600 / 300; Digital 6000 is 400 (LR) / 200 (LD).
+
+Two further structural points:
+
+- **`BandVariant.ranges` is a list because bands really are discontiguous.** Axient Digital
+  G55/G57/K53/K54 carry the 608–614 MHz gap, K54 carries a second at 616–653, P55 is three
+  segments, and every Wisycom MCR54 version is three segments. Flattening a variant to one
+  start/end pair hands out frequencies the radio cannot tune.
+- **Sennheiser digital gear does not IM-search — it uses an equidistant grid**, which is why
+  those modes carry `strategy: 'equidistant'` and the engine has a grid path. An equidistant
+  set has no third-order product landing on a member; that is the whole point of the
+  published "min. frequency spacing for equidistant grid" figure.
+
+Every figure carries a `Provenance` with `basis: 'vendor-doc' | 'derived' | 'assumed'`.
+`verified` on a plugin/profile is now **derived from that** — it is true exactly when the
+default mode's spacing came straight from the manufacturer. Do not set it by hand, and do
+not upgrade a `derived` or `assumed` basis without a source to point at. `UNSOURCED_PRODUCTS`
+lists the products that still carry placeholders, so the gap stays visible.
+
+Coverage is Shure, Sennheiser, Lectrosonics and Wisycom. The rest of the catalog is
+untouched placeholder data and says so.
+
 ## 3. Layout
 
 ```
@@ -45,6 +81,7 @@ packages/
              formats/       WSM / WWB / CSV parsers + writers   -> @rfutils/shared/formats
              pmse/          PMSE PDF parser, exporters, .shw    -> @rfutils/shared/pmse
              coordination/  frequency coordination engine       -> @rfutils/shared/coordination
+             rf/            sourced band variants + RF modes    -> @rfutils/shared/rf
   server   Backend (@rfutils/server) - HTTP/WS + the sockets a browser can't open
   web      Frontend (@rfutils/web) - React, tab-per-tool
 docs/      BRANDS.md, PLUGINS.md, plugins/, screenshots/

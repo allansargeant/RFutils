@@ -12,7 +12,7 @@ import {
 } from '@rfutils/shared/formats';
 import { convertLicence, generateShow } from '@rfutils/shared/pmse';
 import type { MonitorService } from './monitor/index.js';
-import { coordinate, analyze } from '@rfutils/shared/coordination';
+import { coordinate, coordinateRadios, analyze } from '@rfutils/shared/coordination';
 import { loadInventory, saveInventory } from './inventory/store.js';
 import { loadCatalog } from './profiles/catalog.js';
 import { loadPlugins, findPlugin, findPluginForModel } from './plugins/registry.js';
@@ -21,7 +21,7 @@ import { sendLectrosonicsCommands } from './programming/lectrosonicsProgrammer.j
 import { LECTRO_PROGRAM_TEMPLATE } from './monitor/discovery/lectrosonicsProtocol.js';
 import { renderProgramCommand } from '@rfutils/shared';
 import type { TransportId } from '@rfutils/shared';
-import type { CoordinationParams, InventoryItem } from '@rfutils/shared';
+import type { CoordinationParams, CoordinationRadio, InventoryItem } from '@rfutils/shared';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
 
@@ -167,13 +167,37 @@ export function createApiRouter(monitor: MonitorService): Router {
 
   // --- Frequency coordination ---------------------------------------------
 
-  /** Coordinate `count` new frequencies. Body: { count, params, names? }. */
+  /**
+   * Coordinate new frequencies.
+   *
+   * Body is either `{ radios, params }` — each radio carrying its own tuning
+   * ranges, raster and required spacing from the equipment catalog — or the
+   * older `{ count, params, names? }` for a homogeneous set with no equipment
+   * data. `radios` wins when both are present.
+   */
   router.post('/coordinate', (req: Request, res: Response) => {
-    const count = Number(req.body?.count);
     const params = req.body?.params as CoordinationParams | undefined;
+    if (!params || !Array.isArray(params.ranges)) {
+      res.status(400).json({ error: 'Body must include params: { ranges, ... }.' });
+      return;
+    }
+    const radios = req.body?.radios as CoordinationRadio[] | undefined;
+    if (Array.isArray(radios)) {
+      if (radios.some((r) => !r || typeof r.name !== 'string')) {
+        res.status(400).json({ error: 'Each radio must have a name.' });
+        return;
+      }
+      try {
+        res.json(coordinateRadios(radios, params));
+      } catch (err) {
+        res.status(500).json({ error: (err as Error).message });
+      }
+      return;
+    }
+    const count = Number(req.body?.count);
     const names = req.body?.names as string[] | undefined;
-    if (!Number.isFinite(count) || !params || !Array.isArray(params.ranges)) {
-      res.status(400).json({ error: 'Body must be { count, params: { ranges, ... } }.' });
+    if (!Number.isFinite(count)) {
+      res.status(400).json({ error: 'Body must be { count, params } or { radios, params }.' });
       return;
     }
     try {

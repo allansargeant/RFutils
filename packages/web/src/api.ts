@@ -20,6 +20,7 @@ import type {
   PmseConversion,
   ServerToClientEvent,
   CoordinationParams,
+  CoordinationRadio,
   CoordinationResult,
   AnalysisResult,
   Inventory,
@@ -99,6 +100,25 @@ export async function coordinateFrequencies(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ count, params, names }),
+    })
+  );
+}
+
+/**
+ * Coordinate a set of radios that each carry their own tuning ranges, raster
+ * and required spacing — the path that uses the equipment catalog's real
+ * numbers rather than one global spacing guess.
+ */
+export async function coordinateRadioSet(
+  radios: CoordinationRadio[],
+  params: CoordinationParams
+): Promise<CoordinationResult> {
+  if (staticBuild) return (await local()).coordinateRadioSetLocal(radios, params);
+  return asJson<CoordinationResult>(
+    await fetch('/api/coordinate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ radios, params }),
     })
   );
 }

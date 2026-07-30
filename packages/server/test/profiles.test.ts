@@ -14,8 +14,30 @@ describe('equipment profile catalog', () => {
       expect(p.tuningStepKhz).toBeGreaterThan(0);
       expect(p.occupiedBandwidthKhz).toBeGreaterThan(0);
       expect(p.recommendedSpacingMhz).toBeGreaterThan(0);
-      // nothing is claimed as datasheet-verified
-      expect(p.verified).toBe(false);
+    }
+  });
+
+  it('claims verified only where the default mode cites vendor documentation', () => {
+    for (const p of profiles) {
+      const basis = p.modes?.[0]?.spacing.basis;
+      // `verified` is a claim about provenance, not a decoration — it must track
+      // the default mode's spacing basis exactly.
+      expect(p.verified).toBe(basis === 'vendor-doc');
+      if (p.verified) {
+        expect(p.modes?.[0]?.spacing.source).toBeTruthy();
+        expect(p.modes?.[0]?.spacing.retrieved).toBeTruthy();
+      }
+    }
+  });
+
+  it('headline numbers agree with the default mode', () => {
+    for (const p of profiles) {
+      const mode = p.modes?.[0];
+      if (!mode) continue;
+      expect(p.recommendedSpacingMhz).toBeCloseTo(mode.minSpacingKhz / 1000, 6);
+      if (mode.occupiedBandwidthKhz !== undefined) {
+        expect(p.occupiedBandwidthKhz).toBe(mode.occupiedBandwidthKhz);
+      }
     }
   });
 
@@ -47,7 +69,8 @@ describe('deriveCoordDefaults', () => {
   });
 
   it('takes the widest recommended spacing across the gear mix', () => {
-    // EW-D recommends 0.6, EW-DX 0.35 → mix should use 0.6 so both are happy.
+    // Both now sit at Sennheiser's published 600 kHz equidistant grid in their
+    // default (standard) modes, so the mix stays at 0.6.
     const d = deriveCoordDefaults(['sennheiser-ewd', 'sennheiser-ewdx'], catalog);
     expect(d.minSpacingMhz).toBe(0.6);
     expect(d.stepMhz).toBe(0.025);

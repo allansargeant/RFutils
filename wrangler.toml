@@ -1,0 +1,21 @@
+# Cloudflare deployment for the browser-only build of RFutils.
+#
+# This is a static-assets-only Worker: no server code. Unlike the demo sites in
+# the other repos, this one IS built by Cloudflare — it's plain Vite, and it is
+# the real tool rather than a recording, so there is nothing to capture ahead of
+# time. Set the build command in the Cloudflare project to:
+#
+#   npm ci && npm run build:static
+#
+# Without this file, `wrangler deploy` looks for a static directory at the repo
+# root, finds none (the build output is under packages/web/), and fails with
+# "Could not detect a directory containing static files".
+#
+# `name` must match the Cloudflare project. Change it here if the project was
+# created under a different one.
+
+name = "rfutils"
+compatibility_date = "2026-07-30"
+
+[assets]
+directory = "./packages/web/dist-static"

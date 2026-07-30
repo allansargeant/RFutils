@@ -255,17 +255,40 @@ API control still requires Audinate's SDK (see `packages/server/src/monitor/audi
 ## Coordinate
 
 Compute a set of mutually-compatible frequencies. Pick an **equipment profile** (Shure, Sennheiser,
-Wisycom, Lectrosonics, Audio-Technica, Sony …) to prefill the tuning raster and recommended
-spacing, and a **band preset** (UK Ch38, UK/US UHF core, Ch70, 2.4 GHz …) to prefill the ranges —
-or type them in. The profile catalog is a starting point (values are flagged unverified — check
-against your unit and licence) and is user-extensible via `~/.rfutils/profiles.json`. Then set how
-many you need, spacing, and IM options; the engine builds a candidate grid (ranges minus exclusions
-+ guard) and places
+Wisycom, Lectrosonics, Audio-Technica, Sony …), then the **frequency band variant you actually
+own** — a ULX-D G51 (470–534) coordinates differently from an H50 (534–598) — and the **operating
+mode**, because required spacing is a property of the mode, not the product: Shure Axient Digital
+wants 350 kHz in standard mode and 125 kHz in High Density, Sennheiser EW-DX 600 kHz standard and
+300 kHz in Link Density. A **band preset** (UK Ch38, UK/US UHF core, Ch70, 2.4 GHz …) still covers
+the separate question of what your licence allows.
+
+Those numbers are quoted from manufacturer documentation, and the app shows you which is which:
+each figure is labelled *from the manufacturer's documentation*, *calculated from published
+figures*, or *no source — assumed, verify before a show*, with the URL it came from. Shure,
+Sennheiser, Lectrosonics and Wisycom are researched; the rest of the catalog still carries
+placeholders and says so. See [`packages/shared/src/rf/`](packages/shared/src/rf/).
+
+Three consequences worth knowing:
+
+- **Occupied bandwidth is not the spacing to coordinate at.** A PSM 1000 occupies ~175 kHz but
+  Shure's own compatible-frequency count implies ~1.85 MHz of separation. Both are shown.
+- **Bands with gaps are respected.** Axient Digital G55, G57, K53, K54 and Shure P55, SLX-D J52
+  and M55, Sennheiser U1/5 and every Wisycom MCR54 version are discontiguous — nothing is placed
+  in a gap the radio cannot tune.
+- **Sennheiser digital gear is placed on an equidistant grid**, not by IM search, because that is
+  how the vendor designed it to be deployed.
+
+Mixed rigs coordinate correctly: between any two radios the wider of the two spacing requirements
+applies, each radio keeps its own tuning raster (Wisycom is 5 kHz, not 25), and occupied bandwidths
+are never allowed to overlap. The catalog is user-extensible via `~/.rfutils/profiles.json`.
+
+Then set how many you need and the IM options; the engine builds each radio's candidate grid
+(its band ∩ your ranges, minus exclusions + guard) and places
 carriers that are adequately spaced and free of third-order (`2·f1−f2`, `f1+f2−f3`) and optional
 fifth-order (`3·f1−2·f2`) intermodulation products landing on any carrier. Lock existing
 frequencies to coordinate around them, re-check the result for conflicts, and export straight to
 any WWB/WSM format. Works on an integer-kHz raster and is deterministic (seeded), so a given request
-always reproduces. See [`coordination/engine.ts`](packages/server/src/coordination/engine.ts).
+always reproduces. See [`coordination/engine.ts`](packages/shared/src/coordination/engine.ts).
 
 ![RFutils Coordination tab: an equipment profile (Sennheiser EW-DX) and band preset (UK UHF PMSE 470–608) selected, with tuning ranges, spacing, IM-guard and third/fifth-order intermodulation options](docs/screenshots/coordination.png)
 

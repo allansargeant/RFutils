@@ -41,11 +41,62 @@ export interface CoordinationParams {
   seed?: number;
 }
 
+/**
+ * One radio that needs a frequency, described by what it can actually do.
+ *
+ * This is the difference between coordinating with real numbers and
+ * coordinating with one global guess. A mixed rig — a couple of ULX-D on G51, a
+ * PSM 1000 IEM, an SLX-D spare — has three different tuning ranges, three
+ * different required spacings and two different rasters. Reducing that to a
+ * single `minSpacingMhz` either wastes spectrum (if you take the widest) or
+ * hands out frequencies that will not survive the show (if you take the
+ * narrowest).
+ *
+ * Every field is optional and falls back to the coordination-wide
+ * {@link CoordinationParams} value, so a caller with no equipment data still
+ * gets the old behaviour.
+ */
+export interface CoordinationRadio {
+  name: string;
+  /**
+   * What this radio can tune, MHz — its band variant's ranges. Intersected with
+   * the coordination's allowed ranges. Falls back to the coordination ranges.
+   */
+  tuningRanges?: FreqRange[];
+  /** Tuning raster, kHz. Falls back to `stepMhz`. */
+  tuningStepKhz?: number;
+  /**
+   * Minimum spacing this radio needs to any other carrier, MHz. Between two
+   * radios the wider of the pair's requirements applies.
+   */
+  minSpacingMhz?: number;
+  /**
+   * RF footprint, kHz. Two carriers may never overlap: they must be at least
+   * (bwA + bwB) / 2 apart. This is a floor beneath the spacing requirement, not
+   * a substitute for it.
+   */
+  occupiedBandwidthKhz?: number;
+  /** How this radio expects carriers to be laid out. Defaults to `im-search`. */
+  strategy?: 'im-search' | 'equidistant';
+  /** Product plugin id, for reporting. */
+  productId?: string;
+  /** Band variant code in use, e.g. `G51`. For reporting. */
+  bandCode?: string;
+  /** Operating mode id in use, e.g. `high-density`. For reporting. */
+  modeId?: string;
+}
+
 export interface CoordinatedFrequency {
   name: string;
   frequencyMhz: number;
   /** True if this was a pre-locked/existing frequency, not newly assigned. */
   locked?: boolean;
+  /** Band variant this carrier was placed within, when known. */
+  bandCode?: string;
+  /** Operating mode assumed when placing it, when known. */
+  modeId?: string;
+  /** Spacing this radio required, MHz — useful when a mix has several. */
+  requiredSpacingMhz?: number;
 }
 
 export interface CoordinationResult {
@@ -62,6 +113,10 @@ export type ConflictKind =
   | 'spacing'
   | 'exclusion'
   | 'out-of-range'
+  /** Two carriers' occupied bandwidths physically overlap. */
+  | 'bandwidth-overlap'
+  /** A carrier sits outside the tuning range of the radio assigned to it. */
+  | 'out-of-tuning-range'
   | 'im3-2tx'
   | 'im3-3tx'
   | 'im5-2tx';

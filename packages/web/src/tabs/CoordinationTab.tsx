@@ -1,14 +1,22 @@
 import { useEffect, useState } from 'react';
 import type {
   CoordinationParams,
+  CoordinationRadio,
   CoordinationResult,
   AnalysisResult,
   FreqRange,
   ExportFormat,
   ProfileCatalog,
+  Provenance,
 } from '@rfutils/shared';
 import { defaultCoordinationParams, EXPORT_FORMATS } from '@rfutils/shared';
-import { coordinateFrequencies, analyzeFrequencies, exportModel, getProfiles } from '../api.js';
+import {
+  coordinateFrequencies,
+  coordinateRadioSet,
+  analyzeFrequencies,
+  exportModel,
+  getProfiles,
+} from '../api.js';
 import { usePlanStore } from '../planStore.js';
 
 function formatRanges(ranges: FreqRange[]): string {
@@ -43,6 +51,90 @@ function download(text: string, filename: string, mime: string): void {
   URL.revokeObjectURL(url);
 }
 
+/**
+ * Say plainly where a number came from. The project's standing rule is that
+ * users must be able to tell a manufacturer's figure from our arithmetic from a
+ * guess — so the basis is spelled out rather than reduced to a tick.
+ */
+function Basis({ p, label }: { p?: Provenance; label: string }): JSX.Element | null {
+  if (!p) return null;
+  const text =
+    p.basis === 'vendor-doc'
+      ? `${label}: from the manufacturer's documentation`
+      : p.basis === 'derived'
+        ? `${label}: calculated from published figures`
+        : `${label}: no source — assumed, verify before a show`;
+  return (
+    <li className={p.basis === 'assumed' ? 'status--error' : undefined}>
+      {text}
+      {p.note ? ` — ${p.note}` : ''}
+      {p.source ? (
+        <>
+          {' '}
+          <span className="mono">({p.source})</span>
+        </>
+      ) : null}
+    </li>
+  );
+}
+
+function ProfileSummary({
+  profile,
+  variant,
+  mode,
+}: {
+  profile: NonNullable<ProfileCatalog['profiles'][number]>;
+  variant?: NonNullable<ProfileCatalog['profiles'][number]['bandVariants']>[number];
+  mode?: NonNullable<ProfileCatalog['profiles'][number]['modes']>[number];
+}): JSX.Element {
+  const control =
+    profile.protocol === 'shure-command-strings'
+      ? 'Programmable over the network.'
+      : profile.protocol === 'sennheiser-ssc'
+        ? 'Monitored over SSC.'
+        : 'File export only.';
+  return (
+    <div className="field--wide export-note">
+      <p>
+        <strong>
+          {profile.manufacturer} {profile.model}
+          {variant ? ` · ${variant.code}` : ''}
+          {mode ? ` · ${mode.name}` : ''}
+        </strong>{' '}
+        — needs <strong>{mode ? `${mode.minSpacingKhz} kHz` : `${profile.recommendedSpacingMhz * 1000} kHz`}</strong>{' '}
+        between carriers
+        {mode?.occupiedBandwidthKhz
+          ? `, occupying about ${mode.occupiedBandwidthKhz} kHz each`
+          : ''}
+        , tuning in {variant?.tuningStepKhz ?? profile.tuningStepKhz} kHz steps.{' '}
+        {mode?.strategy === 'equidistant'
+          ? 'This equipment expects an equidistant grid rather than a searched IM-free set.'
+          : ''}{' '}
+        {control}
+      </p>
+      {variant && variant.ranges.length > 1 && (
+        <p>
+          {variant.code} is <strong>not continuous</strong> — it tunes{' '}
+          {formatRanges(variant.ranges)} MHz. Nothing will be placed in the gaps.
+        </p>
+      )}
+      {variant?.notes && <p>{variant.notes}</p>}
+      {mode?.notes && <p>{mode.notes}</p>}
+      <ul>
+        <Basis p={mode?.spacing} label="Spacing" />
+        <Basis p={mode?.bandwidth} label="Occupied bandwidth" />
+        <Basis p={variant?.provenance} label={`${variant?.code ?? 'Band'} range`} />
+      </ul>
+      {!profile.modes?.length && (
+        <p className="status--error">
+          No researched data for this product yet — the spacing and bandwidth shown are
+          placeholders. Verify against the datasheet.
+        </p>
+      )}
+    </div>
+  );
+}
+
 export function CoordinationTab(): JSX.Element {
   const d = defaultCoordinationParams();
   const [rangesText, setRangesText] = useState('606.5-614');
@@ -65,11 +157,16 @@ export function CoordinationTab(): JSX.Element {
   const [catalog, setCatalog] = useState<ProfileCatalog | null>(null);
   const [bandId, setBandId] = useState('');
   const [profileId, setProfileId] = useState('');
-  const [profileNote, setProfileNote] = useState<string | null>(null);
+  const [variantCode, setVariantCode] = useState('');
+  const [modeId, setModeId] = useState('');
 
   useEffect(() => {
     getProfiles().then(setCatalog).catch(() => setCatalog(null));
   }, []);
+
+  const profile = catalog?.profiles.find((p) => p.id === profileId);
+  const variant = profile?.bandVariants?.find((v) => v.code === variantCode);
+  const mode = profile?.modes?.find((m) => m.id === modeId) ?? profile?.modes?.[0];
 
   const applyBand = (id: string): void => {
     setBandId(id);
@@ -77,20 +174,39 @@ export function CoordinationTab(): JSX.Element {
     if (preset) setRangesText(formatRanges(preset.ranges));
   };
 
+  /** Push a mode's real spacing (and the product's raster) into the form. */
+  const applyMode = (p: typeof profile, m: typeof mode): void => {
+    if (!p) return;
+    if (m) setSpacing(m.minSpacingKhz / 1000);
+    setStep(p.tuningStepKhz / 1000);
+  };
+
   const applyProfile = (id: string): void => {
     setProfileId(id);
-    const profile = catalog?.profiles.find((p) => p.id === id);
-    if (!profile) {
-      setProfileNote(null);
+    setVariantCode('');
+    const p = catalog?.profiles.find((x) => x.id === id);
+    if (!p) {
+      setModeId('');
       return;
     }
-    setSpacing(profile.recommendedSpacingMhz);
-    setStep(profile.tuningStepKhz / 1000);
-    if (profile.defaultBandPresetId) applyBand(profile.defaultBandPresetId);
-    setProfileNote(
-      `${profile.manufacturer} ${profile.model}: ~${profile.occupiedBandwidthKhz} kHz occupied, ` +
-        `${profile.recommendedSpacingMhz} MHz spacing recommended. ${profile.protocol === 'shure-command-strings' ? 'Programmable over the network.' : profile.protocol === 'sennheiser-ssc' ? 'Monitored over SSC.' : 'File export only.'} Verify against your unit.`
-    );
+    const first = p.modes?.[0];
+    setModeId(first?.id ?? '');
+    applyMode(p, first);
+    if (p.defaultBandPresetId) applyBand(p.defaultBandPresetId);
+  };
+
+  /**
+   * Selecting a band variant replaces the free-text ranges with the radio's
+   * real tunable spectrum — including its gaps, which is why this writes a
+   * comma-separated list rather than one span.
+   */
+  const applyVariant = (code: string): void => {
+    setVariantCode(code);
+    const v = profile?.bandVariants?.find((x) => x.code === code);
+    if (!v) return;
+    setRangesText(formatRanges(v.ranges));
+    setBandId('');
+    if (v.tuningStepKhz) setStep(v.tuningStepKhz / 1000);
   };
 
   const buildParams = (): CoordinationParams => ({
@@ -106,12 +222,35 @@ export function CoordinationTab(): JSX.Element {
     seed: 1,
   });
 
+  /**
+   * One radio per requested channel, carrying the selected product's real
+   * numbers. Returns null when no equipment is selected, in which case the
+   * older count-based call is used and the form's own spacing/step apply.
+   */
+  const buildRadios = (): CoordinationRadio[] | null => {
+    if (!profile || !mode) return null;
+    return Array.from({ length: count }, (_, i) => ({
+      name: `${profile.model} ${i + 1}`,
+      tuningRanges: variant?.ranges,
+      tuningStepKhz: variant?.tuningStepKhz ?? profile.tuningStepKhz,
+      minSpacingMhz: mode.minSpacingKhz / 1000,
+      occupiedBandwidthKhz: mode.occupiedBandwidthKhz,
+      strategy: mode.strategy,
+      productId: profile.id,
+      bandCode: variant?.code,
+      modeId: mode.id,
+    }));
+  };
+
   const run = async (): Promise<void> => {
     setBusy(true);
     setError(null);
     setAnalysis(null);
     try {
-      const res = await coordinateFrequencies(count, buildParams());
+      const radios = buildRadios();
+      const res = radios
+        ? await coordinateRadioSet(radios, buildParams())
+        : await coordinateFrequencies(count, buildParams());
       setResult(res);
       usePlanStore.getState().setCoordination(res); // share with Allocation/Deployment
     } catch (e) {
@@ -173,8 +312,39 @@ export function CoordinationTab(): JSX.Element {
             ))}
           </select>
         </label>
+        {profile?.bandVariants?.length ? (
+          <label className="field">
+            Frequency band (as printed on the unit)
+            <select value={variantCode} onChange={(e) => applyVariant(e.target.value)}>
+              <option value="">— pick the variant you own —</option>
+              {profile.bandVariants.map((v) => (
+                <option key={v.code} value={v.code}>
+                  {v.code} · {formatRanges(v.ranges)} MHz
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
+        {profile?.modes && profile.modes.length > 1 ? (
+          <label className="field">
+            Mode
+            <select
+              value={mode?.id ?? ''}
+              onChange={(e) => {
+                setModeId(e.target.value);
+                applyMode(profile, profile.modes?.find((m) => m.id === e.target.value));
+              }}
+            >
+              {profile.modes.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.name} · {m.minSpacingKhz} kHz spacing
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
         <label className="field">
-          Band preset
+          Band preset (licence)
           <select value={bandId} onChange={(e) => applyBand(e.target.value)}>
             <option value="">— pick a band (prefills ranges) —</option>
             {catalog?.bandPresets.map((b) => (
@@ -184,7 +354,7 @@ export function CoordinationTab(): JSX.Element {
             ))}
           </select>
         </label>
-        {profileNote && <p className="field--wide export-note">{profileNote}</p>}
+        {profile && <ProfileSummary profile={profile} variant={variant} mode={mode} />}
         <label className="field field--wide">
           <span>
             Tuning ranges — MHz, e.g. <code>606.5-614, 470-478</code>
@@ -280,6 +450,8 @@ export function CoordinationTab(): JSX.Element {
                   <th>#</th>
                   <th>Name</th>
                   <th>Frequency (MHz)</th>
+                  <th>Band</th>
+                  <th>Spacing needed (MHz)</th>
                   <th>Type</th>
                 </tr>
               </thead>
@@ -289,6 +461,10 @@ export function CoordinationTab(): JSX.Element {
                     <td>{i + 1}</td>
                     <td>{a.name}</td>
                     <td className="mono">{a.frequencyMhz.toFixed(3)}</td>
+                    <td>{a.bandCode ?? '—'}</td>
+                    <td className="mono">
+                      {a.requiredSpacingMhz !== undefined ? a.requiredSpacingMhz.toFixed(3) : '—'}
+                    </td>
                     <td>{a.locked ? 'locked' : 'coordinated'}</td>
                   </tr>
                 ))}

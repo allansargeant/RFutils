@@ -19,6 +19,7 @@ import type {
   AnalysisResult,
   CoordinationList,
   CoordinationParams,
+  CoordinationRadio,
   CoordinationResult,
   ExportFormat,
   FieldMapping,
@@ -136,6 +137,14 @@ export async function coordinateFrequenciesLocal(
 ): Promise<CoordinationResult> {
   const { coordinate } = await import('@rfutils/shared/coordination');
   return coordinate(count, params, names);
+}
+
+export async function coordinateRadioSetLocal(
+  radios: CoordinationRadio[],
+  params: CoordinationParams
+): Promise<CoordinationResult> {
+  const { coordinateRadios } = await import('@rfutils/shared/coordination');
+  return coordinateRadios(radios, params);
 }
 
 export async function analyzeFrequenciesLocal(

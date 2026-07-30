@@ -3,20 +3,30 @@
  *
  * A profile captures the coordination-relevant characteristics of a product:
  * which control protocol RFutils can talk to it with, the tuning raster, the
- * occupied bandwidth, and a sensible recommended carrier spacing. Tuning
- * *ranges* are deliberately NOT baked into product profiles — the usable range
- * is region- and band-variant-specific — so ranges come from separate, clearly
- * region-tagged band presets instead.
+ * occupied bandwidth, and the carrier spacing to coordinate at.
  *
- * ⚠️ These are STARTING POINTS, not a substitute for the datasheet. Occupied
- * bandwidth and recommended spacing vary by mode/region; band-preset ranges
- * depend on your licence and local spectrum. `verified` is false throughout —
- * check against your actual unit and licence before a live show. The catalog
- * is user-extensible: drop a profiles.json in RFUTILS_CONFIG_DIR to add or
+ * Two kinds of range live here and they answer different questions:
+ *
+ *   - `bandVariants` — what *this radio* can tune. A ULX-D is not "470–608"; it
+ *     is a G51 (470–534) or an H50 (534–598) or a K51 (606–670), and several
+ *     variants are discontiguous. Sourced from vendor documentation; see
+ *     `src/rf/`.
+ *   - `BAND_PRESETS` — what *your licence* allows in a region. Still separate,
+ *     because that is a regulatory question, not a product one.
+ *
+ * A coordination is constrained by the intersection of the two.
+ *
+ * ⚠️ Check `verified` and, for detail, the `provenance` on each band variant and
+ * the `spacing`/`bandwidth` provenance on each mode. `vendor-doc` means the
+ * figure is quoted from the manufacturer; `derived` means it was computed from
+ * published figures; `assumed` means there is no source. Band-preset ranges
+ * depend on your licence and local spectrum regardless. The catalog is
+ * user-extensible: drop a profiles.json in RFUTILS_CONFIG_DIR to add or
  * override entries.
  */
 
 import { BUILTIN_PLUGINS, type ProductPlugin, type TransportId } from './plugins.js';
+import type { BandVariant, RfMode } from './rf/types.js';
 
 /** Control protocol RFutils can use to talk to (and program) a device. */
 export type DeviceProtocol =
@@ -42,7 +52,14 @@ export interface EquipmentProfile {
   recommendedSpacingMhz: number;
   /** Default band preset id to pair with (a sensible starting range). */
   defaultBandPresetId?: string;
-  /** Not datasheet-verified — always false here; see module note. */
+  /**
+   * Frequency-range variants this product is sold in (G51, S1-10, B2 …), with
+   * their real tunable spectrum. Present only for researched products.
+   */
+  bandVariants?: BandVariant[];
+  /** Operating modes with their own required spacing. First is the default. */
+  modes?: RfMode[];
+  /** True when the default mode's spacing is quoted from vendor documentation. */
   verified: boolean;
   notes?: string;
 }
@@ -123,6 +140,8 @@ export function pluginToProfile(p: ProductPlugin): EquipmentProfile {
     occupiedBandwidthKhz: p.occupiedBandwidthKhz,
     recommendedSpacingMhz: p.recommendedSpacingMhz,
     defaultBandPresetId: p.defaultBandPresetId,
+    bandVariants: p.bandVariants,
+    modes: p.modes,
     verified: p.verified,
     notes: p.notes,
   };

@@ -21,6 +21,10 @@
     "./coordination": {
       "types": "./dist/coordination/index.d.ts",
       "default": "./dist/coordination/index.js"
+    },
+    "./rf": {
+      "types": "./dist/rf/index.d.ts",
+      "default": "./dist/rf/index.js"
     }
   },
   "scripts": {
