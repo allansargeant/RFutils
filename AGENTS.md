@@ -122,6 +122,21 @@ has to be a bare compile-time constant so Vite can eliminate the `if (staticBuil
 `staticBuild` from `buildMode.js`, never from `localApi.js`, or the server bundle grows a pdfjs
 dependency it never uses.
 
+**That elimination is load-bearing and it is version-sensitive — check it after any Vite
+upgrade.** The repo is pinned to Vite 6 (`overrides` in the root package.json forces `^6.4.3`
+across the tree, because vitest resolves a Vite of its own and npm otherwise pins it back). On
+Vite 8 the branch is *not* eliminated: `import('./localApi.js')` survives and takes pdfjs with
+it, and the server build goes from one 221 kB chunk (236 K total) to eight chunks including a
+374 kB pdfjs one (792 K total) — 3.4× bigger, all of it dead code. Presumably rolldown folds
+the `define`-substituted constant differently. See PR #12; taking Vite 8 needs the static/server
+split expressed some other way, not just a version bump.
+
+The cheap check after any Vite bump:
+
+```bash
+npm run build && ls packages/web/dist/assets   # one JS chunk + CSS, no pdf-*.js
+```
+
 Similarly, pdfjs's worker is copied in by the `rfutils-pdf-worker` plugin in `vite.config.ts`
 rather than imported with `?url`: a `?url` import emits the 2.3 MB worker into *both* builds.
 
