@@ -1,0 +1,127 @@
+name: release-desktop
+
+# Builds the RFutils desktop app for every platform and attaches the installers
+# to the release.
+#
+# release.yml already ships the portable Node bundle and release-macos.yml an
+# unsigned/notarised macOS .dmg — but nothing produced a Windows or Linux
+# desktop build, so the desktop app was macOS-only. This closes that.
+#
+# Tauri cannot cross-compile its bundles, and the launcher embeds a Node runtime
+# plus native prebuilds matched to the target (launcher/scripts/prepare.sh takes
+# NODE_PLATFORM), so each platform must build on its own runner. That is exactly
+# what CI is good for and what a single Mac cannot do.
+#
+# Modelled on atem-overseer's release-desktop.yml, which is the working
+# reference for this launcher shape.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to attach installers to (e.g. v0.3.1)'
+        required: true
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  desktop:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: macos-aarch64,  os: macos-14,       node_platform: darwin-arm64, rust_target: aarch64-apple-darwin,  bundles: app }
+          - { name: macos-x86_64,   os: macos-14,       node_platform: darwin-x64,   rust_target: x86_64-apple-darwin,   bundles: app }
+          - { name: windows-x86_64, os: windows-latest, node_platform: win-x64,      rust_target: x86_64-pc-windows-msvc, bundles: 'nsis,msi' }
+          - { name: linux-x86_64,   os: ubuntu-22.04,   node_platform: linux-x64,    rust_target: x86_64-unknown-linux-gnu, bundles: 'deb,rpm' }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust_target }}
+
+      - name: Linux system dependencies
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install launcher deps
+        run: cd launcher && npm ci
+
+      - name: Build and stage the embedded app
+        shell: bash
+        # prepare.sh fetches a self-contained Node for NODE_PLATFORM and installs
+        # the production node_modules with that platform's native prebuilds —
+        # which is why this cannot be cross-built.
+        env:
+          NODE_PLATFORM: ${{ matrix.node_platform }}
+        run: cd launcher && bash scripts/prepare.sh
+
+      - name: Build desktop bundle
+        shell: bash
+        # tauri.conf.json only lists app,dmg, so the bundles are named
+        # explicitly per platform rather than relying on the config.
+        run: cd launcher && npx --no-install tauri build --target ${{ matrix.rust_target }} --bundles ${{ matrix.bundles }}
+
+      - name: Installers (macOS)
+        if: startsWith(matrix.os, 'macos')
+        shell: bash
+        # Built here rather than by Tauri: its dmg step drives Finder over
+        # AppleScript and fails headless, and it has no pkg bundler at all.
+        # Ad-hoc signing first — the bundle nests an embedded Node binary, and
+        # approving the outer app does not unquarantine it.
+        run: |
+          source scripts/release-lib.sh
+          version="${{ github.event.inputs.tag || github.ref_name }}"
+          version="${version#v}"
+          case "$version" in [0-9]*) ;; *) version="$(node -p "require('./package.json').version")" ;; esac
+          rl_init "RFutils" rfutils "$version" com.stoatworks.rfutils "$GITHUB_WORKSPACE/out"
+          appdir="launcher/src-tauri/target/${{ matrix.rust_target }}/release/bundle/macos"
+          app="RFutils.app"
+          if [ ! -d "$appdir/$app" ]; then echo "no .app produced" >&2; exit 1; fi
+          stage="$RUNNER_TEMP/stage-mac"
+          rm -rf "$stage"; mkdir -p "$stage" "$GITHUB_WORKSPACE/out"
+          cp -R "$appdir/$app" "$stage/"
+          rl_adhoc_sign "$stage/$app"
+          rl_dmg "${{ matrix.name }}" "$stage" --app "$app"
+          rl_pkg "${{ matrix.name }}" "$stage" --app "$app"
+
+      - name: Collect installers
+        shell: bash
+        run: |
+          mkdir -p out
+          find launcher/src-tauri/target -type f \
+            \( -name '*.msi' -o -name '*.exe' -o -name '*.deb' -o -name '*.rpm' -o -name '*.AppImage' \) \
+            -path '*/release/bundle/*' -exec cp {} out/ \; || true
+          ls -la out
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rfutils-desktop-${{ matrix.name }}
+          path: out/*
+          if-no-files-found: warn
+
+      - name: Attach installers to the release
+        if: startsWith(github.ref, 'refs/tags/v') || github.event.inputs.tag != ''
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          # release.yml may still be creating the release; wait rather than race it.
+          for i in $(seq 1 30); do
+            if gh release view "$TAG" >/dev/null 2>&1; then break; fi
+            echo "waiting for release $TAG…"; sleep 10
+          done
+          gh release upload "$TAG" out/* --clobber
