@@ -7,7 +7,7 @@ import { WebSocketServer, WebSocket } from 'ws';
 import type { ServerToClientEvent, AudioClientMessage, AudioServerMessage } from '@rfutils/shared';
 import { createApiRouter } from './routes.js';
 import { MonitorService, type AudioFrame } from './monitor/index.js';
-import { collectDiagnostics, init as initDiag, log, say } from './diag/index.js';
+import { collectDiagnostics, init as initDiag, say } from './diag/index.js';
 
 // Before anything that can fail, so a failure during startup is logged and
 // captured like any other.

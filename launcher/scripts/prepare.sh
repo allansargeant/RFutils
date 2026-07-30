@@ -23,14 +23,17 @@ echo "==> building RFutils"
 
 echo "==> esbuilding server -> single ESM bundle"
 BANNER='import{createRequire as __cr}from "module";const require=__cr(import.meta.url);import{fileURLToPath as __f}from "url";import{dirname as __d}from "path";const __filename=__f(import.meta.url);const __dirname=__d(__filename);'
-mkdir -p "$APP/packages/server/dist/templates" "$APP/packages/web/dist"
+mkdir -p "$APP/packages/web/dist"
 ( cd "$REPO" && npx --yes esbuild@0.24.0 packages/server/src/index.ts \
     --bundle --platform=node --format=esm --target=node18 \
     --banner:js="$BANNER" \
     --outfile="$APP/packages/server/dist/index.mjs" )
 
-echo "==> copying templates + built web UI"
-cp "$REPO"/packages/server/src/pmse/templates/* "$APP/packages/server/dist/templates/"
+# The .shw templates are NOT copied: gen-templates.mjs inlines them into
+# templates.generated.ts at build time, so showGenerator reads no files and the
+# bundle needs none. (This used to copy them from packages/server/src/pmse —
+# a path that stopped existing when the parsers moved to packages/shared.)
+echo "==> copying built web UI"
 cp -R "$REPO"/packages/web/dist/. "$APP/packages/web/dist/"
 
 echo "==> fetching self-contained Node $NODE_VERSION"

@@ -257,7 +257,10 @@ function formatRecord(record: Record<string, unknown>): string {
   const fields = Object.entries(rest)
     .map(([k, v]) => ` ${k}=${typeof v === 'string' ? v : JSON.stringify(v)}`)
     .join('');
-  return `${String(time)} ${name.padEnd(5)} ${String(msg ?? '')}${fields}`;
+  // `msg` is unknown: stringify a non-string the same way the fields are, or an
+  // object message renders as "[object Object]" and the line loses its content.
+  const message = msg === undefined || msg === null ? '' : typeof msg === 'string' ? msg : JSON.stringify(msg);
+  return `${String(time)} ${name.padEnd(5)} ${message}${fields}`;
 }
 
 /**
