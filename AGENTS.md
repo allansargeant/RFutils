@@ -75,7 +75,9 @@ Things that legitimately need Node stay in `server/`: `inventory/store.ts`, `pro
 ### The two web builds
 
 `npm run build` targets the server; `npm run build:static` (`VITE_RFUTILS_STATIC=1`) produces the
-browser-only bundle published to GitHub Pages by `scripts/deploy-pages.sh`.
+browser-only bundle. Cloudflare Pages builds it from this repo (`npm ci && npm run
+build:static`, output `packages/web/dist-static`) and serves it at the root of its own
+domain — so the static build targets a root base path, not a `/RFutils/` subdirectory.
 
 `src/buildMode.ts` exports the `staticBuild` flag, and it lives alone in that file on purpose: it
 has to be a bare compile-time constant so Vite can eliminate the `if (staticBuild)` branches in
@@ -97,7 +99,7 @@ npm run dev          # server (port 8420) + web
 npm run dev:demo     # with mock devices - no hardware needed
 npm run dev:verify   # monitor disabled
 npm run build
-npm run build:static # browser-only bundle for GitHub Pages
+npm run build:static # browser-only bundle (Cloudflare Pages)
 npm run typecheck    # runs across shared, server and web
 npm test             # server package
 ```

@@ -50,7 +50,7 @@ deployment.
 ## Try it without installing anything
 
 The conversion and coordination half of RFutils runs entirely in a browser, hosted at
-**<https://stoatworks-labs.com/RFutils/>**. Drop in a WWB/WSM export or an Ofcom PMSE licence PDF
+**<https://rfutils.stoatworks-labs.com>**. Drop in a WWB/WSM export or an Ofcom PMSE licence PDF
 and get your files back — **nothing is uploaded**: the parsers, the `.shw` generator and the
 coordination engine all execute on your own machine, in the page. Your licence PDF never leaves
 your laptop.
@@ -103,15 +103,22 @@ Other scripts: `npm run typecheck` (all packages), `npm test` (server parser tes
 `npm run dev:demo` (like `dev`, but seeds simulated receivers so the Monitor tab is populated
 without any hardware — how the Monitor screenshot above was captured).
 
-To build the browser-only version and publish it to GitHub Pages:
+To build the browser-only version:
 
 ```bash
-npm run build:static              # -> packages/web/dist-static, base path /RFutils/
-scripts/deploy-pages.sh --dry-run # show what would be published
-scripts/deploy-pages.sh           # build + push to the gh-pages branch
+npm run build:static     # -> packages/web/dist-static
+npm run preview:static   # serve that build locally
 ```
 
-`RFUTILS_BASE=/ npm run build:static` builds for a domain root instead of a subdirectory.
+It is published to **Cloudflare Pages**, which builds it from this repo:
+
+| Setting | Value |
+|---|---|
+| Build command | `npm ci && npm run build:static` |
+| Build output directory | `packages/web/dist-static` |
+
+The build targets a root base path, since a Pages project serves at the root of its own
+domain. Set `RFUTILS_BASE=/somewhere/` to host it under a subdirectory instead.
 
 ### Environment
 

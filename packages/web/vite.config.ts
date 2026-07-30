@@ -11,10 +11,11 @@ const SERVER_PORT = process.env.RFUTILS_SERVER_PORT ?? '8420';
 //
 // The static build (`npm run build:static`) has no server at all: it runs the
 // conversion and coordination code from @rfutils/shared in the browser. It is
-// served from a subdirectory on GitHub Pages, hence the base path — override
-// with RFUTILS_BASE when hosting somewhere else (use '/' for a domain root).
+// published to Cloudflare Pages, which serves a project at the root of its own
+// domain — hence a root base path. Set RFUTILS_BASE to host it under a
+// subdirectory instead (e.g. '/RFutils/').
 const isStatic = process.env.VITE_RFUTILS_STATIC === '1';
-const base = process.env.RFUTILS_BASE ?? (isStatic ? '/RFutils/' : '/');
+const base = process.env.RFUTILS_BASE ?? '/';
 
 /**
  * Copy pdfjs's worker into the static build at a fixed path, so localApi can

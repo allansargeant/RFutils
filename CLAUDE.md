@@ -7,7 +7,7 @@ Unified browser app for RF/wireless-mic coordination — merges wsm-wwb-bridge +
 - Dev, mock devices: `npm run dev:demo`
 - Dev, no monitor (verify): `npm run dev:verify`
 - Build: `npm run build`
-- Build browser-only (GitHub Pages): `npm run build:static`; publish with `scripts/deploy-pages.sh`
+- Build browser-only (Cloudflare Pages builds this from the repo): `npm run build:static`
 - Typecheck: `npm run typecheck`
 - Test: `npm test` (server package)
 - Build shared only: `npm run build:shared`
