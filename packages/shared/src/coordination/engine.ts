@@ -21,7 +21,7 @@ import type {
   CoordinationParams,
   CoordinationResult,
   FreqRange,
-} from '@rfutils/shared';
+} from '../index.js';
 
 /** kHz-integer working unit avoids float drift on a 25 kHz raster. */
 const toKhz = (mhz: number): number => Math.round(mhz * 1000);

@@ -7,16 +7,20 @@ Unified browser app for RF/wireless-mic coordination — merges wsm-wwb-bridge +
 - Dev, mock devices: `npm run dev:demo`
 - Dev, no monitor (verify): `npm run dev:verify`
 - Build: `npm run build`
+- Build browser-only (GitHub Pages): `npm run build:static`; publish with `scripts/deploy-pages.sh`
 - Typecheck: `npm run typecheck`
 - Test: `npm test` (server package)
 - Build shared only: `npm run build:shared`
 
 ## Layout (packages/)
-- `shared` — types + parsers (WSM/WWB/PMSE); build before server/web (`build:shared`)
-- `server` — backend (`@rfutils/server`)
-- `web` — frontend (`@rfutils/web`)
+- `shared` — types + all pure logic: `formats/`, `pmse/`, `coordination/` (subpath exports
+  `@rfutils/shared/{formats,pmse,coordination}`); build before server/web (`build:shared`)
+- `server` — backend (`@rfutils/server`) + the sockets a browser can't open
+- `web` — frontend (`@rfutils/web`); `localApi.ts` runs the shared logic in-browser for the
+  static build
 
 ## Notes
+- **Nothing in `shared` may import a Node builtin** — the static build runs it in the browser.
 - `shared` must be built before server/web — every dev/build script does this first.
 - Parsers here vs the standalone wsm-wwb-bridge (Python): check which is canonical before extending.
 - Public repo (github.com/stoatworks-labs/RFutils). "Commit" = commit **and** push.

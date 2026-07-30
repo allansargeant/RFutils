@@ -12,12 +12,15 @@ export default tseslint.config(
   {
     ignores: [
       '**/dist/**',
+      '**/dist-static/**',
       '**/node_modules/**',
       'launcher/**',
       'packages/web/public/**',
       '**/test/**', // exercised by `npm test`, not part of the tsc build projects
       '**/*.config.{ts,js}',
-      'eslint.config.mjs',
+      // Build tooling, not shipped code: plain ESM with no tsconfig project, so
+      // the type-checked rules can't run over it.
+      '**/*.mjs',
     ],
   },
   js.configs.recommended,

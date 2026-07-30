@@ -4,7 +4,7 @@
  * This is the TS equivalent of what wsm-wwb-bridge's GUI dispatched to.
  */
 
-import type { CoordinationList, DetectedFormat, ExportFormat } from '@rfutils/shared';
+import type { CoordinationList, DetectedFormat, ExportFormat } from '../index.js';
 import { detectFormat } from './detect.js';
 import { readWwbXml } from './wwbXml.js';
 import { readWsmProject } from './wsmXml.js';
@@ -19,6 +19,7 @@ import { writeGenericCsv } from './csvGeneric.js';
 
 export { detectFormat };
 export * from './csvGeneric.js';
+export * from './freqParse.js';
 
 export interface ReadResult {
   format: DetectedFormat;

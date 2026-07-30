@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { coordinate, analyze } from '../src/coordination/engine.js';
+import { coordinate, analyze } from '@rfutils/shared/coordination';
 import { defaultCoordinationParams, type CoordinationParams } from '@rfutils/shared';
 
 function wideParams(over: Partial<CoordinationParams> = {}): CoordinationParams {

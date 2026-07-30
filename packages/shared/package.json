@@ -9,11 +9,28 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./formats": {
+      "types": "./dist/formats/index.d.ts",
+      "default": "./dist/formats/index.js"
+    },
+    "./pmse": {
+      "types": "./dist/pmse/index.d.ts",
+      "default": "./dist/pmse/index.js"
+    },
+    "./coordination": {
+      "types": "./dist/coordination/index.d.ts",
+      "default": "./dist/coordination/index.js"
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "dev": "tsc -p tsconfig.json --watch"
+    "gen:templates": "node scripts/gen-templates.mjs",
+    "build": "npm run gen:templates && tsc -p tsconfig.json",
+    "typecheck": "npm run gen:templates && tsc -p tsconfig.json --noEmit",
+    "dev": "npm run gen:templates && tsc -p tsconfig.json --watch"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.9.5",
+    "pdfjs-dist": "^4.7.76"
   }
 }

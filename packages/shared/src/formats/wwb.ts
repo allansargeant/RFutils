@@ -8,8 +8,8 @@
  * structured shape (columns are user-configurable in real WWB).
  */
 
-import type { Channel, CoordinationList } from '@rfutils/shared';
-import { displayFrequency } from '@rfutils/shared';
+import type { Channel, CoordinationList } from '../index.js';
+import { displayFrequency } from '../index.js';
 import { formatMhz, parseFrequencyToMhz } from './freqParse.js';
 import { writeCsv } from './csvUtil.js';
 import { readHeaderAndRows, readRows, sniffMapping } from './csvGeneric.js';

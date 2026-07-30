@@ -4,7 +4,7 @@
  * PMSE PDF path is detected upstream by content type).
  */
 
-import type { DetectedFormat } from '@rfutils/shared';
+import type { DetectedFormat } from '../index.js';
 import { readHeaderAndRows } from './csvGeneric.js';
 import { looksLikeWsmHtmlReport } from './wsmHtml.js';
 import { looksLikeWsmXml } from './wsmXml.js';

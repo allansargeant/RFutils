@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -p tsconfig.json && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build:static": "tsc -p tsconfig.json && VITE_RFUTILS_STATIC=1 vite build",
+    "preview:static": "VITE_RFUTILS_STATIC=1 vite preview --outDir dist-static"
   },
   "dependencies": {
     "@rfutils/shared": "*",

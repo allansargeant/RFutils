@@ -21,8 +21,8 @@
  * width; a materially different template revision would need re-calibration.
  */
 
-import type { Assignment, ParsedLicence } from '@rfutils/shared';
-import { emptyLicence } from '@rfutils/shared';
+import type { Assignment, ParsedLicence } from '../index.js';
+import { emptyLicence } from '../index.js';
 
 // pdfjs-dist legacy ESM build works under Node.
  

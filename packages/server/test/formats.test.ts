@@ -2,10 +2,10 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { readText, writeFormat } from '../src/formats/index.js';
-import { detectFormat } from '../src/formats/detect.js';
-import { parseFrequencyToMhz, formatKhz, parseWwbGroupChannel } from '../src/formats/freqParse.js';
-import { generateShow } from '../src/pmse/showGenerator.js';
+import { readText, writeFormat } from '@rfutils/shared/formats';
+import { detectFormat } from '@rfutils/shared/formats';
+import { parseFrequencyToMhz, formatKhz, parseWwbGroupChannel } from '@rfutils/shared/formats';
+import { generateShow } from '@rfutils/shared/pmse';
 
 const FIXTURES = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
 const read = (name: string) => readFileSync(join(FIXTURES, name), 'utf-8');

@@ -3,7 +3,7 @@
  * generator together, mirroring pmse-to-wwb's /api/convert response.
  */
 
-import type { ParsedLicence, PmseConversion } from '@rfutils/shared';
+import type { ParsedLicence, PmseConversion } from '../index.js';
 import { parseLicencePdf } from './pdfParser.js';
 import { suggestedNames, toReferenceCsv, toWwbFrequencyList } from './exporters.js';
 import { generateShow } from './showGenerator.js';

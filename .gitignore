@@ -9,5 +9,9 @@ out/
 companion-routes.json
 .claude/
 
+# Generated from packages/shared/src/pmse/templates/*.tpl by the build
+packages/shared/src/pmse/templates.generated.ts
+
 # Never commit licence PDFs or other sample docs
 *.pdf
+packages/web/dist-static/

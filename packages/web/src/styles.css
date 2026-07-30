@@ -92,6 +92,23 @@ body {
   padding: 1px 5px;
 }
 
+/* Shown only by the hosted (static) build. */
+.app__notice {
+  margin: 0 0 20px;
+  padding: 10px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-2);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.app__notice a {
+  color: var(--accent-2);
+}
+
 .app__footer {
   margin-top: 40px;
   padding-top: 16px;

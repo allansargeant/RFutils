@@ -10,7 +10,7 @@
  * present and falls back to the freq_entry candidate pool otherwise.
  */
 
-import type { Channel, CoordinationList } from '@rfutils/shared';
+import type { Channel, CoordinationList } from '../index.js';
 import { parseWwbGroupChannel } from './freqParse.js';
 import {
   parseXml,

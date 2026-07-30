@@ -5,6 +5,7 @@ import { InventoryTab } from './tabs/InventoryTab.js';
 import { CoordinationTab } from './tabs/CoordinationTab.js';
 import { AllocationTab } from './tabs/AllocationTab.js';
 import { DeploymentTab } from './tabs/DeploymentTab.js';
+import { staticBuild } from './buildMode.js';
 
 type TabId = 'convert' | 'monitor' | 'inventory' | 'coordination' | 'allocation' | 'deployment';
 
@@ -12,16 +13,20 @@ interface TabDef {
   id: TabId;
   label: string;
   planned?: boolean;
+  /** Needs the local server: LAN discovery, live audio, or TCP programming. */
+  needsServer?: boolean;
 }
 
 const TABS: TabDef[] = [
   { id: 'convert', label: 'Convert' },
-  { id: 'monitor', label: 'Monitor' },
+  { id: 'monitor', label: 'Monitor', needsServer: true },
   { id: 'inventory', label: 'Inventory' },
   { id: 'coordination', label: 'Coordination' },
   { id: 'allocation', label: 'Allocation' },
-  { id: 'deployment', label: 'Deployment' },
+  { id: 'deployment', label: 'Deployment', needsServer: true },
 ];
+
+const VISIBLE_TABS = staticBuild ? TABS.filter((t) => !t.needsServer) : TABS;
 
 export function App(): JSX.Element {
   const [tab, setTab] = useState<TabId>('convert');
@@ -34,7 +39,7 @@ export function App(): JSX.Element {
           <span className="app__tagline">RF coordination &amp; wireless-mic suite</span>
         </div>
         <nav className="tabs" role="tablist">
-          {TABS.map((t) => (
+          {VISIBLE_TABS.map((t) => (
             <button
               key={t.id}
               role="tab"
@@ -49,13 +54,22 @@ export function App(): JSX.Element {
         </nav>
       </header>
 
+      {staticBuild && (
+        <p className="app__notice">
+          This is the hosted build: everything runs in your browser and no file is uploaded
+          anywhere. Live monitoring, device discovery and programming receivers need the
+          RFutils server on your own network —{' '}
+          <a href="https://github.com/stoatworks-labs/RFutils">download RFutils</a> for those.
+        </p>
+      )}
+
       <main>
         {tab === 'convert' && <ConvertTab />}
-        {tab === 'monitor' && <MonitorTab />}
+        {tab === 'monitor' && !staticBuild && <MonitorTab />}
         {tab === 'inventory' && <InventoryTab />}
         {tab === 'coordination' && <CoordinationTab />}
         {tab === 'allocation' && <AllocationTab />}
-        {tab === 'deployment' && <DeploymentTab />}
+        {tab === 'deployment' && !staticBuild && <DeploymentTab />}
       </main>
 
       <footer className="app__footer">

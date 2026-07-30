@@ -9,10 +9,10 @@ import {
   readHeaderAndRows,
   sniffMapping,
   type FieldMapping,
-} from './formats/index.js';
-import { convertLicence, generateShow } from './pmse/index.js';
+} from '@rfutils/shared/formats';
+import { convertLicence, generateShow } from '@rfutils/shared/pmse';
 import type { MonitorService } from './monitor/index.js';
-import { coordinate, analyze } from './coordination/engine.js';
+import { coordinate, analyze } from '@rfutils/shared/coordination';
 import { loadInventory, saveInventory } from './inventory/store.js';
 import { loadCatalog } from './profiles/catalog.js';
 import { loadPlugins, findPlugin, findPluginForModel } from './plugins/registry.js';
@@ -248,7 +248,7 @@ export function createApiRouter(monitor: MonitorService): Router {
 
     const results: ProgramTargetResult[] = [];
     // Group live sends by transport + address so one connection carries all of
-    // a receiver's channels. Key is `${transport} ${address}`.
+    // a receiver's channels. Key is `${transport}\0${address}`.
     const groups = new Map<
       string,
       { transport: TransportId; address: string; cmds: Array<{ channelId: string; command: string }> }
@@ -294,7 +294,7 @@ export function createApiRouter(monitor: MonitorService): Router {
 
       results.push({ channelId: t.channelId, address, command, sent: false, ok: dryRun });
       if (!dryRun) {
-        const key = `${transport} ${address}`;
+        const key = `${transport}\0${address}`;
         const group = groups.get(key) ?? { transport, address, cmds: [] };
         group.cmds.push({ channelId: t.channelId, command });
         groups.set(key, group);

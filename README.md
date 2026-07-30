@@ -47,17 +47,34 @@ deployment.
 
 ![RFutils Convert tab: a Sennheiser WSM Coordination Report parsed into the channel table with an export-format picker](docs/screenshots/convert-coordination.png)
 
+## Try it without installing anything
+
+The conversion and coordination half of RFutils runs entirely in a browser, hosted at
+**<https://stoatworks-labs.com/RFutils/>**. Drop in a WWB/WSM export or an Ofcom PMSE licence PDF
+and get your files back — **nothing is uploaded**: the parsers, the `.shw` generator and the
+coordination engine all execute on your own machine, in the page. Your licence PDF never leaves
+your laptop.
+
+The hosted build has **Convert, Coordination, Inventory and Allocation**. It does not have
+**Monitor** or **Deployment**: discovering receivers (mDNS), decoding AES67 audio and programming
+frequencies over TCP need sockets a web page cannot open. For those, run RFutils locally.
+
 ## Architecture
 
 An npm-workspaces monorepo:
 
-- **`packages/shared`** — the internal data model and wire types shared by server and browser
-  (`Channel` / `CoordinationList`, PMSE `Assignment`, `DiscoveredDevice`, the WebSocket protocol).
+- **`packages/shared`** — the internal data model and wire types (`Channel` / `CoordinationList`,
+  PMSE `Assignment`, `DiscoveredDevice`, the WebSocket protocol) **and all the pure logic**: the
+  WSM/WWB/CSV parsers and writers (`shared/formats`), the PMSE PDF parser, exporters and `.shw`
+  generator (`shared/pmse`), and the coordination engine (`shared/coordination`). None of it
+  touches a Node API, which is what lets the same code run on the server and in the browser.
 - **`packages/server`** — a Node ([Express](https://expressjs.com) + [ws](https://github.com/websockets/ws))
-  server. It does the file parsing/exporting (ported from the two Python tools) **and** owns the raw
-  sockets a browser can't open: mDNS, Shure's TCP command protocol, and AES67/SAP multicast.
+  server. It exposes the shared logic over `/api` **and** owns the raw sockets a browser can't
+  open: mDNS, Shure's TCP command protocol, and AES67/SAP multicast.
 - **`packages/web`** — the React/Vite single-page app (ported from MicWizard's renderer plus new
-  conversion UI).
+  conversion UI). Built twice: against the server (`npm run build`), and standalone for hosting
+  (`npm run build:static`), where `src/localApi.ts` calls the shared logic directly instead of
+  `fetch('/api/…')`.
 
 The two file tools were originally Python (a tkinter desktop app and a FastAPI service); their
 parsers were ported to TypeScript and checked against the original tools' output on real sample
@@ -85,6 +102,16 @@ npm start -w @rfutils/server   # serves the built UI + API on :8420
 Other scripts: `npm run typecheck` (all packages), `npm test` (server parser tests),
 `npm run dev:demo` (like `dev`, but seeds simulated receivers so the Monitor tab is populated
 without any hardware — how the Monitor screenshot above was captured).
+
+To build the browser-only version and publish it to GitHub Pages:
+
+```bash
+npm run build:static              # -> packages/web/dist-static, base path /RFutils/
+scripts/deploy-pages.sh --dry-run # show what would be published
+scripts/deploy-pages.sh           # build + push to the gh-pages branch
+```
+
+`RFUTILS_BASE=/ npm run build:static` builds for a domain root instead of a subdirectory.
 
 ### Environment
 

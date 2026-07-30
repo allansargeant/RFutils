@@ -8,10 +8,10 @@
  * it, then call `readRows` with the confirmed mapping.
  */
 
-import type { Channel, CoordinationList, ChannelField, FieldMapping } from '@rfutils/shared';
+import type { Channel, CoordinationList, ChannelField, FieldMapping } from '../index.js';
 import { parseFrequencyToMhz } from './freqParse.js';
 import { parseCsvNonEmpty, writeCsv } from './csvUtil.js';
-import { displayFrequency } from '@rfutils/shared';
+import { displayFrequency } from '../index.js';
 
 export type { ChannelField, FieldMapping };
 

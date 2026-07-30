@@ -9,17 +9,10 @@
  * verbatim. Open the generated file in WWB and check it before relying on it.
  */
 
-import { randomUUID } from 'node:crypto';
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
-
-const TEMPLATES_DIR = join(dirname(fileURLToPath(import.meta.url)), 'templates');
-
-const SKELETON = readFileSync(join(TEMPLATES_DIR, 'skeleton.xml.tpl'), 'utf-8');
-const DEVICE_TPL = readFileSync(join(TEMPLATES_DIR, 'device_ad4q_a.xml.tpl'), 'utf-8');
-const PROFILE_TPL = readFileSync(join(TEMPLATES_DIR, 'profile_ad4q_a.xml.tpl'), 'utf-8');
-const FREQ_ENTRY_TPL = readFileSync(join(TEMPLATES_DIR, 'freq_entry_ad4q_a.xml.tpl'), 'utf-8');
+// Templates are inlined by scripts/gen-templates.mjs rather than read from
+// disk: this module runs in the browser too (the static build), where there is
+// no filesystem. The .tpl files under templates/ remain the source of truth.
+import { SKELETON, DEVICE_TPL, PROFILE_TPL, FREQ_ENTRY_TPL } from './templates.generated.js';
 
 const CHANNELS_PER_DEVICE = 4;
 const FILLER_NAME = 'Unused';
@@ -46,8 +39,28 @@ function cdata(text: string): string {
   return `<![CDATA[${safe}]]>`;
 }
 
+/**
+ * Uppercase RFC 4122 v4 UUID, matching what the Python original produced with
+ * `str(uuid.uuid4()).upper()`. Uses Web Crypto, which both Node 19+ and every
+ * target browser provide; the manual path covers older/insecure contexts where
+ * `randomUUID` is absent but `getRandomValues` is not.
+ */
 function newId(): string {
-  return randomUUID().toUpperCase();
+  const webCrypto = globalThis.crypto;
+  if (typeof webCrypto?.randomUUID === 'function') return webCrypto.randomUUID().toUpperCase();
+
+  const bytes = new Uint8Array(16);
+  webCrypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6]! & 0x0f) | 0x40; // version 4
+  bytes[8] = (bytes[8]! & 0x3f) | 0x80; // variant 10x
+  const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+  return [
+    hex.slice(0, 8),
+    hex.slice(8, 12),
+    hex.slice(12, 16),
+    hex.slice(16, 20),
+    hex.slice(20),
+  ].join('-').toUpperCase();
 }
 
 /** Python str.replace(old, new, 1) — replace only the first occurrence. */

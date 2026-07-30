@@ -19,7 +19,8 @@
     "build": "npm run build:shared && npm run build -w @rfutils/server && npm run build -w @rfutils/web",
     "typecheck": "npm run typecheck -w @rfutils/shared && npm run typecheck -w @rfutils/server && npm run typecheck -w @rfutils/web",
     "lint": "eslint packages",
-    "test": "npm run test -w @rfutils/server"
+    "test": "npm run build:shared && npm run test -w @rfutils/server",
+    "build:static": "npm run build:shared && npm run build:static -w @rfutils/web"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

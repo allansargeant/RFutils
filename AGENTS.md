@@ -41,14 +41,54 @@ either, work out which is canonical for the change you're making — otherwise t
 
 ```
 packages/
-  shared   Types + parsers (WSM / WWB / PMSE). Must be built first.
-  server   Backend (@rfutils/server)
+  shared   Types + ALL the pure logic. Must be built first.
+             formats/       WSM / WWB / CSV parsers + writers   -> @rfutils/shared/formats
+             pmse/          PMSE PDF parser, exporters, .shw    -> @rfutils/shared/pmse
+             coordination/  frequency coordination engine       -> @rfutils/shared/coordination
+  server   Backend (@rfutils/server) - HTTP/WS + the sockets a browser can't open
   web      Frontend (@rfutils/web) - React, tab-per-tool
 docs/      BRANDS.md, PLUGINS.md, plugins/, screenshots/
 ```
 
 **`shared` must be built before `server` or `web`.** Every dev and build script does this
 first (`npm run build:shared`). If you see phantom type errors, that's usually why.
+
+### The environment rule for `shared`
+
+**Nothing in `packages/shared` may import a Node builtin** (`node:fs`, `node:crypto`,
+`node:path`, …) or use `Buffer`/`process`. That is not a style preference — it is the only
+reason the static build works. `packages/web/src/localApi.ts` runs these exact modules in the
+browser, so one `readFileSync` added to a parser silently breaks the hosted app while every
+test still passes (the tests run under Node, where it works fine).
+
+Two consequences already baked in:
+
+- The `.shw` XML templates are **inlined** into `templates.generated.ts` by
+  `packages/shared/scripts/gen-templates.mjs` (run by `build`/`typecheck`; the output is
+  gitignored). The `.tpl` files under `src/pmse/templates/` remain the source of truth — the
+  generator copies their bytes verbatim and escapes only what a template literal requires.
+- `showGenerator` uses Web Crypto, not `node:crypto`.
+
+Things that legitimately need Node stay in `server/`: `inventory/store.ts`, `profiles/catalog.ts`,
+`plugins/registry.ts` (all read `~/.rfutils`) and `programming/*` (raw TCP).
+
+### The two web builds
+
+`npm run build` targets the server; `npm run build:static` (`VITE_RFUTILS_STATIC=1`) produces the
+browser-only bundle published to GitHub Pages by `scripts/deploy-pages.sh`.
+
+`src/buildMode.ts` exports the `staticBuild` flag, and it lives alone in that file on purpose: it
+has to be a bare compile-time constant so Vite can eliminate the `if (staticBuild)` branches in
+`api.ts` — and with them the dynamic `import('./localApi.js')` — from the server build. Import
+`staticBuild` from `buildMode.js`, never from `localApi.js`, or the server bundle grows a pdfjs
+dependency it never uses.
+
+Similarly, pdfjs's worker is copied in by the `rfutils-pdf-worker` plugin in `vite.config.ts`
+rather than imported with `?url`: a `?url` import emits the 2.3 MB worker into *both* builds.
+
+**When you add an API call**, add it to `api.ts` and decide explicitly: can it run in the browser
+(implement it in `localApi.ts`) or does it need the server (`noServer(...)`, and make sure no
+static-build tab reaches it)?
 
 ## 4. Commands (from repo root)
 
@@ -57,6 +97,7 @@ npm run dev          # server (port 8420) + web
 npm run dev:demo     # with mock devices - no hardware needed
 npm run dev:verify   # monitor disabled
 npm run build
+npm run build:static # browser-only bundle for GitHub Pages
 npm run typecheck    # runs across shared, server and web
 npm test             # server package
 ```
@@ -68,7 +109,8 @@ receivers on the network.
 
 `packages/web/src/App.tsx` imports its six tabs **directly** — there is no dynamic import,
 no lazy loading and no string-keyed tab registry. If you add a tab, wire it into `App.tsx`
-explicitly.
+explicitly, and mark it `needsServer: true` if it can't work without the local server (the
+static build filters those out).
 
 (A `PlaceholderTab` component previously rendered "Planned" stubs for the coordination,
 allocation and deployment tabs. Those three now have real implementations, so it was removed
