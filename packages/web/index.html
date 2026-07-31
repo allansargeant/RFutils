@@ -8,5 +8,23 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!--
+      Support footer. Vendored from stoatworks-backend/support-footer — edit it
+      there and re-run scripts/sync-support-footer.sh, never here.
+      Classic + defer on purpose: it reads its config off this tag, and
+      document.currentScript is null inside a module.
+    -->
+    <script
+      src="/support-footer.js"
+      defer
+      data-app="RFutils"
+      data-repo="https://github.com/stoatworks-labs/RFutils"
+    ></script>
+    <!--
+      No data-note here: this index.html is shared by both builds (the hosted
+      browser-only one and the local server one, split only by
+      VITE_RFUTILS_STATIC), so a "nothing is uploaded" line would be true of one
+      and false of the other.
+    -->
   </body>
 </html>

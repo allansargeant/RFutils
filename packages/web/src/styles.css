@@ -13,6 +13,9 @@
   --good: #3fae5a;
   --warn: #d9a441;
   --bad: #d94b3d;
+
+  /* Read by the vendored support footer, which otherwise inherits page colour. */
+  --sw-support-accent: var(--accent-2);
 }
 
 * {
