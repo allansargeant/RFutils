@@ -137,11 +137,11 @@ interface + port, Start/Stop the server, and open the web UI. It's **fully
 self-contained** — the `.dmg` embeds a Node runtime plus the whole app (server +
 built web UI), so nothing needs to be installed, not even Node. Grab it from
 [Releases](https://github.com/stoatworks-labs/RFutils/releases), or see
-[launcher/](launcher/) to build it. The `.dmg` is **unsigned** (a signed +
-notarized build needs a paid Apple Developer account) — on first launch,
-right-click the app → **Open** to get past Gatekeeper. If you ever get a
-Developer account, [launcher/SIGNING.md](launcher/SIGNING.md) shows how to turn
-signing on; until then it's not needed.
+[launcher/](launcher/) to build it. The `.dmg` is **unsigned** — see
+[Unsigned builds](#unsigned-builds--gatekeeper-smartscreen--defender-firewall)
+for first-launch and firewall notes. If you ever get an Apple Developer account,
+[launcher/SIGNING.md](launcher/SIGNING.md) shows how to turn signing on; until
+then it's not needed.
 
 <p align="center"><img src="launcher/docs/panel.png" width="300" alt="RFutils desktop app"></p>
 
@@ -313,3 +313,24 @@ The suite carries a plan end to end:
 ![RFutils Deployment tab: allocated frequencies bound to live device channels with a dry-run showing the exact Shure command strings](docs/screenshots/deployment.png)
 
 *Screenshot captured with `RFUTILS_MOCK_DEVICES=1` (simulated receivers).*
+
+## Unsigned builds — Gatekeeper, SmartScreen & Defender Firewall
+
+The release binaries are **not code-signed or notarized** — that needs paid Apple
+and Microsoft developer certificates this project doesn't carry. The downloads are
+fine; the OS just can't identify the publisher, so it warns you the first time.
+
+- **macOS** — *"cannot be opened because the developer cannot be verified"*.
+  Right-click the app → **Open** → **Open**, or clear the flag:
+  `xattr -dr com.apple.quarantine "/Applications/RFutils.app"`
+- **Windows** — SmartScreen shows *"Windows protected your PC"* →
+  **More info** → **Run anyway**.
+- **Windows Defender Firewall** — first launch pops *"Allow RFutils to communicate on
+  these networks"*. Tick **Private** (and **Domain** on a managed network) — RFutils
+  needs it to serve the web UI and receive receiver telemetry and AES67 audio. Deny it
+  and Monitor will find no receivers; the offline Convert and Coordinate tools still
+  work.
+- **Linux** — no signing gate.
+
+Per-artifact steps, self-signing, checksum verification and the Defender Firewall reset
+procedure: **[docs/UNSIGNED.md](docs/UNSIGNED.md)**.
