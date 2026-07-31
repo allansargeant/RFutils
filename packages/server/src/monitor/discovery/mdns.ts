@@ -15,28 +15,56 @@ export interface MdnsDiscoveryHandle {
 
 export function startMdnsDiscovery(registry: DeviceRegistry): MdnsDiscoveryHandle {
   const bonjour = new Bonjour();
-  const browsers = [...DANTE_SERVICE_TYPES, SENNHEISER_SSC_SERVICE_TYPE].map((type) => {
-    const browser = bonjour.find({ type, protocol: 'tcp' });
+  // The service type is kept beside each browser, not just closed over by the 'up'
+  // handler, because the refresh below has to re-upsert from the browser's own
+  // service list and still know whether it is looking at Sennheiser or Dante.
+  const watch = (type: string, protocol: 'tcp' | 'udp') => {
+    const browser = bonjour.find({ type, protocol });
     browser.on('up', (service: ServiceInfo) => handleService(registry, type, service));
     browser.on('down', (service: ServiceInfo) => registry.remove(serviceId(service)));
-    return browser;
-  });
+    return { type, browser };
+  };
 
-  // Dante's own services are UDP, not TCP.
-  const danteUdpBrowsers = DANTE_SERVICE_TYPES.map((type) => {
-    const browser = bonjour.find({ type, protocol: 'udp' });
-    browser.on('up', (service: ServiceInfo) => handleService(registry, type, service));
-    browser.on('down', (service: ServiceInfo) => registry.remove(serviceId(service)));
-    return browser;
-  });
+  const allBrowsers = [
+    ...[...DANTE_SERVICE_TYPES, SENNHEISER_SSC_SERVICE_TYPE].map((type) => watch(type, 'tcp')),
+    // Dante's own services are UDP, not TCP.
+    ...DANTE_SERVICE_TYPES.map((type) => watch(type, 'udp')),
+  ];
+
+  /**
+   * Re-assert every service still being advertised, and re-query for them.
+   *
+   * `up` fires once per service, but the registry's pruneStale() drops anything
+   * not re-upserted within its window — so a Dante box that was still sitting
+   * there happily advertising itself silently disappeared from the list a couple
+   * of minutes after it was found. Vendor adapters never hit this because their
+   * metering re-upserts constantly; an mDNS-only device has nothing else touching
+   * it.
+   *
+   * Reading each browser's own list rather than a cache of our own is what keeps
+   * this honest: bonjour expires a service on TTL or a goodbye packet and stops
+   * returning it, so a device that really has gone stops being refreshed and is
+   * pruned as intended.
+   */
+  const refreshTimer = setInterval(() => {
+    for (const { type, browser } of allBrowsers) {
+      browser.update();
+      for (const service of browser.services) handleService(registry, type, service);
+    }
+  }, REFRESH_INTERVAL_MS);
 
   return {
     stop: () => {
-      for (const b of [...browsers, ...danteUdpBrowsers]) b.stop();
+      clearInterval(refreshTimer);
+      for (const { browser } of allBrowsers) browser.stop();
       bonjour.destroy();
     },
   };
 }
+
+/** Comfortably inside the registry's 120s staleness window, so a live device never
+ *  gets close to being pruned, without re-querying the network constantly. */
+const REFRESH_INTERVAL_MS = 30_000;
 
 function serviceId(service: ServiceInfo): string {
   return `mdns:${service.fqdn}`;

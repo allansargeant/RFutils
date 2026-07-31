@@ -2,13 +2,17 @@ import net from 'node:net';
 import os from 'node:os';
 import { EventEmitter } from 'node:events';
 import type { DeviceRegistry } from '../deviceRegistry.js';
-import type { DeviceChannel } from '@rfutils/shared';
+import { extractFramedMessages, parseShureMessage, subnetHostsFor } from './shureProtocol.js';
 
 /**
  * Shure "Command Strings" protocol: plaintext ASCII over TCP port 2202.
- * Ported verbatim from MicWizard. Discovery is a TCP connect-scan of the
- * local /24. NOT yet tested against real hardware — verify against your
- * receiver's command-strings PDF before relying on it.
+ * Discovery is a TCP connect-scan on that port, confirmed by a real protocol
+ * handshake (GET ALL must get a REP back), across every directly-attached IPv4
+ * subnet. NOT yet tested against real hardware — verify against your receiver's
+ * command-strings PDF before relying on it.
+ *
+ * Parsing and host enumeration live in shureProtocol.ts so they are testable
+ * without a socket.
  */
 const SHURE_COMMAND_PORT = 2202;
 const CONNECT_TIMEOUT_MS = 300;
@@ -32,6 +36,11 @@ export function startShureDiscovery(registry: DeviceRegistry): ShureDiscoveryHan
           const reachable = await probe(host);
           if (!reachable || stopped) return;
           const client = new ShureDeviceClient(host, registry);
+          // Without this, a device that drops for any reason (reboot, a brief
+          // network blip) stays permanently un-monitored: the stale Map entry
+          // blocks every future rescan from retrying this host, even once it is
+          // reachable again.
+          client.once('disconnected', () => activeClients.delete(host));
           activeClients.set(host, client);
           client.start();
         })
@@ -52,15 +61,7 @@ export function startShureDiscovery(registry: DeviceRegistry): ShureDiscoveryHan
 }
 
 function localSubnetHosts(): string[] {
-  const interfaces = os.networkInterfaces();
-  for (const entries of Object.values(interfaces)) {
-    for (const entry of entries ?? []) {
-      if (entry.family !== 'IPv4' || entry.internal) continue;
-      const prefix = entry.address.split('.').slice(0, 3).join('.');
-      return Array.from({ length: 253 }, (_, i) => `${prefix}.${i + 1}`);
-    }
-  }
-  return [];
+  return subnetHostsFor(Object.values(os.networkInterfaces()).flatMap((entries) => entries ?? []));
 }
 
 function probe(host: string): Promise<boolean> {
@@ -81,6 +82,7 @@ function probe(host: string): Promise<boolean> {
 class ShureDeviceClient extends EventEmitter {
   private socket: net.Socket | null = null;
   private buffer = '';
+  private disconnected = false;
 
   constructor(
     private readonly host: string,
@@ -93,9 +95,11 @@ class ShureDeviceClient extends EventEmitter {
     const socket = net.createConnection({ host: this.host, port: SHURE_COMMAND_PORT });
     socket.setEncoding('utf8');
     socket.on('data', (chunk: string) => this.handleData(chunk));
-    socket.on('error', () => this.registry.remove(this.deviceId));
-    socket.on('close', () => this.registry.remove(this.deviceId));
+    socket.on('error', () => this.handleDisconnect());
+    socket.on('close', () => this.handleDisconnect());
     socket.on('connect', () => {
+      // Ask for full state, then subscribe to periodic samples (documented Shure
+      // command; period is in ms, 500ms is a conservative default).
       socket.write('< GET 1 ALL >');
       socket.write('< SET 1 METER_RATE 00500 >');
     });
@@ -111,41 +115,32 @@ class ShureDeviceClient extends EventEmitter {
     return `shure:${this.host}`;
   }
 
+  /** Fires once on error OR close, whichever comes first — see the call site in startShureDiscovery. */
+  private handleDisconnect(): void {
+    if (this.disconnected) return;
+    this.disconnected = true;
+    this.registry.remove(this.deviceId);
+    this.emit('disconnected');
+  }
+
   private handleData(chunk: string): void {
-    this.buffer += chunk;
-    let start = this.buffer.indexOf('<');
-    let end = this.buffer.indexOf('>');
-    while (start !== -1 && end !== -1 && end > start) {
-      this.handleMessage(this.buffer.slice(start + 1, end).trim());
-      this.buffer = this.buffer.slice(end + 1);
-      start = this.buffer.indexOf('<');
-      end = this.buffer.indexOf('>');
-    }
+    const { messages, remainder } = extractFramedMessages(this.buffer + chunk);
+    this.buffer = remainder;
+    for (const message of messages) this.handleMessage(message);
   }
 
   private handleMessage(message: string): void {
-    const parts = message.split(/\s+/);
-    const [kind, channelNum, ...rest] = parts;
-    if (kind !== 'REP' && kind !== 'SAMPLE') return;
-
-    const fields = new Map<string, string>();
-    for (let i = 0; i < rest.length - 1; i += 2) {
-      fields.set(rest[i]!, rest[i + 1]!);
-    }
-
-    const channel: DeviceChannel = {
-      id: `${this.deviceId}:${channelNum}`,
-      name: fields.get('CHAN_NAME') ?? `Channel ${channelNum}`,
-      rfLevel: parsePercent(fields.get('RF_LVL_A') ?? fields.get('RF_LVL')),
-      audioLevelDb: parseShureAudioLevel(fields.get('AUDIO_LVL')),
-      batteryPercent: parsePercent(fields.get('BATT_CHARGE')),
-      batteryMinutesRemaining: parseMinutes(fields.get('BATT_RUN_TIME')),
-      antenna: parseAntenna(fields.get('ANTENNA')),
-    };
-
     const existing = this.registry.get(this.deviceId);
-    const channels = existing?.channels.filter((c) => c.id !== channel.id) ?? [];
-    channels.push(channel);
+    // The channel as last understood, so fields this message does not mention
+    // survive it — a SAMPLE only carries the metered ones. See parseShureMessage.
+    const channelNum = message.split(/\s+/)[1];
+    const known = existing?.channels.find((c) => c.id === `${this.deviceId}:${channelNum}`);
+
+    const parsed = parseShureMessage(message, this.deviceId, known);
+    if (!parsed) return;
+
+    const channels = existing?.channels.filter((c) => c.id !== parsed.channel.id) ?? [];
+    channels.push(parsed.channel);
 
     this.registry.upsert({
       id: this.deviceId,
@@ -158,31 +153,4 @@ class ShureDeviceClient extends EventEmitter {
       channels,
     });
   }
-}
-
-function parsePercent(raw: string | undefined): number | null {
-  if (raw === undefined) return null;
-  const value = Number(raw);
-  return Number.isFinite(value) ? value : null;
-}
-
-function parseMinutes(raw: string | undefined): number | null {
-  if (raw === undefined) return null;
-  const value = Number(raw);
-  return Number.isFinite(value) ? value : null;
-}
-
-/** Shure reports AUDIO_LVL as a 0-100+ code, not literal dBFS — approximation pending real-hardware calibration. */
-function parseShureAudioLevel(raw: string | undefined): number | null {
-  if (raw === undefined) return null;
-  const value = Number(raw);
-  if (!Number.isFinite(value)) return null;
-  return value - 100;
-}
-
-function parseAntenna(raw: string | undefined): DeviceChannel['antenna'] {
-  if (raw === 'A') return 'A';
-  if (raw === 'B') return 'B';
-  if (raw === 'DIVERSITY') return 'diversity';
-  return null;
 }
