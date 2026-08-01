@@ -159,15 +159,20 @@ npm run build:static     # -> packages/web/dist-static
 npm run preview:static   # serve that build locally
 ```
 
-It is published to **Cloudflare Pages**, which builds it from this repo:
+It is published to a **static-assets-only Cloudflare Worker** (`wrangler.toml`, worker
+`rfutils`, serving `packages/web/dist-static`):
 
-| Setting | Value |
-|---|---|
-| Build command | `npm ci && npm run build:static` |
-| Build output directory | `packages/web/dist-static` |
+```bash
+npm run build:static
+cf-run npx wrangler deploy
+```
 
-The build targets a root base path, since a Pages project serves at the root of its own
-domain. Set `RFUTILS_BASE=/somewhere/` to host it under a subdirectory instead.
+**`wrangler deploy` runs no build.** It uploads `packages/web/dist-static` exactly as it
+finds it, so the build has to come first — skip it and the deploy reports a clean success
+while republishing the previous build.
+
+The build targets a root base path, since the worker serves at the root of its own domain.
+Set `RFUTILS_BASE=/somewhere/` to host it under a subdirectory instead.
 
 ### Environment
 
