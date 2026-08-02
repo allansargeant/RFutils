@@ -14,4 +14,7 @@ packages/shared/src/pmse/templates.generated.ts
 
 # Never commit licence PDFs or other sample docs
 *.pdf
+# — except the generated user guide, which is a build output of
+# docs/USER-GUIDE.md and is meant to ship. It is not a sample document.
+!docs/USER-GUIDE.pdf
 packages/web/dist-static/
