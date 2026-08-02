@@ -248,6 +248,11 @@ battery, and RF telemetry pushed to the browser over WebSocket.
 > **Not yet hardware-tested.** As in MicWizard, the vendor protocol adapters are built from a mix of
 > public documentation and best-effort reverse engineering and have not been validated against real
 > receivers. The Sennheiser SSC adapter in particular is a skeleton.
+>
+> This is unchanged by [`docs/SHURE-ACN.md`](docs/SHURE-ACN.md), which *is* built from real Shure
+> QLXD4 hardware — but documents a **different protocol** (ANSI E1.17 / ACN, the path a Yamaha
+> console uses when a receiver is mounted on it), not the Command Strings interface these adapters
+> speak. Real gear was on the network, and it still didn't test this code.
 
 ### Audio cueing to headphones
 
@@ -367,6 +372,22 @@ The suite carries a plan end to end:
 ![RFutils Deployment tab: allocated frequencies bound to live device channels with a dry-run showing the exact Shure command strings](docs/screenshots/deployment.png)
 
 *Screenshot captured with `RFUTILS_MOCK_DEVICES=1` (simulated receivers).*
+
+## Control it from Companion
+
+[**companion-module-rfutils**](https://github.com/stoatworks-labs/companion-module-rfutils) is a [Bitfocus Companion](https://bitfocus.io/companion) connection module for this app.
+
+Puts the rack's battery, RF and audio state on a Stream Deck — a monitor tile
+per channel, escalating amber to red, with **blue when a channel stops
+reporting**.
+
+That blue matters: every threshold goes dark rather than showing a remembered
+value when a receiver goes quiet, so without it a dead receiver would look
+exactly like a healthy one. Frequency programming through the module is a dry
+run unless explicitly ticked.
+
+It is not in the official Companion module store — install it via
+**Settings → Developer modules path**.
 
 ## Unsigned builds — Gatekeeper, SmartScreen & Defender Firewall
 
