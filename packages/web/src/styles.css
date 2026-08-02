@@ -46,6 +46,12 @@ body {
   gap: 12px;
 }
 
+/* Far right of the brand row, above the tabs. `margin-left: auto` rather than a
+   spacer element, so the tagline keeps its natural width. */
+.app__about {
+  margin-left: auto;
+}
+
 .app__brand h1 {
   margin: 0 0 4px;
   font-size: 22px;

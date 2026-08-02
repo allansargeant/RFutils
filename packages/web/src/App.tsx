@@ -37,6 +37,11 @@ export function App(): JSX.Element {
         <div className="app__brand">
           <h1>RFutils</h1>
           <span className="app__tagline">RF coordination &amp; wireless-mic suite</span>
+          {/* Opens the shared About dialog — see public/about.js, which delegates
+              this attribute from the document, so nothing needs importing here. */}
+          <button type="button" className="app__about" data-stoatworks-about>
+            About
+          </button>
         </div>
         <nav className="tabs" role="tablist">
           {VISIBLE_TABS.map((t) => (

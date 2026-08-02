@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
+
 const SERVER_PORT = process.env.RFUTILS_SERVER_PORT ?? '8420';
 
 // The React app talks to the RFutils server over REST (/api) and a
@@ -38,6 +40,10 @@ function pdfWorkerPlugin(): Plugin {
 }
 
 export default defineConfig({
+  // The About dialog shows the version the build actually produced. about-data.js
+  // carries one baked at sync time as a fallback, and it goes stale the moment a
+  // release is tagged; this is the one that is always right.
+  define: { __APP_VERSION__: JSON.stringify(`v${pkg.version}`) },
   base,
   plugins: [react(), ...(isStatic ? [pdfWorkerPlugin()] : [])],
   server: {
