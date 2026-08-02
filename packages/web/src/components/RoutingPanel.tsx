@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import type { CompanionStatus } from '@rfutils/shared';
 import { useDeviceStore } from '../store.js';
 import { companionStatus, makeCrosspoint, clearCrosspoint } from '../api.js';
@@ -24,9 +25,14 @@ export function RoutingPanel(): JSX.Element | null {
   const [routeState, setRouteState] = useState<SubmitState>('idle');
   const [clearState, setClearState] = useState<SubmitState>('idle');
   const [error, setError] = useState<string | null>(null);
-  const knownDeviceNames = useDeviceStore((state) => [
-    ...new Set([...state.devices.values()].map((d) => d.name)),
-  ]);
+  // useShallow is load-bearing, not tidiness. zustand v5 compares the selector's
+  // result by reference; a selector building a fresh array every call never
+  // compares equal, so it re-renders forever until React throws "Maximum update
+  // depth exceeded" — and with no error boundary above it, that unmounts the
+  // whole app and leaves a blank page.
+  const knownDeviceNames = useDeviceStore(
+    useShallow((state) => [...new Set([...state.devices.values()].map((d) => d.name))])
+  );
 
   useEffect(() => {
     companionStatus().then(setStatus).catch(() => setStatus(null));

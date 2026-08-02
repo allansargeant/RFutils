@@ -122,6 +122,24 @@ against.
 
 ---
 
+## Monitor
+
+Discovers Shure, Sennheiser and AES67/Dante receivers on the local network and meters audio,
+battery and RF per channel in real time.
+
+![The Monitor tab: receivers grouped by vendor, with audio and RF meters, battery percentage and runtime per channel, and the Dante routing panel underneath.](screenshots/monitor.png)
+
+*Captured against `npm run dev:demo`, so the receivers are simulated.*
+
+If nothing appears: RFutils and the receivers must be on the same subnet, discovery must not be
+blocked by a firewall, and the wireless network must not be isolating clients from each other.
+
+**Dante routing is off unless you set it up.** RFutils only monitors by default; routing channels
+from here needs your own Bitfocus Companion with a "Make Crosspoint" button and a
+`companion-routes.json` in `~/.rfutils/`. The panel says so when it is not configured.
+
+---
+
 ## Deployment — read this before you press it
 
 **Deployment sends commands to real receivers, which may be in use.**
