@@ -258,10 +258,26 @@ obvious candidate and does not hold up.
 
 ## 8. Status
 
-Nothing here is implemented in RFutils. This is a protocol note recording what
-was observed on the wire, so a future ACN adapter starts from evidence rather
-than from scratch. The Command Strings path in [`BRANDS.md`](BRANDS.md) remains
-the supported way RFutils talks to Shure gear.
+Nothing here is implemented **in RFutils**, and the Command Strings path in
+[`BRANDS.md`](BRANDS.md) remains the supported way RFutils talks to Shure gear.
+
+There is now an implementation elsewhere: `mic-adapter-shure-acn` in
+[Dante-BabelBox](https://github.com/stoatworks-labs/Dante-BabelBox) implements
+the SLPv2 discovery of §3 and the property decoding of §5, with the decoder
+unit-tested against real receiver frames from the captures. It is read-only and
+**cannot open its own session** — see below.
+
+Two things constrain any implementation, including that one:
+
+- **Telemetry is only visible with a mirrored port.** The receiver unicasts its
+  `EVENT` messages to the console, so on an ordinary switch port a third-party
+  listener sees nothing. Discovery, being multicast, works anywhere.
+- **The session handshake cannot be verified.** The capture described in §4 as
+  containing the full JOIN / CONNECT / SUBSCRIBE sequence is **lost** — it is
+  not in the `dante-captures` archive and not on the machine, and no surviving
+  capture contains a single JOIN. The sequence above is preserved as prose, but
+  the byte-level field layouts are not. Re-recording a receiver power-cycling
+  while mounted is what unblocks an active client.
 
 Nothing was ever transmitted to the receiver: every finding above is passive
 observation of a console and a receiver talking to each other, plus one
