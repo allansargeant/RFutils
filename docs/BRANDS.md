@@ -45,6 +45,15 @@ Two paths, in order of tractability:
   build the Shure/Sennheiser adapters) — feasible but more effort and hardware-dependent.
 - **Deity / analog FM / IR-sync gear** — no open network control; coordination + export only.
 
+## A second Shure control path: ACN
+
+A QLX-D **mounted on a Yamaha console** is not using Command Strings at all — the console
+drives it over ANSI E1.17 (ACN), on entirely different ports, with its own discovery
+mechanism and property map. RFutils does not implement this and doesn't need to, but
+[`SHURE-ACN.md`](SHURE-ACN.md) records what was observed on the wire in case that changes,
+and because it explains the extra multicast traffic if RFutils shares a network with a
+console-mounted receiver.
+
 Every entry's control situation is also recorded in the equipment profile `notes`
 ([`packages/shared/src/profiles.ts`](../packages/shared/src/profiles.ts)), and the catalog is
 user-extensible via `~/.rfutils/profiles.json`.
