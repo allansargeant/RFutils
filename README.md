@@ -58,11 +58,11 @@ deployment.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| Apple Silicon · .dmg disk image | [`rfutils-0.3.1-macos-aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-aarch64.dmg) | 47 MB |
-| Apple Silicon · .dmg disk image | [`RFutils_0.3.1_aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/RFutils_0.3.1_aarch64.dmg) | 41 MB |
-| Intel · .dmg disk image | [`rfutils-0.3.1-macos-x86_64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-x86_64.dmg) | 47 MB |
-| Apple Silicon · .pkg installer | [`rfutils-0.3.1-macos-aarch64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-aarch64.pkg) | 41 MB |
-| Intel · .pkg installer | [`rfutils-0.3.1-macos-x86_64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-x86_64.pkg) | 41 MB |
+| Apple Silicon · .dmg disk image | [`rfutils-0.3.1-macos-aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-aarch64.dmg) | 40 MB |
+| Apple Silicon · .dmg disk image | [`RFutils_0.3.1_aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/RFutils_0.3.1_aarch64.dmg) | 40 MB |
+| Intel · .dmg disk image | [`rfutils-0.3.1-macos-x86_64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-x86_64.dmg) | 40 MB |
+| Apple Silicon · .pkg installer | [`rfutils-0.3.1-macos-aarch64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-aarch64.pkg) | 40 MB |
+| Intel · .pkg installer | [`rfutils-0.3.1-macos-x86_64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-x86_64.pkg) | 40 MB |
 
 </details>
 
@@ -92,7 +92,7 @@ Also in this release:
 
 All builds, checksums and release notes: [github.com/stoatworks-labs/RFutils/releases](https://github.com/stoatworks-labs/RFutils/releases).
 
-These builds are unsigned, so macOS and Windows each warn once on first launch — see [Unsigned builds — Gatekeeper, SmartScreen & Defender Firewall](#unsigned-builds--gatekeeper-smartscreen--defender-firewall) for the one-time fix.
+macOS builds are signed and notarised and open normally. The Windows builds are unsigned, so SmartScreen warns once — see [Windows SmartScreen & Defender Firewall](#windows-smartscreen--defender-firewall) for the one-time click-through.
 
 <!-- downloads:end -->
 
