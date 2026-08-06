@@ -33,6 +33,11 @@ program — pick the transmitter's brand instead.
 
 ## Adding live control for another brand
 
+Every path below starts with a packet capture, and
+**[`capture-guide.md`](capture-guide.md)** is the step-by-step for getting one — including
+which of the three methods your situation needs, and what to actually *do* while the
+capture is running, which matters more than the setup does.
+
 Two paths, in order of tractability:
 
 - **Lectrosonics DSQD** — adapter is **wired** (discover/monitor/program), but its wire format is an

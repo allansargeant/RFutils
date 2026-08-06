@@ -254,6 +254,15 @@ battery, and RF telemetry pushed to the browser over WebSocket.
 > console uses when a receiver is mounted on it), not the Command Strings interface these adapters
 > speak. Real gear was on the network, and it still didn't test this code.
 
+**Got gear we don't support?** Wisycom, Sony DWX, Sound Devices and MiPro all have real network
+control protocols that nobody has published — and the Lectrosonics adapter is already written and
+waiting on [one file's worth](packages/server/src/monitor/discovery/lectrosonicsProtocol.ts) of
+correct wire format. Five minutes of a receiver doing something ordinary, recorded with Wireshark,
+is enough to start from. **[docs/capture-guide.md](docs/capture-guide.md)** walks through it: for
+most people it's "run Wireshark on the same laptop as the vendor software" and nothing else, and
+there's a mirror-port recipe for the cases where it isn't. See [`docs/BRANDS.md`](docs/BRANDS.md)
+for what's supported today.
+
 ### Audio cueing to headphones
 
 A browser can't join a Dante/AES67 multicast group directly, so cueing to headphones works by
