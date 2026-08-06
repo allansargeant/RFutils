@@ -263,6 +263,10 @@ most people it's "run Wireshark on the same laptop as the vendor software" and n
 there's a mirror-port recipe for the cases where it isn't. See [`docs/BRANDS.md`](docs/BRANDS.md)
 for what's supported today.
 
+There's a 57-second video on why, covering this project and
+[Dante-BabelBox](https://github.com/stoatworks-labs/Dante-BabelBox) together:
+**[Send us a capture](https://www.youtube.com/watch?v=E-gjYZoHVAw)**.
+
 ### Audio cueing to headphones
 
 A browser can't join a Dante/AES67 multicast group directly, so cueing to headphones works by
