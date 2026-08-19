@@ -51,28 +51,16 @@ deployment.
 
 ## Download
 
-**[v0.3.1](https://github.com/stoatworks-labs/RFutils/releases/tag/v0.3.1)** — prebuilt for macOS, Windows and Linux. Pick your platform:
+**[v0.4.0](https://github.com/stoatworks-labs/RFutils/releases/tag/v0.4.0)** — prebuilt for macOS and Linux. Pick your platform:
 
 <details>
-<summary><b>macOS</b> — Apple Silicon, Intel</summary>
+<summary><b>macOS</b> — Apple Silicon</summary>
 
 | Build | Download | Size |
 | --- | --- | --- |
-| Apple Silicon · .dmg disk image | [`rfutils-0.3.1-macos-aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-aarch64.dmg) | 40 MB |
-| Apple Silicon · .dmg disk image | [`RFutils_0.3.1_aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/RFutils_0.3.1_aarch64.dmg) | 40 MB |
-| Intel · .dmg disk image | [`rfutils-0.3.1-macos-x86_64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-x86_64.dmg) | 40 MB |
-| Apple Silicon · .pkg installer | [`rfutils-0.3.1-macos-aarch64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-aarch64.pkg) | 40 MB |
-| Intel · .pkg installer | [`rfutils-0.3.1-macos-x86_64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/rfutils-0.3.1-macos-x86_64.pkg) | 40 MB |
-
-</details>
-
-<details>
-<summary><b>Windows</b> — x64</summary>
-
-| Build | Download | Size |
-| --- | --- | --- |
-| x64 · .exe installer | [`RFutils_0.3.1_x64-setup.exe`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/RFutils_0.3.1_x64-setup.exe) | 26 MB |
-| x64 · .msi installer | [`RFutils_0.3.1_x64_en-US.msi`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/RFutils_0.3.1_x64_en-US.msi) | 41 MB |
+| Apple Silicon · .dmg disk image | [`rfutils-0.4.0-macos-aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.0/rfutils-0.4.0-macos-aarch64.dmg) | 40 MB |
+| Apple Silicon · .dmg disk image | [`RFutils_0.4.0_aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.0/RFutils_0.4.0_aarch64.dmg) | 40 MB |
+| Apple Silicon · .pkg installer | [`rfutils-0.4.0-macos-aarch64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.0/rfutils-0.4.0-macos-aarch64.pkg) | 40 MB |
 
 </details>
 
@@ -81,18 +69,18 @@ deployment.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| x64 · .deb package (Debian/Ubuntu) | [`RFutils_0.3.1_amd64.deb`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/RFutils_0.3.1_amd64.deb) | 43 MB |
-| x64 · .rpm package (Fedora/RHEL) | [`RFutils-0.3.1-1.x86_64.rpm`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.3.1/RFutils-0.3.1-1.x86_64.rpm) | 43 MB |
+| x64 · .deb package (Debian/Ubuntu) | [`RFutils_0.4.0_amd64.deb`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.0/RFutils_0.4.0_amd64.deb) | 43 MB |
+| x64 · .rpm package (Fedora/RHEL) | [`RFutils-0.4.0-1.x86_64.rpm`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.0/RFutils-0.4.0-1.x86_64.rpm) | 43 MB |
 
 </details>
 
 Also in this release:
 
-- [`rfutils-node-bundle.tar.gz`](https://github.com/stoatworks-labs/RFutils/releases/latest/download/rfutils-node-bundle.tar.gz) — Node bundle (run it yourself), 286 KB
+- [`rfutils-node-bundle.tar.gz`](https://github.com/stoatworks-labs/RFutils/releases/latest/download/rfutils-node-bundle.tar.gz) — Node bundle (run it yourself), 461 KB
 
 All builds, checksums and release notes: [github.com/stoatworks-labs/RFutils/releases](https://github.com/stoatworks-labs/RFutils/releases).
 
-macOS builds are signed and notarised and open normally. The Windows builds are unsigned, so SmartScreen warns once — see [Windows SmartScreen & Defender Firewall](#windows-smartscreen--defender-firewall) for the one-time click-through.
+macOS builds are signed and notarised by Apple, so they open normally — no Gatekeeper warning and no quarantine step.
 
 <!-- downloads:end -->
 
