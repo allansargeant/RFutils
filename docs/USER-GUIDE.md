@@ -38,10 +38,12 @@ programming receivers.
 RFutils ships as a tray application (built on av-launcher, with a Node runtime embedded). Start
 it, pick a network interface and port, press **Start**, then **Open**.
 
-> **On macOS, if the app opens but the server never starts:** this is almost always Gatekeeper.
-> For an unsigned app bundling helper binaries, approving the *app* does not unquarantine the
-> *helpers* — they are terminated silently, with no error shown. See the release notes for the
-> unquarantine step.
+> **On macOS, if the app opens but the server never starts:** this is almost always Gatekeeper —
+> though it should no longer happen with a released build, since the `.dmg` and `.pkg` are
+> Developer ID-signed and notarised. On a copy you built yourself, or an older download, the trap
+> is that approving the *app* does not unquarantine the *helpers* bundled inside it; they are
+> terminated silently, with no error shown. `xattr -dr com.apple.quarantine` on the whole bundle
+> clears it.
 
 ### From source
 
