@@ -83,14 +83,30 @@
 /* Deliberately one column, chips under the text, at every width. A two-column
    "text left / chips right" version only actually fits in a narrow band of
    viewport widths — four chips need ~28rem beside 46rem of prose — so it spent
-   most of its life wrapping into this layout anyway, just less predictably. */
-.sw-support__inner {
-  max-width: 62rem;
-  margin: 0 auto;
+   most of its life wrapping into this layout anyway, just less predictably.
+
+   There used to be a .sw-support__inner rule here describing a wrapper that
+   build() never created, so it styled nothing on any of the twenty apps that
+   vendor this file. It is gone rather than made real: an app with a max-width
+   layout constrains .sw-support from its own stylesheet, and a second
+   max-width inside that one would fight it.
+   (No backticks in this block: it is inside the CSS template literal, and one
+   closes it.) */
+.sw-support > * { margin: 0; }
+.sw-support > * + * { margin-top: 0.75rem; }
+
+/* The funding chips and the feedback button share a line while there is room for
+   both, and the button wraps as a whole when there is not. It used to be a block
+   sibling after the chips, so it always started a new line — one lone pill under
+   four, with the rest of the footer's width empty beside it, which reads as a
+   layout accident rather than a choice. The column gap is deliberately much wider
+   than the gap between the chips: on one line these are two different offers, and
+   the spacing is what says so. */
+.sw-support__row {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.75rem;
 }
 .sw-support__say { margin: 0; max-width: 46rem; }
 .sw-support__say p { margin: 0 0 0.25rem; }
@@ -142,7 +158,7 @@
   padding: 0.3rem 0.7rem;
   border: 1px solid var(--sw-rule);
   border-radius: 999px;
-  background: var(--sw-chip);
+  background: none;
   transition: background 0.15s, border-color 0.15s;
 }
 .sw-fb-open:hover,
@@ -327,8 +343,15 @@
       list.appendChild(li);
     }
 
-    footer.append(say, list);
-    if (wantsFeedback) footer.append(feedbackRow({ app, repo, project, version }));
+    // The chips and the feedback button go in one row rather than straight onto
+    // the footer, so they can share a line. An app whose stylesheet reaches into
+    // these class names — arraycad does — sees `say` and this row as the footer's
+    // two children.
+    const row = document.createElement('div');
+    row.className = 'sw-support__row';
+    row.appendChild(list);
+    if (wantsFeedback) row.appendChild(feedbackRow({ app, repo, project, version }));
+    footer.append(say, row);
     document.body.appendChild(footer);
     clearDemoBanner(footer);
   }
