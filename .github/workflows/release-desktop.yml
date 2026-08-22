@@ -74,6 +74,21 @@ jobs:
         # explicitly per platform rather than relying on the config.
         run: cd launcher && npx --no-install tauri build --target ${{ matrix.rust_target }} --bundles ${{ matrix.bundles }}
 
+      # The x86_64 job is a cross-compile, so its target directory holds both
+      # host and target artefacts — and the embedded Node runtime (~111 MB) is
+      # then copied into the .app, the staging dir and the disk image in turn.
+      # That was enough to exhaust the runner: hdiutil failed with "No space
+      # left on device" while the aarch64 job, with the same payload, was fine.
+      # The bundle is already built by this point; the intermediates are not
+      # needed again.
+      - name: Reclaim disk before packaging
+        if: startsWith(matrix.os, 'macos')
+        shell: bash
+        run: |
+          target="launcher/src-tauri/target/${{ matrix.rust_target }}/release"
+          rm -rf "$target/build" "$target/deps" "$target/incremental" "$target/.fingerprint"
+          df -h / | tail -1
+
       - name: Installers (macOS)
         if: startsWith(matrix.os, 'macos')
         shell: bash
