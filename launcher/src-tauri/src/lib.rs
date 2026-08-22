@@ -33,6 +33,9 @@ struct AppInfo {
     name: String,
     default_port: u16,
     url_template: String,
+    /// Where this launcher keeps `settings.json` — resolved per-platform, so
+    /// the panel can name it instead of guessing a macOS path.
+    config_dir: String,
     theme: std::collections::BTreeMap<String, String>,
 }
 
@@ -76,12 +79,17 @@ fn store_settings(app: &AppHandle, s: &Settings) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn get_app_info() -> Result<AppInfo, String> {
+fn get_app_info(app: AppHandle) -> Result<AppInfo, String> {
     let cfg = config::load()?;
     Ok(AppInfo {
         name: cfg.app.name,
         default_port: cfg.app.default_port,
         url_template: cfg.app.url,
+        config_dir: app
+            .path()
+            .app_config_dir()
+            .map(|d| d.display().to_string())
+            .unwrap_or_else(|_| "unavailable".into()),
         theme: cfg.app.theme,
     })
 }
@@ -163,7 +171,8 @@ fn start_server(app: AppHandle, state: State<AppState>) -> Result<Status, String
         .app_config_dir()
         .map_err(|e| format!("resolving app config dir: {e}"))?;
     let resource_dir = app.path().resource_dir().ok();
-    let launch = config::build_launch(&cfg, &bind_host, s.port, &work_dir, resource_dir.as_deref())?;
+    let launch =
+        config::build_launch(&cfg, &bind_host, s.port, &work_dir, resource_dir.as_deref())?;
 
     // A binary bundled as a resource can lose its execute bit on some platforms;
     // restore it before spawning so a shipped bundle just works.
@@ -172,6 +181,16 @@ fn start_server(app: AppHandle, state: State<AppState>) -> Result<Status, String
 
     let mut cmd = Command::new(&launch.program);
     cmd.args(&launch.args);
+
+    // A GUI process spawning a console child pops a console window on Windows.
+    // The server's output is not surfaced anywhere, so the window is pure noise
+    // sitting on top of the panel.
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x0800_0000;
+        cmd.creation_flags(CREATE_NO_WINDOW);
+    }
     for (k, v) in &launch.envs {
         cmd.env(k, v);
     }
@@ -283,7 +302,9 @@ pub fn run() {
             pin_config_path(&app.handle().clone());
 
             // Name the tray after the app being launched, when we can read it.
-            let app_name = config::load().map(|c| c.app.name).unwrap_or_else(|_| "Launcher".into());
+            let app_name = config::load()
+                .map(|c| c.app.name)
+                .unwrap_or_else(|_| "Launcher".into());
 
             // Tray menu: Show / Quit.
             let show = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;

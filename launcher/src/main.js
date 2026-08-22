@@ -91,9 +91,13 @@ async function persist() {
   }
 }
 
+/** Filled in from get_app_info; shown by the gear button. */
+let configDir = "";
+
 async function init() {
   try {
     const info = await invoke("get_app_info");
+    configDir = info.config_dir;
     applyTheme(info.theme);
     ui.name.textContent = info.name;
     ui.mark.textContent = (info.name.trim()[0] || "◆").toUpperCase();
@@ -137,7 +141,7 @@ ui.launch.addEventListener("click", () => invoke("open_gui").catch((e) => flash(
 ui.hide.addEventListener("click", () => invoke("hide_window").catch(() => {}));
 ui.quit.addEventListener("click", () => invoke("quit_app").catch(() => {}));
 ui.gear.addEventListener("click", () =>
-  flash("Config: ~/Library/Application Support/<launcher-id>")
+  flash("Config: " + (configDir || "unknown"))
 );
 
 window.addEventListener("DOMContentLoaded", init);
@@ -187,6 +191,7 @@ function mockInvoke(cmd, args = {}) {
         name: app,
         default_port: s.port,
         url_template: "http://{host}:{port}/",
+        config_dir: "~/Library/Application Support/<launcher-id>",
         theme: MOCK_THEMES[app] || MOCK_THEMES["SRT Router"],
       });
     case "list_interfaces":
