@@ -51,18 +51,18 @@ deployment.
 
 ## Download
 
-**[v0.4.1](https://github.com/stoatworks-labs/RFutils/releases/tag/v0.4.1)** — prebuilt for macOS, Windows and Linux. Pick your platform:
+**[v0.4.2](https://github.com/stoatworks-labs/RFutils/releases/tag/v0.4.2)** — prebuilt for macOS, Windows and Linux. Pick your platform:
 
 <details>
 <summary><b>macOS</b> — Apple Silicon, Intel</summary>
 
 | Build | Download | Size |
 | --- | --- | --- |
-| Apple Silicon · .dmg disk image | [`rfutils-0.4.1-macos-aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.1/rfutils-0.4.1-macos-aarch64.dmg) | 40 MB |
-| Apple Silicon · .dmg disk image | [`RFutils_0.4.1_aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.1/RFutils_0.4.1_aarch64.dmg) | 40 MB |
-| Intel · .dmg disk image | [`rfutils-0.4.1-macos-x86_64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.1/rfutils-0.4.1-macos-x86_64.dmg) | 41 MB |
-| Apple Silicon · .pkg installer | [`rfutils-0.4.1-macos-aarch64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.1/rfutils-0.4.1-macos-aarch64.pkg) | 40 MB |
-| Intel · .pkg installer | [`rfutils-0.4.1-macos-x86_64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.1/rfutils-0.4.1-macos-x86_64.pkg) | 41 MB |
+| Apple Silicon · .dmg disk image | [`rfutils-0.4.2-macos-aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.2/rfutils-0.4.2-macos-aarch64.dmg) | 40 MB |
+| Apple Silicon · .dmg disk image | [`RFutils_0.4.2_aarch64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.2/RFutils_0.4.2_aarch64.dmg) | 40 MB |
+| Intel · .dmg disk image | [`rfutils-0.4.2-macos-x86_64.dmg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.2/rfutils-0.4.2-macos-x86_64.dmg) | 41 MB |
+| Apple Silicon · .pkg installer | [`rfutils-0.4.2-macos-aarch64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.2/rfutils-0.4.2-macos-aarch64.pkg) | 40 MB |
+| Intel · .pkg installer | [`rfutils-0.4.2-macos-x86_64.pkg`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.2/rfutils-0.4.2-macos-x86_64.pkg) | 41 MB |
 
 </details>
 
@@ -71,8 +71,8 @@ deployment.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| x64 · .exe installer | [`RFutils_0.4.1_x64-setup.exe`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.1/RFutils_0.4.1_x64-setup.exe) | 27 MB |
-| x64 · .msi installer | [`RFutils_0.4.1_x64_en-US.msi`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.1/RFutils_0.4.1_x64_en-US.msi) | 41 MB |
+| x64 · .exe installer | [`RFutils_0.4.2_x64-setup.exe`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.2/RFutils_0.4.2_x64-setup.exe) | 27 MB |
+| x64 · .msi installer | [`RFutils_0.4.2_x64_en-US.msi`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.2/RFutils_0.4.2_x64_en-US.msi) | 41 MB |
 
 </details>
 
@@ -81,8 +81,8 @@ deployment.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| x64 · .deb package (Debian/Ubuntu) | [`RFutils_0.4.1_amd64.deb`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.1/RFutils_0.4.1_amd64.deb) | 43 MB |
-| x64 · .rpm package (Fedora/RHEL) | [`RFutils-0.4.1-1.x86_64.rpm`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.1/RFutils-0.4.1-1.x86_64.rpm) | 43 MB |
+| x64 · .deb package (Debian/Ubuntu) | [`RFutils_0.4.2_amd64.deb`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.2/RFutils_0.4.2_amd64.deb) | 43 MB |
+| x64 · .rpm package (Fedora/RHEL) | [`RFutils-0.4.2-1.x86_64.rpm`](https://github.com/stoatworks-labs/RFutils/releases/download/v0.4.2/RFutils-0.4.2-1.x86_64.rpm) | 43 MB |
 
 </details>
 
