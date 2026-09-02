@@ -13,12 +13,12 @@
   },
   "dependencies": {
     "@rfutils/shared": "*",
-    "react": "^19.2.8",
+    "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@types/react": "^19.2.18",
+    "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^6.1.0",
     "typescript": "^5.6.3",
