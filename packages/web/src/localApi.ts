@@ -48,7 +48,7 @@ export async function convertFileLocal(
   try {
     ({ format, list } = readText(text, mapping));
   } catch (err) {
-    throw new Error(`Could not parse this file: ${(err as Error).message}`);
+    throw new Error(`Could not parse this file: ${(err as Error).message}`, { cause: err });
   }
 
   const response: ConvertResponse = {
@@ -120,7 +120,7 @@ export async function convertPmsePdfLocal(file: File): Promise<PmseConversion> {
   try {
     conversion = await convertLicence(new Uint8Array(await file.arrayBuffer()));
   } catch (err) {
-    throw new Error(`Could not parse this PDF: ${(err as Error).message}`);
+    throw new Error(`Could not parse this PDF: ${(err as Error).message}`, { cause: err });
   }
   if (conversion.assignmentCount === 0) {
     throw new Error(
@@ -185,7 +185,9 @@ export async function putInventoryLocal(items: InventoryItem[]): Promise<Invento
   try {
     localStorage.setItem(INVENTORY_KEY, JSON.stringify(inv));
   } catch (err) {
-    throw new Error(`Could not save the inventory in this browser: ${(err as Error).message}`);
+    throw new Error(`Could not save the inventory in this browser: ${(err as Error).message}`, {
+      cause: err,
+    });
   }
   return inv;
 }
