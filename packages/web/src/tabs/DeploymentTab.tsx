@@ -3,6 +3,7 @@ import type { DiscoveredDevice, ExportFormat } from '@rfutils/shared';
 import { EXPORT_FORMATS } from '@rfutils/shared';
 import { usePlanStore } from '../planStore.js';
 import { getDevices, programFrequencies, exportModel, type ProgramTargetResult } from '../api.js';
+import type { JSX } from 'react';
 
 function download(text: string, filename: string, mime: string): void {
   const url = URL.createObjectURL(new Blob([text], { type: mime }));

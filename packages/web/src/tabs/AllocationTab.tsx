@@ -8,6 +8,7 @@ import {
 } from '@rfutils/shared';
 import { usePlanStore, type Allocation } from '../planStore.js';
 import { coordinateFrequencies, exportModel, getProfiles } from '../api.js';
+import type { JSX } from 'react';
 
 function download(text: string, filename: string, mime: string): void {
   const url = URL.createObjectURL(new Blob([text], { type: mime }));

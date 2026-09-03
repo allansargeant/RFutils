@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useCue } from '../audio/useCue.js';
 import { useAudioMode } from '../audio/useAudioMode.js';
 import { cuePlayer } from '../audio/cuePlayer.js';
+import type { JSX } from 'react';
 
 /**
  * Per-channel "cue to headphones" toggle.

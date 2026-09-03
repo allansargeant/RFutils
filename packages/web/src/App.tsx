@@ -6,6 +6,7 @@ import { CoordinationTab } from './tabs/CoordinationTab.js';
 import { AllocationTab } from './tabs/AllocationTab.js';
 import { DeploymentTab } from './tabs/DeploymentTab.js';
 import { staticBuild } from './buildMode.js';
+import type { JSX } from 'react';
 
 type TabId = 'convert' | 'monitor' | 'inventory' | 'coordination' | 'allocation' | 'deployment';
 

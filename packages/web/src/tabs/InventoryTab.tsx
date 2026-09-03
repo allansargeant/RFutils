@@ -3,6 +3,7 @@ import type { InventoryItem, InventoryRole, EquipmentProfile } from '@rfutils/sh
 import { channelsNeeded } from '@rfutils/shared';
 import { usePlanStore } from '../planStore.js';
 import { getProfiles } from '../api.js';
+import type { JSX } from 'react';
 
 const ROLES: InventoryRole[] = ['mic', 'iem', 'other'];
 

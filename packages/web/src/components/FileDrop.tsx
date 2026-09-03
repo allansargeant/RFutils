@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { JSX } from 'react';
 
 /** Reusable drop-or-click file picker. */
 export function FileDrop({

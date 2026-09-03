@@ -1,4 +1,6 @@
 /** Ported from MicWizard. Presentational battery gauge. */
+import type { JSX } from 'react';
+
 export function BatteryIndicator({
   percent,
   minutesRemaining,

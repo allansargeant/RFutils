@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { PmseConversion } from '@rfutils/shared';
 import { convertPmsePdf } from '../api.js';
 import { FileDrop } from '../components/FileDrop.js';
+import type { JSX } from 'react';
 
 /** Ofcom PMSE licence PDF → WWB files (frequency list, reference CSV, .shw). */
 export function PmseConvert({

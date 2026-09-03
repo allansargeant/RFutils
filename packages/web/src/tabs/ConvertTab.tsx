@@ -9,6 +9,7 @@ import { EXPORT_FORMATS } from '@rfutils/shared';
 import { convertFile, exportModel, type ConvertResponse } from '../api.js';
 import { FileDrop } from '../components/FileDrop.js';
 import { PmseConvert } from './PmseConvert.js';
+import type { JSX } from 'react';
 
 type Mode = 'coordination' | 'pmse';
 

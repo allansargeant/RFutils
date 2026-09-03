@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 const MIN_DB = -60;
 const MAX_DB = 0;
 

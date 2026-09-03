@@ -3,6 +3,7 @@ import { useShallow } from 'zustand/react/shallow';
 import type { CompanionStatus } from '@rfutils/shared';
 import { useDeviceStore } from '../store.js';
 import { companionStatus, makeCrosspoint, clearCrosspoint } from '../api.js';
+import type { JSX } from 'react';
 
 type SubmitState = 'idle' | 'sending' | 'ok' | 'error';
 

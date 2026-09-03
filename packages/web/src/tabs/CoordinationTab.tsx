@@ -18,6 +18,7 @@ import {
   getProfiles,
 } from '../api.js';
 import { usePlanStore } from '../planStore.js';
+import type { JSX } from 'react';
 
 function formatRanges(ranges: FreqRange[]): string {
   return ranges.map((r) => `${r.startMhz}-${r.endMhz}`).join(', ');

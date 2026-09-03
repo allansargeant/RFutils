@@ -2,6 +2,7 @@ import type { DiscoveredDevice } from '@rfutils/shared';
 import { LevelMeter } from './LevelMeter.js';
 import { BatteryIndicator } from './BatteryIndicator.js';
 import { CueButton } from './CueButton.js';
+import type { JSX } from 'react';
 
 const VENDOR_LABEL: Record<DiscoveredDevice['vendor'], string> = {
   shure: 'Shure',
