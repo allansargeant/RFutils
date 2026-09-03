@@ -19,6 +19,23 @@ updates:
       interval: weekly
     open-pull-requests-limit: 5
     groups:
+      # Peer-locked families move together, whatever the bump size. A major that
+      # arrives for one member without the others is how react 19 shipped against
+      # react-dom 18 and took a hosted app down for three weeks (RFutils #22).
+      # These sit ABOVE the minor-and-patch group because Dependabot files a
+      # dependency under the first group that matches it.
+      react-family:
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom", "react-refresh"]
+        update-types: ["major", "minor", "patch"]
+      vite-toolchain:
+        patterns: ["vite", "@vitejs/*", "vitest", "@vitest/*", "esbuild", "electron-vite", "rolldown", "rolldown-vite"]
+        update-types: ["major", "minor", "patch"]
+      eslint-typescript:
+        patterns: ["eslint", "@eslint/*", "eslint-plugin-*", "eslint-config-*", "typescript-eslint", "@typescript-eslint/*", "typescript"]
+        update-types: ["major", "minor", "patch"]
+      electron-family:
+        patterns: ["electron", "electron-builder", "@electron/*", "@electron-forge/*"]
+        update-types: ["major", "minor", "patch"]
       # The build/test toolchain moves together — vite, vitest and their
       # shared esbuild are the source of most of the noise here, and bumping
       # them in one PR is the only way the result is actually testable.
@@ -29,16 +46,30 @@ updates:
           - "@vitejs/*"
           - "esbuild"
           - "@vitest/*"
-      types:
-        patterns:
-          - "@types/*"
-
   # The Tauri launcher: separate package.json + package-lock.json.
   - package-ecosystem: npm
     directory: "/launcher"
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
+    groups:
+      # Peer-locked families move together, whatever the bump size. A major that
+      # arrives for one member without the others is how react 19 shipped against
+      # react-dom 18 and took a hosted app down for three weeks (RFutils #22).
+      # These sit ABOVE the minor-and-patch group because Dependabot files a
+      # dependency under the first group that matches it.
+      react-family:
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom", "react-refresh"]
+        update-types: ["major", "minor", "patch"]
+      vite-toolchain:
+        patterns: ["vite", "@vitejs/*", "vitest", "@vitest/*", "esbuild", "electron-vite", "rolldown", "rolldown-vite"]
+        update-types: ["major", "minor", "patch"]
+      eslint-typescript:
+        patterns: ["eslint", "@eslint/*", "eslint-plugin-*", "eslint-config-*", "typescript-eslint", "@typescript-eslint/*", "typescript"]
+        update-types: ["major", "minor", "patch"]
+      electron-family:
+        patterns: ["electron", "electron-builder", "@electron/*", "@electron-forge/*"]
+        update-types: ["major", "minor", "patch"]
 
   # The Rust side of the launcher.
   #
@@ -53,6 +84,16 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
+    groups:
+      # Peer-locked families move together, whatever the bump size (see the npm
+      # entries for why). wgpu/egui/eframe/winit only compile against matching
+      # majors; tauri and its plugins likewise.
+      gpu-ui-family:
+        patterns: ["wgpu", "wgpu-*", "egui", "egui-*", "eframe", "winit"]
+        update-types: ["major", "minor", "patch"]
+      tauri-family:
+        patterns: ["tauri", "tauri-*"]
+        update-types: ["major", "minor", "patch"]
 
   - package-ecosystem: github-actions
     directory: "/"
