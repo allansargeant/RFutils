@@ -135,8 +135,14 @@ jobs:
         run: |
           TAG="${{ github.event.inputs.tag || github.ref_name }}"
           # release.yml may still be creating the release; wait rather than race it.
-          for i in $(seq 1 30); do
-            if gh release view "$TAG" >/dev/null 2>&1; then break; fi
-            echo "waiting for release $TAG…"; sleep 10
-          done
+          # Create the release if nothing has yet. This used to poll for one for five
+          # minutes and then fail with "release not found", which is exactly what
+          # happens whenever the job that creates it is still queued behind a busy
+          # runner queue -- the build phase above reads green and the upload is the
+          # only thing that fails. --verify-tag refuses to invent a tag that is not
+          # pushed, and the `||` keeps it harmless when another job wins the race.
+          extra=""
+          case "$TAG" in *-*) extra="--prerelease" ;; esac
+          gh release view "$TAG" >/dev/null 2>&1 || \
+            gh release create "$TAG" --verify-tag --generate-notes --title "$TAG" $extra || true
           gh release upload "$TAG" out/* --clobber
