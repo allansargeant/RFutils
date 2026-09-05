@@ -94,10 +94,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="${{ github.event.inputs.tag || github.ref_name }}"
-          # On a fresh tag, release.yml creates the release (with notes) first;
-          # wait for it so we only ever append the .dmg.
-          for i in $(seq 1 30); do
-            if gh release view "$TAG" >/dev/null 2>&1; then break; fi
-            echo "waiting for release $TAG…"; sleep 10
-          done
+          # Normally release.yml has already created the release (with notes) and
+          # this only appends the .dmg. Create it if nothing has yet. This used to poll for one for five
+          # minutes and then fail with "release not found", which is exactly what
+          # happens whenever the job that creates it is still queued behind a busy
+          # runner queue -- the build phase above reads green and the upload is the
+          # only thing that fails. --verify-tag refuses to invent a tag that is not
+          # pushed, and the `||` keeps it harmless when another job wins the race.
+          extra=""
+          case "$TAG" in *-*) extra="--prerelease" ;; esac
+          gh release view "$TAG" >/dev/null 2>&1 || \
+            gh release create "$TAG" --verify-tag --generate-notes --title "$TAG" $extra || true
           gh release upload "$TAG" launcher/src-tauri/target/release/bundle/dmg/*.dmg --clobber
