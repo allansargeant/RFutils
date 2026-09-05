@@ -94,13 +94,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="${{ github.event.inputs.tag || github.ref_name }}"
-          # Normally release.yml has already created the release (with notes) and
-          # this only appends the .dmg. Create it if nothing has yet. This used to poll for one for five
-          # minutes and then fail with "release not found", which is exactly what
-          # happens whenever the job that creates it is still queued behind a busy
-          # runner queue -- the build phase above reads green and the upload is the
-          # only thing that fails. --verify-tag refuses to invent a tag that is not
-          # pushed, and the `||` keeps it harmless when another job wins the race.
+          # Normally release.yml has already made the release, with its notes, and
+          # this job only appends the .dmg. Create it if nothing has yet.
+          #
+          # This used to poll for one for five minutes and then upload regardless,
+          # which fails with "release not found" whenever the creating job is still
+          # queued behind a busy runner -- and it fails alone, under a build phase
+          # that reads green. --verify-tag refuses to invent a tag that was never
+          # pushed, and the trailing `|| true` keeps losing the race harmless.
           extra=""
           case "$TAG" in *-*) extra="--prerelease" ;; esac
           gh release view "$TAG" >/dev/null 2>&1 || \
